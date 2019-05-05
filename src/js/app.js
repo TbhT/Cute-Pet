@@ -53,6 +53,8 @@ var app = new Framework7({
   routes: routes,
 });
 
+// app.preloader.show()
+
 // Login Screen Demo
 $$('#my-login-screen .login-button').on('click', function () {
   var username = $$('#my-login-screen [name="username"]').val();

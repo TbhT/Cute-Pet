@@ -1,0 +1,100 @@
+<template>
+  <form id="me-signup-form">
+    <div class="list no-hairlines-md">
+      <ul>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-floating-label">昵称</div>
+            <div class="item-input-wrap">
+              <input name="nickname" type="text" placeholder="昵称" />
+            </div>
+          </div>
+        </li>
+
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-floating-label">手机号</div>
+            <div class="item-input-wrap">
+              <input name="phone" type="text" placeholder="你的手机号" />
+            </div>
+          </div>
+        </li>
+
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-floating-label">密码</div>
+            <div class="item-input-wrap">
+              <input name="password" type="password" placeholder="你的密码" />
+            </div>
+          </div>
+        </li>
+
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-floating-label">姓名</div>
+            <div class="item-input-wrap">
+              <input name="name" type="text" placeholder="你的名字" />
+            </div>
+          </div>
+        </li>
+
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-floating-label">性别</div>
+            <div class="item-input-wrap input-dropdown-wrap">
+              <select name="gender" placeholder="请选择性别">
+                <option value="1">男</option>
+                <option value="2">女</option>
+              </select>
+            </div>
+          </div>
+        </li>
+
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-floating-label">居住地址</div>
+            <div class="item-input-wrap">
+              <textarea class="resizable" name="homeAddress" type="text" placeholder="居住地址" />
+            </div>
+          </div>
+        </li>
+
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-floating-label">工作地址</div>
+            <div class="item-input-wrap">
+              <textarea class="resizable" name="workAddress" type="text" placeholder="工作地址" />
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </form>
+
+  <div class="block">
+    <p class="row">
+      <button class="col button button-raised">取消</button>
+      <button
+        class="col button button-raised button-fill button-round"
+        @click="submitSignup"
+      >
+        提交
+      </button>
+    </p>
+  </div>
+</template>
+
+<script>
+import { clearFormData } from '../utils/form.js'
+
+
+export default {
+  methods: {
+    submitSignup: function() {
+      var that = this
+      var formData = that.$app.form.convertToData('me-signup-form')
+      console.log(formData)
+    }
+  }
+}
+</script>

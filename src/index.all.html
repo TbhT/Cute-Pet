@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover"
+    />
+
+    <meta name="theme-color" content="#f7b453" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <title>宠伢</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <link rel="apple-touch-icon" href="static/icons/apple-touch-icon.png" />
+    <link rel="icon" href="static/icons/favicon.png" />
+
+    <!-- built styles file will be auto injected -->
+  </head>
+  <body>
+    <div id="app">
+      <!-- Views/Tabs container -->
+      <div class="tabs-animated-wrap">
+        <div class="views tabs safe-areas">
+          <!-- Tabbar for switching views-tabs -->
+          <div class="toolbar toolbar-bottom tabbar-labels">
+            <div class="toolbar-inner">
+              <a href="#view-feeds" class="tab-link tab-link-active">
+                <i class="icon f7-icons if-not-md">feeds_fill</i>
+                <i class="icon material-icons if-md">feeds</i>
+                <span class="tabbar-label">首页</span>
+              </a>
+              <a href="#view-activities" class="tab-link">
+                <i class="icon f7-icons if-not-md">activities_fill</i>
+                <i class="icon material-icons if-md">activities_list</i>
+                <span class="tabbar-label">活动</span>
+              </a>
+              <a href="#view-markets" class="tab-link">
+                <i class="icon f7-icons if-not-md">markets_fill</i>
+                <i class="icon material-icons if-md">markets</i>
+                <span class="tabbar-label">市场</span>
+              </a>
+              <a href="#view-person" class="tab-link">
+                <i class="icon f7-icons if-not-md">person_fill</i>
+                <i class="icon material-icons if-md">person</i>
+                <span class="tabbar-label">我的</span>
+              </a>
+            </div>
+          </div>
+
+          <div
+            id="view-feeds"
+            class="view view-main view-init tab tab-active"
+            data-url="/feeds/"
+          ></div>
+
+          <div
+            id="view-activities"
+            class="view view-init tab"
+            data-view="activities"
+            data-url="/activities/"
+          ></div>
+
+          <div
+            id="view-markets"
+            class="view view-init tab"
+            data-view="markets"
+            data-url="/markets/"
+          ></div>
+
+          <div
+            id="view-person"
+            class="view view-init tab"
+            data-view="person"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- built script files will be auto injected -->
+  </body>
+</html>
