@@ -12,7 +12,7 @@ module.exports = {
           'Firefox >= 31',
           'Samsung >= 5',
         ],
-      },
+      }
     }],
   ],
   plugins: [

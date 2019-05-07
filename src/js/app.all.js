@@ -1,25 +1,19 @@
-import $$ from 'dom7';
+import $$ from 'dom7'
 import Framework7 from 'framework7/framework7.esm.bundle.js';
-import "@babel/polyfill"
 
-// Import F7 Styles
-import 'framework7/css/framework7.bundle.css';
+import 'framework7/css/framework7.bundle.css'
 
-// Import Icons and App Custom Styles
-import '../css/icons.css';
-import '../css/app.css';
+import '../css/icons.css'
+import '../css/app.css'
 
-// Import Routes
-import routes from './routes.js';
 
-var app = new Framework7({
-  root: '#app', // App root element
+import routes from './routes.all.js'
 
-  name: 'CutePet', // App name
-  theme: 'ios', // Automatic theme detection
-  // App root data
-  // init: false,
-  data: async function () {
+const app = new Framework7({
+  root: '#app',
+  name: 'CutePet',
+  theme: 'ios',
+  data: function () {
     return {
       user: {
         firstName: 'John',
@@ -43,28 +37,10 @@ var app = new Framework7({
           description: 'Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum.'
         },
       ]
-    };
+    }
   },
-  // App root methods
   methods: {
-    helloWorld: function () {
-      app.dialog.alert('Hello World!');
-    },
+
   },
-  // App routes
-  routes: routes,
-});
-
-// app.preloader.show()
-
-// Login Screen Demo
-$$('#my-login-screen .login-button').on('click', function () {
-  var username = $$('#my-login-screen [name="username"]').val();
-  var password = $$('#my-login-screen [name="password"]').val();
-
-  // Close login screen
-  app.loginScreen.close('#my-login-screen');
-
-  // Alert username and password
-  app.dialog.alert('Username: ' + username + '<br>Password: ' + password);
-});
+  routes
+})
