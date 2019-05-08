@@ -21,11 +21,11 @@ const target = process.env.TARGET || 'web';
 module.exports = {
   mode: env,
   entry: [
-    './src/js/app.js',
+    './src/js/app.all.js',
   ],
   output: {
     path: resolvePath('www'),
-    filename: 'js/app.js',
+    filename: 'js/app.all.js',
     publicPath: '',
     hotUpdateChunkFilename: 'hot/hot-update.js',
     hotUpdateMainFilename: 'hot/hot-update.json',

@@ -1,6 +1,6 @@
 import $$ from 'dom7';
 import Framework7 from 'framework7/framework7.esm.bundle.js';
-import "@babel/polyfill"
+// import "@babel/polyfill"
 
 // Import F7 Styles
 import 'framework7/css/framework7.bundle.css';
@@ -19,7 +19,7 @@ var app = new Framework7({
   theme: 'ios', // Automatic theme detection
   // App root data
   // init: false,
-  data: async function () {
+  data: function () {
     return {
       user: {
         firstName: 'John',

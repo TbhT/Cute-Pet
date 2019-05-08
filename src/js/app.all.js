@@ -42,5 +42,13 @@ const app = new Framework7({
   methods: {
 
   },
-  routes
+  routes: routes
 })
+
+
+// app.preloader.show()
+
+// setInterval(() => {
+//   app.preloader.hide()
+// }, 2000);
+
