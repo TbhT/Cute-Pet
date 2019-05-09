@@ -71,6 +71,8 @@ module.exports = {
             loader: 'framework7-component-loader',
             options: {
               helpersPath: './src/template7-helpers-list.js',
+              partialsPath: './src/components',
+              partialsExt: '.f7.html'
             },
           },
         ],

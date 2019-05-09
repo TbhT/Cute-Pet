@@ -2,7 +2,9 @@
 
   <div class="page" data-name="me-all-tweets">
     <div class="page-content">
-
+      {{#each messages }}
+      {{> 'card' }}
+      {{/each }}
     </div>
   </div>
 
@@ -14,6 +16,25 @@
 
 <script>
   export default {
-    
+    data: function () {
+      return {
+        messages: [
+          {
+            name: '用户1',
+            avatar: 'https://cdn.framework7.io/placeholder/fashion-88x88-4.jpg',
+            createTime: Date.now(),
+            text: '我是用户1111111111111111111111111111111111111111111',
+            image: 'https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg'
+          },
+          {
+            name: '用户2',
+            avatar: 'https://cdn.framework7.io/placeholder/fashion-88x88-4.jpg',
+            createTime: Date.now(),
+            text: '我是用户22222222222222222222222222222222222222222222222',
+            image: 'https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg'
+          }
+        ]
+      }
+    }
   }
 </script>
