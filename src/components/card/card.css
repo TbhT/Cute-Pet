@@ -1,0 +1,36 @@
+.me-card.card {
+  margin: 10px 0;
+}
+
+.me-card-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  float: left;
+}
+
+.me-card-name {
+  margin-left: 50px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.me-card .card-header {
+  display: block;
+}
+
+.me-card-time {
+  margin-left: 50px;
+  font-size: 14px;
+  color: #8e8e93;
+}
+
+.me-text.text {
+  word-break: break-all;
+  text-indent: 2em;
+}
+
+.me-card-like i,
+.me-card-comment i {
+  font-size: 20px;
+}
