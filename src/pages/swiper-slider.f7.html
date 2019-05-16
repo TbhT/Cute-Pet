@@ -1,0 +1,42 @@
+<template>
+  {{> 'slider/slider'}}
+</template>
+
+<script>
+  import '../components/slider/slider.css'
+
+  export default {
+    data: function() {
+      return {
+        bannerImages: [
+          {
+            imgUrl:
+              'https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg'
+          },
+          {
+            imgUrl:
+              'https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg'
+          },
+          {
+            imgUrl:
+              'https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg'
+          }
+        ]
+      }
+    },
+    on: {
+      pageMounted: function(e, page) {
+        console.log('11111111111111')
+        this.$app.swiper.create('.swiper-container', {
+          speed: 400,
+          spaceBetween: 100,
+          preloadImages: false,
+          lazy: true,
+          pagination: {
+            el: '.swiper-pagination'
+          }
+        })
+      }
+    }
+  }
+</script>
