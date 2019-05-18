@@ -11,11 +11,11 @@ import Framework7Vue from 'framework7-vue/framework7-vue.esm.bundle.js';
 import 'framework7/css/framework7.bundle.css';
 
 // Import Icons and App Custom Styles
-import '../css/icons.css';
-import '../css/app.css';
+import './css/icons.css';
+import './css/app.css';
 
 // Import App Component
-import App from '../app.vue';
+import App from './app.vue';
 
 // Init Framework7-Vue Plugin
 Framework7.use(Framework7Vue);
