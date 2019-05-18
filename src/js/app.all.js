@@ -3,6 +3,8 @@ import Framework7 from 'framework7/framework7.esm.bundle.js';
 
 import 'framework7/css/framework7.bundle.css'
 
+import '../assets/fonts/iconfont.css'
+
 import '../css/icons.css'
 import '../css/app.css'
 
