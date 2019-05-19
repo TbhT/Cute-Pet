@@ -2,9 +2,9 @@
   <div class="card me-post-card" @click="cardClick(data)">
     <div class="card-header">
       <div class="me-avatar">
-        <img :src="getAvatar(data.userId)" alt="" class="lazy lazy-fade-in">
+        <img :src="getAvatar(data.userId)" alt class="lazy lazy-fade-in">
       </div>
-      
+
       <div class="me-user">
         <div class="me-name">{{ data.nickname }}</div>
         <div class="me-create-time">{{ data.createTime }}</div>
@@ -34,7 +34,6 @@
 <script>
 import { getRemoteAvatar } from '../utils/index.js'
 
-
 export default {
   props: {
     data: {
@@ -53,13 +52,13 @@ export default {
       this.$emit('card:content-click', data)
     },
     formatTime(time) {
-
+      
     },
     getAvatar(userId) {
       return getRemoteAvatar(userId)
     },
     likeClick(tweetId) {
-// TODO: 
+      // TODO:
     }
   }
 }
