@@ -10,10 +10,9 @@
 
 <script>
 export default {
-  props: {
-    topics: {
-      type: Array,
-      default: []
+  data() {
+    return {
+      topics: []
     }
   },
   mounted() {
@@ -22,6 +21,7 @@ export default {
   methods: {
     getAllTopics() {
       // TODO: 获取近期话题的接口
+      console.log('获取近期话题----------')
 
       setTimeout(() => {
         this.topics = [

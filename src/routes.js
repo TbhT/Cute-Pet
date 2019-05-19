@@ -1,5 +1,5 @@
 
-import HomePage from './pages/home.vue';
+// import HomePage from './pages/home.vue';
 import AboutPage from './pages/about.vue';
 import FormPage from './pages/form.vue';
 import CatalogPage from './pages/catalog.vue';
@@ -9,11 +9,12 @@ import SettingsPage from './pages/settings.vue';
 import DynamicRoutePage from './pages/dynamic-route.vue';
 import RequestAndLoad from './pages/request-and-load.vue';
 import NotFoundPage from './pages/404.vue';
+import MainPage from './pages/main.vue'
 
 var routes = [
   {
     path: '/',
-    component: HomePage,
+    component: MainPage,
   },
   {
     path: '/about/',

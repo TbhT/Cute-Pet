@@ -36,7 +36,17 @@ export default {
       topics: []
     }
   },
+  mounted() {
+    this.getAllTweets()
+    this.getBannerImages()
+  },
   methods: {
+    onRefresh() {
+      // TODO: 
+    },
+    onInfiniteScroll() {
+      // TODO: 
+    },
     getAllTweets() {
       // TODO: 获取所有的信息流
 

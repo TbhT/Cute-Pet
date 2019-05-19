@@ -26,8 +26,7 @@ export default {
     return {
       refreshing: false,
       loadingMore: false,
-      loadedEnd: false,
-      loadCardData: []
+      loadedEnd: false
     }
   },
   methods: {

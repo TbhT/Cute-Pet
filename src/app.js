@@ -14,6 +14,8 @@ import 'framework7/css/framework7.bundle.css';
 import './css/icons.css';
 import './css/app.css';
 
+import './assets/fonts/iconfont.css'
+
 // Import App Component
 import App from './app.vue';
 

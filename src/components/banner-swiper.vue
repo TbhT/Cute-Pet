@@ -11,13 +11,13 @@
 export default {
   props: {
     bannerImages: {
-      type: Object
+      type: Array,
+      default: []
     }
   },
   data() {
     return {
-      params: {},
-      bannerImages: []
+      params: {}
     }
   }
 }

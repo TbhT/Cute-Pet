@@ -1,14 +1,14 @@
 <template>
   <f7-page>
-    <f7-toolbar tabbar labels>
+    <f7-toolbar tabbar labels position="bottom">
       <f7-link icon="iconfont icon-ios7homeoutline" text="首页" tab-link="#tab-home" tab-link-active></f7-link>
-      <f7-link icon="iconfont icon-activity" text="活动" tab-link="#tab-activities"></f7-link>
-      <f7-link icon="iconfont icon-market1" text="市场" tab-link="#tab-market"></f7-link>
-      <f7-link icon="iconfont icon-person" text="我的" tab-link="#tab-person"></f7-link>
+      <f7-link icon-ios="f7:list_fill" text="活动" tab-link="#tab-activities"></f7-link>
+      <f7-link icon-ios="f7:settings_fill" text="市场" tab-link="#tab-market"></f7-link>
+      <f7-link icon-ios="f7:home_fil" text="我的" tab-link="#tab-person"></f7-link>
     </f7-toolbar>
 
     <f7-tabs>
-      <f7-tab id="tab-home" tab-active>
+      <f7-tab id="tab-home" tab-active url="/">
         <home-view></home-view>
       </f7-tab>
       <f7-tab id="tab-activities">

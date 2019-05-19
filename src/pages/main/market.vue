@@ -1,5 +1,7 @@
 <template>
-  <banner-swiper :bannerImages="bannerImages"></banner-swiper>
+  <f7-page id="marketView" ptr infinite>
+    <banner-swiper :bannerImages="bannerImages"></banner-swiper>
+  </f7-page>
 </template>
 
 <script>
@@ -18,5 +20,4 @@ export default {
 </script>
 
 <style>
-
 </style>

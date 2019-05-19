@@ -1,5 +1,7 @@
 <template>
-  <banner-swiper :bannerImages="bannerImages"></banner-swiper>
+  <f7-page id="activitiesView" ptr infinite>
+    <banner-swiper :bannerImages="bannerImages"></banner-swiper>
+  </f7-page>
 </template>
 
 <script>
