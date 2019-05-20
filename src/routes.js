@@ -13,7 +13,7 @@ import NotFoundPage from './pages/404.vue';
 
 import HomePage from './pages/home.vue'
 
-var routes = [
+const routes = [
   {
     path: '/',
     component: HomePage,
@@ -61,7 +61,7 @@ var routes = [
       // Simulate Ajax Request
       setTimeout(function () {
         // We got user data from request
-        var user = {
+        const user = {
           firstName: 'Vladimir',
           lastName: 'Kharlampidi',
           about: 'Hello, i am creator of Framework7! Hope you like it!',

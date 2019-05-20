@@ -2,7 +2,7 @@
   <f7-card class="me-post-card" @click="cardClick(data)">
     <f7-card-header>
       <div class="me-avatar">
-        <img src="https://loremflickr.com/70/70/people?lock=1" alt class="lazy lazy-fade-in">
+        <img data-src="https://loremflickr.com/70/70/people?lock=1" width="100%" class="lazy lazy-fade-in">
       </div>
 
       <div class="me-user">
