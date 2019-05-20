@@ -7,7 +7,7 @@
 </template>
 
 <style>
-.me-swiper.swiper.swiper-container {
+.me-swiper.swiper-container.swiper-container {
   margin-top: 45px;
 }
 .me-swiper img {
