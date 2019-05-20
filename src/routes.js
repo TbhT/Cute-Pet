@@ -11,12 +11,12 @@ import RequestAndLoad from './pages/request-and-load.vue';
 import NotFoundPage from './pages/404.vue';
 
 
-import MainPage from './pages/main.vue'
+import HomePage from './pages/home.vue'
 
 var routes = [
   {
     path: '/',
-    component: MainPage,
+    component: HomePage,
   },
   {
     path: '/about/',

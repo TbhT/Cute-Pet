@@ -3,7 +3,31 @@
     <!-- Status bar overlay for fullscreen mode-->
     <!-- <f7-statusbar></f7-statusbar> -->
 
-    <f7-view id="main-view" url="/" main></f7-view>
+    <f7-views tabs class="safe-areas">
+      <f7-toolbar tabbar labels position="bottom">
+        <f7-link
+          tab-link="#me-view-home"
+          tab-link-active
+          icon="iconfont icon-ios7homeoutline"
+          text="首页"
+        ></f7-link>
+
+        <f7-link tab-link="#me-view-activities" icon-ios="f7:list_fill" text="活动"></f7-link>
+
+        <f7-link tab-link="#me-view-market" icon-ios="f7:settings_fill" text="市场"></f7-link>
+
+        <f7-link tab-link="#me-view-person" icon-ios="f7:home_fil" text="我的"></f7-link>
+      </f7-toolbar>
+
+      <f7-view id="me-view-home" main tab tab-active url="/"></f7-view>
+
+      <f7-view id="me-view-activities" tab url="/catelog/"></f7-view>
+
+      <f7-view id="me-view-market" tab url="/catelog/"></f7-view>
+
+      <f7-view id="me-view-person" tab url="/settings/"></f7-view>
+
+    </f7-views>
   </f7-app>
 </template>
 <script>

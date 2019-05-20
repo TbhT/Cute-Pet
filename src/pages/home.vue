@@ -1,68 +1,134 @@
 <template>
-  <f7-page name="home">
-    <!-- Top Navbar -->
-    <f7-navbar :sliding="false" large>
-      <f7-nav-left>
-        <f7-link icon-ios="f7:menu" icon-aurora="f7:menu" icon-md="material:menu" panel-open="left"></f7-link>
-      </f7-nav-left>
-      <f7-nav-title sliding>CutePet</f7-nav-title>
-      <f7-nav-right>
-        <f7-link icon-ios="f7:menu" icon-aurora="f7:menu" icon-md="material:menu" panel-open="right"></f7-link>
-      </f7-nav-right>
-      <f7-nav-title-large sliding>CutePet</f7-nav-title-large>
-    </f7-navbar>
+  <f7-page id="homeView">
+    <!-- ptr infinite @ptr:refresh="onRefresh" @inifinite="onInfiniteScroll" -->
+    <f7-page-content>
+      <f7-subnavbar class="me-home-subnavbar">
+        <f7-segmented raised>
+          <f7-button tab-link="#tab-tweets" tab-link-active>精选</f7-button>
+          <f7-button tab-link="#tab-topics">话题</f7-button>
+        </f7-segmented>
+      </f7-subnavbar>
 
-    <!-- Page content-->
-    <f7-block strong>
-      <p>This is an example of tabs-layout application. The main point of such tabbed layout is that each tab contains independent view with its own routing and navigation.</p>
+      <banner-swiper :bannerImages="bannerImages"></banner-swiper>
 
-      <p>Each tab/view may have different layout, different navbar type (dynamic, fixed or static) or without navbar like this tab.</p>
-    </f7-block>
-
-    <f7-block-title>Navigation</f7-block-title>
-    <f7-list>
-      <f7-list-item link="/about/" title="About"></f7-list-item>
-      <f7-list-item link="/form/" title="Form"></f7-list-item>
-    </f7-list>
-
-    <f7-block-title>Modals</f7-block-title>
-    <f7-block strong>
-      <f7-row>
-        <f7-col width="50">
-          <f7-button fill raised popup-open="#my-popup">Popup</f7-button>
-        </f7-col>
-        <f7-col width="50">
-          <f7-button fill raised login-screen-open="#my-login-screen">Login Screen</f7-button>
-        </f7-col>
-      </f7-row>
-    </f7-block>
-
-    <f7-block-title>Panels</f7-block-title>
-    <f7-block strong>
-      <f7-row>
-        <f7-col width="50">
-          <f7-button fill raised panel-open="left">Left Panel</f7-button>
-        </f7-col>
-        <f7-col width="50">
-          <f7-button fill raised panel-open="right">Right Panel</f7-button>
-        </f7-col>
-      </f7-row>
-    </f7-block>
-
-    <f7-list>
-      <f7-list-item
-        title="Dynamic (Component) Route"
-        link="/dynamic-route/blog/45/post/125/?foo=bar#about"
-      ></f7-list-item>
-      <f7-list-item
-        title="Default Route (404)"
-        link="/load-something-that-doesnt-exist/"
-      ></f7-list-item>
-      <f7-list-item
-        title="Request Data & Load"
-        link="/request-and-load/user/123456/"
-      ></f7-list-item>
-    </f7-list>
-
+      <f7-tabs>
+        <f7-tab id="tab-tweets" tab-active>
+          <card-list :loadCardData="tweets"></card-list>
+        </f7-tab>
+        <f7-tab id="tab-topics">
+          <topics></topics>
+        </f7-tab>
+      </f7-tabs>
+    </f7-page-content>
   </f7-page>
 </template>
+
+<style>
+/* .me-home-subnavbar.subnavbar {
+  margin-top: 70%;
+} */
+</style>
+
+<script>
+import CardList from '../components/card-list.vue'
+import BannerSwiper from '../components/banner-swiper.vue'
+import Topics from '../components/topics.vue'
+
+export default {
+  components: {
+    CardList,
+    BannerSwiper,
+    Topics
+  },
+  data() {
+    return {
+      bannerImages: [],
+      tweets: [],
+      topics: []
+    }
+  },
+  mounted() {
+    this.getAllTweets()
+    this.getBannerImages()
+  },
+  methods: {
+    onRefresh() {
+      // TODO:
+    },
+    onInfiniteScroll() {
+      // TODO:
+    },
+    getAllTweets() {
+      // TODO: 获取所有的信息流
+
+      // 模拟ajax请求
+      setTimeout(() => {
+        console.log('加载 tweets')
+        this.tweets = [
+          {
+            tweetId: 1,
+            userId: 10,
+            nickname: 'Tom',
+            createTime: Date.now(),
+            text: 'yes aaaaaaaaaaaaaaaaaa',
+            image: 'https://loremflickr.com/1000/700/nature?lock=5'
+          },
+          {
+            tweetId: 2,
+            userId: 11,
+            nickname: 'Alice',
+            createTime: Date.now(),
+            text: 'lfakdjfklajdkflajldkjflkajdlfkjalkdjflkajdslfjald',
+            imgage: 'https://loremflickr.com/1000/700/nature?lock=3'
+          },
+          {
+            tweetId: 4,
+            userId: 114,
+            nickname: 'Hello',
+            createTime: Date.now(),
+            text: 'dklsjfaldjflkajdlfkjalkfjlakjflkajldfjaldjflkajfljalf',
+            image: 'https://loremflickr.com/1000/700/nature?lock=7'
+          },
+          {
+            tweetId: 5,
+            userId: 90,
+            nickname: 'James',
+            createTime: Date.now(),
+            text:
+              'lkdfjakldfa 发快递了放假啊看到法兰克都快疯了安居房卡房间里肯德基奥菲罗克的',
+            image: 'https://loremflickr.com/1000/700/nature?lock=8'
+          }
+        ]
+      }, 2000)
+    },
+    getBannerImages() {
+      // TODO: 获取轮播图图片信息
+
+      setTimeout(() => {
+        this.bannerImages = [
+          {
+            id: 1,
+            imgUrl: 'https://loremflickr.com/1000/700/nature?lock=5'
+          },
+          {
+            id: 2,
+            imgUrl: 'https://loremflickr.com/1000/700/nature?lock=3'
+          },
+          {
+            id: 3,
+            imgUrl: 'https://loremflickr.com/1000/700/nature?lock=7'
+          },
+          {
+            id: 4,
+            imgUrl: 'https://loremflickr.com/1000/700/nature?lock=1'
+          },
+          {
+            id: 5,
+            imgUrl: 'https://loremflickr.com/1000/700/nature?lock=8'
+          }
+        ]
+      }, 1000)
+    }
+  }
+}
+</script>
