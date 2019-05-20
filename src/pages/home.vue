@@ -1,13 +1,5 @@
 <template>
-  <f7-page
-    id="homeView"
-    ptr
-    infinite
-    :infinite-distance="10"
-    :infinite-preloader="showPreloader"
-    @ptr:refresh="onRefresh"
-    @infinite="loadMore"
-  >
+  <f7-page id="homeView" :page-content="false" tabs no-navbar no-toolbar>
     <!-- ptr infinite @ptr:refresh="onRefresh" @inifinite="onInfiniteScroll" -->
     <f7-subnavbar class="me-home-subnavbar">
       <f7-segmented raised>
@@ -16,18 +8,24 @@
       </f7-segmented>
     </f7-subnavbar>
 
-    <banner-swiper :bannerImages="bannerImages"></banner-swiper>
+    <f7-page-content
+      id="tab-tweets"
+      class="page-content"
+      tab-active
+      tab
+      ptr
+      infinite
+      @ptr:refresh="onRefresh"
+      @inifinite="loadMore"
+    >
+      <banner-swiper :bannerImages="bannerImages"></banner-swiper>
+      <card-list :loadCardData="tweets"></card-list>
+    </f7-page-content>
 
-    <f7-tabs>
-      <f7-tab id="tab-tweets" tab-active>
-        <card-list :loadCardData="tweets"></card-list>
-      </f7-tab>
-
-      <f7-tab id="tab-topics">
-        <topics></topics>
-      </f7-tab>
-    </f7-tabs>
-
+    <f7-page-content id="tab-topics" class="page-content" tab>
+      <banner-swiper :bannerImages="bannerImages"></banner-swiper>
+      <topics></topics>
+    </f7-page-content>
   </f7-page>
 </template>
 

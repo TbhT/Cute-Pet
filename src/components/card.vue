@@ -2,7 +2,7 @@
   <f7-card class="me-post-card" @click="cardClick(data)">
     <f7-card-header>
       <div class="me-avatar">
-        <img data-src="https://loremflickr.com/70/70/people?lock=1" width="100%" class="lazy lazy-fade-in">
+        <img src="https://loremflickr.com/70/70/people?lock=1">
       </div>
 
       <div class="me-user">
@@ -14,7 +14,7 @@
     <f7-card-content>
       <div class="text me-text">{{ data.text }}</div>
       <div class="me-image" v-if="data.image">
-        <img :src="data.image" class="lazy lazy-fade-in">
+        <img :data-src="data.image" class="lazy">
       </div>
     </f7-card-content>
 

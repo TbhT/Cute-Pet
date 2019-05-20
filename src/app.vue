@@ -21,9 +21,9 @@
 
       <f7-view id="me-view-home" main tab tab-active url="/"></f7-view>
 
-      <f7-view id="me-view-activities" tab url="/catelog/"></f7-view>
+      <f7-view id="me-view-activities" tab url="/catalog/"></f7-view>
 
-      <f7-view id="me-view-market" tab url="/catelog/"></f7-view>
+      <f7-view id="me-view-market" tab url="/catalog/"></f7-view>
 
       <f7-view id="me-view-person" tab url="/settings/"></f7-view>
 
