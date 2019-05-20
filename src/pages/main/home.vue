@@ -1,22 +1,33 @@
 <template>
-  <f7-page id="homeView" ptr infinite @ptr:refresh="onRefresh" @inifinite="onInfiniteScroll">
-    <banner-swiper :bannerImages="bannerImages"></banner-swiper>
+  <f7-page id="homeView">
+    <!-- ptr infinite @ptr:refresh="onRefresh" @inifinite="onInfiniteScroll" -->
+    <f7-page-content>
+      <f7-subnavbar class="me-home-subnavbar">
+        <f7-segmented raised>
+          <f7-button tab-link="#tab-tweets" tab-link-active>精选</f7-button>
+          <f7-button tab-link="#tab-topics">话题</f7-button>
+        </f7-segmented>
+      </f7-subnavbar>
 
-    <f7-toolbar tabbar>
-      <f7-link tab-link="#tab-tweets">精选</f7-link>
-      <f7-link tab-link="#tab-topics">话题</f7-link>
-    </f7-toolbar>
+      <banner-swiper :bannerImages="bannerImages"></banner-swiper>
 
-    <f7-tabs>
-      <f7-tab id="tab-tweets" tab-active>
-        <card-list :loadCardData="tweets"></card-list>
-      </f7-tab>
-      <f7-tab id="tab-topics">
-        <topics></topics>
-      </f7-tab>
-    </f7-tabs>
+      <f7-tabs>
+        <f7-tab id="tab-tweets" tab-active>
+          <card-list :loadCardData="tweets"></card-list>
+        </f7-tab>
+        <f7-tab id="tab-topics">
+          <topics></topics>
+        </f7-tab>
+      </f7-tabs>
+    </f7-page-content>
   </f7-page>
 </template>
+
+<style>
+/* .me-home-subnavbar.subnavbar {
+  margin-top: 70%;
+} */
+</style>
 
 <script>
 import CardList from '../../components/card-list.vue'
@@ -42,17 +53,18 @@ export default {
   },
   methods: {
     onRefresh() {
-      // TODO: 
+      // TODO:
     },
     onInfiniteScroll() {
-      // TODO: 
+      // TODO:
     },
     getAllTweets() {
       // TODO: 获取所有的信息流
 
       // 模拟ajax请求
       setTimeout(() => {
-        this.comments = [
+        console.log('加载 tweets')
+        this.tweets = [
           {
             tweetId: 1,
             userId: 10,

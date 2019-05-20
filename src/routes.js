@@ -9,6 +9,8 @@ import SettingsPage from './pages/settings.vue';
 import DynamicRoutePage from './pages/dynamic-route.vue';
 import RequestAndLoad from './pages/request-and-load.vue';
 import NotFoundPage from './pages/404.vue';
+
+
 import MainPage from './pages/main.vue'
 
 var routes = [

@@ -1,7 +1,7 @@
 <template>
   <f7-app :params="f7params">
     <!-- Status bar overlay for fullscreen mode-->
-    <f7-statusbar></f7-statusbar>
+    <!-- <f7-statusbar></f7-statusbar> -->
 
     <f7-view id="main-view" url="/" main></f7-view>
   </f7-app>
