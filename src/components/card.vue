@@ -14,7 +14,7 @@
     <f7-card-content>
       <div class="text me-text">{{ data.text }}</div>
       <div class="me-image" v-if="data.image">
-        <img :data-src="data.image" class="lazy">
+        <img :src="data.image" class="lazy">
       </div>
     </f7-card-content>
 
@@ -36,13 +36,19 @@
   margin: 10px 0;
 }
 
+.me-post-card .card-content {
+  padding-top: 0;
+}
+
 .me-text.text {
   word-wrap: break-word;
   text-indent: 2em;
   font-size: 20px;
+  padding: 4px;
 }
 .me-user {
   font-size: 14px;
+  margin-right: 130px;
 }
 .me-user .me-name {
   color: #f7b453;
@@ -54,6 +60,7 @@
 }
 .me-image img {
   width: 100%;
+  padding: 4px;
 }
 </style>
 

@@ -52,7 +52,8 @@ export default {
       tweets: [],
       topics: [],
       showPreloader: true,
-      allowInfinite: true
+      allowInfinite: true,
+      isLoadAll: false
     }
   },
   mounted() {
