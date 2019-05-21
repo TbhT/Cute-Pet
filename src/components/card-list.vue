@@ -47,7 +47,7 @@ export default {
       // TODO: 需要有加载以后的回调
     },
     routeToCardDetail(data) {
-      this.$f7router.navigate(`/comment/${data.commentId}`)
+      this.$f7router.navigate(`/tweet/${data.tweetId}`)
     }
   }
 }

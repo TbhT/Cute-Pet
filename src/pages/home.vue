@@ -1,5 +1,5 @@
 <template>
-  <f7-page id="homeView" :page-content="false" tabs no-navbar no-toolbar>
+  <f7-page id="homeView" :page-content="false" tabs>
     <!-- ptr infinite @ptr:refresh="onRefresh" @inifinite="onInfiniteScroll" -->
     <f7-subnavbar class="me-home-subnavbar">
       <f7-segmented raised>
