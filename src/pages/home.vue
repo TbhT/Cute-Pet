@@ -1,5 +1,5 @@
 <template>
-  <f7-page id="homeView" :page-content="false" tabs hide-bars-on-scroll with-subnavbar>
+  <f7-page id="homeView" :page-content="false" tabs with-subnavbar>
     <!-- ptr infinite @ptr:refresh="onRefresh" @inifinite="onInfiniteScroll" -->
     <f7-navbar title="宠伢">
       <f7-subnavbar class="me-home-subnavbar">
