@@ -30,22 +30,6 @@ export default {
     }
   },
   methods: {
-    onRefresh() {
-      if (this.refreshing) {
-        return false
-      }
-
-      this.refreshing = true
-      // TODO: 需要有刷新以后的回调
-    },
-    onInfiniteScroll() {
-      if (this.loadingMore || this.loadedEnd) {
-        return false
-      }
-
-      this.loadingMore = true
-      // TODO: 需要有加载以后的回调
-    },
     routeToCardDetail(data) {
       this.$f7router.navigate(`/tweet/${data.tweetId}`)
     }

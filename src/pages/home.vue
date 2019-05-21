@@ -1,12 +1,14 @@
 <template>
-  <f7-page id="homeView" :page-content="false" tabs>
+  <f7-page id="homeView" :page-content="false" tabs hide-bars-on-scroll with-subnavbar>
     <!-- ptr infinite @ptr:refresh="onRefresh" @inifinite="onInfiniteScroll" -->
-    <f7-subnavbar class="me-home-subnavbar">
-      <f7-segmented raised>
-        <f7-button tab-link="#tab-tweets" tab-link-active>精选</f7-button>
-        <f7-button tab-link="#tab-topics">话题</f7-button>
-      </f7-segmented>
-    </f7-subnavbar>
+    <f7-navbar title="宠伢">
+      <f7-subnavbar class="me-home-subnavbar">
+        <f7-segmented raised>
+          <f7-button tab-link="#tab-tweets" tab-link-active>精选</f7-button>
+          <f7-button tab-link="#tab-topics">话题</f7-button>
+        </f7-segmented>
+      </f7-subnavbar>
+    </f7-navbar>
 
     <f7-page-content
       id="tab-tweets"
@@ -24,7 +26,7 @@
 
     <f7-page-content id="tab-topics" class="page-content" tab>
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
-      <topics></topics>
+      <topic-list></topic-list>
     </f7-page-content>
   </f7-page>
 </template>
@@ -38,13 +40,13 @@
 <script>
 import CardList from '../components/card-list.vue'
 import BannerSwiper from '../components/banner-swiper.vue'
-import Topics from '../components/topics.vue'
+import TopicList from '../components/topic-list.vue'
 
 export default {
   components: {
     CardList,
     BannerSwiper,
-    Topics
+    TopicList
   },
   data() {
     return {

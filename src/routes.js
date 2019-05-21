@@ -12,11 +12,74 @@ import NotFoundPage from './pages/404.vue';
 
 
 import HomePage from './pages/home.vue'
+import TopicDetailPage from './pages/topic-detail.vue'
+
 
 const routes = [
   {
     path: '/',
     component: HomePage,
+  },
+  {
+    path: '/topic/:topicId/',
+    async: function (routeTo, routeFrom, resolve, reject) {
+      this.app.preloader.show()
+
+      const topicId = routeTo.params.topicId
+      const topicText = routeTo.params.topicText
+      const tweets = [
+        {
+          tweetId: 1,
+          userId: 10,
+          nickname: 'Tom',
+          createTime: Date.now(),
+          text: 'yes aaaaaaaaaaaaaaaaaa',
+          image: 'https://loremflickr.com/1000/700/nature?lock=5'
+        },
+        {
+          tweetId: 2,
+          userId: 11,
+          nickname: 'Alice',
+          createTime: Date.now(),
+          text: 'lfakdjfklajdkflajldkjflkajdlfkjalkdjflkajdslfjald',
+          image: 'https://loremflickr.com/1000/700/nature?lock=3'
+        },
+        {
+          tweetId: 4,
+          userId: 114,
+          nickname: 'Hello',
+          createTime: Date.now(),
+          text: 'dklsjfaldjflkajdlfkjalkfjlakjflkajldfjaldjflkajfljalf',
+          image: 'https://loremflickr.com/1000/700/nature?lock=7'
+        },
+        {
+          tweetId: 5,
+          userId: 90,
+          nickname: 'James',
+          createTime: Date.now(),
+          text:
+            'lkdfjakldfa 发快递了放假啊看到法兰克都快疯了安居房卡房间里肯德基奥菲罗克的',
+          image: 'https://loremflickr.com/1000/700/nature?lock=8'
+        }
+      ]
+
+      //  TODO: 模仿ajax请求
+      setTimeout(() => {
+        resolve(
+          {
+            component: TopicDetailPage
+          },
+          {
+            props: {
+              tweets,
+              topicText
+            }
+          }
+        )
+
+        this.app.preloader.hide()
+      }, 3000);
+    }
   },
   {
     path: '/about/',
