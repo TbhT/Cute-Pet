@@ -13,6 +13,7 @@ import NotFoundPage from './pages/404.vue';
 
 import HomePage from './pages/home.vue'
 import TopicDetailPage from './pages/topic-detail.vue'
+import TweetDetailPage from './pages/tweet-detail.vue'
 
 
 const routes = [
@@ -27,6 +28,8 @@ const routes = [
 
       const topicId = routeTo.params.topicId
       const topicText = routeTo.params.topicText
+      //  TODO: 模仿ajax请求
+
       const tweets = [
         {
           tweetId: 1,
@@ -63,7 +66,6 @@ const routes = [
         }
       ]
 
-      //  TODO: 模仿ajax请求
       setTimeout(() => {
         resolve(
           {
@@ -78,7 +80,48 @@ const routes = [
         )
 
         this.app.preloader.hide()
-      }, 3000);
+      }, 1000);
+    }
+  },
+  {
+    path: '/tweet/:tweetId',
+    async: function (to, from, resolve, reject) {
+      const tweetId = to.params.tweetId
+
+      // TODO: 拉取某条tweet下的评论
+      const comments = [
+        {
+          commentId: 1,
+          userId: 114,
+          createTime: Date.now(),
+          text: '这是第一条评论'
+        },
+        {
+          commentId: 2,
+          userId: 115,
+          createTime: Date.now(),
+          text: '这是第二条评论'
+        },
+        {
+          commentId: 3,
+          userId: 116,
+          createTime: Date.now(),
+          text: '这是第三条评论'
+        }
+      ]
+
+      setTimeout(() => {
+        resolve(
+          {
+            component: TweetDetailPage
+          },
+          {
+            props: {
+              comments
+            }
+          }
+        )
+      }, 1000);
     }
   },
   {

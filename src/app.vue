@@ -32,6 +32,7 @@
 </template>
 <script>
 import routes from './routes.js'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -90,7 +91,10 @@ export default {
       this.$f7.dialog.alert(
         'Username: ' + this.username + '<br>Password: ' + this.password
       )
-    }
+    },
+    ...mapGetters([
+      ''
+    ])
   },
   mounted() {
     this.$f7ready(f7 => {
