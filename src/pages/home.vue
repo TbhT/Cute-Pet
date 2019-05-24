@@ -16,9 +16,9 @@
       tab-active
       tab
       ptr
-      infinite
+      :infinite="isIninite"
       @ptr:refresh="onRefresh"
-      @inifinite="loadMore"
+      @infinite="loadMore"
     >
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
       <card-list :loadCardData="tweets"></card-list>
@@ -41,8 +41,9 @@
 import CardList from '../components/card-list.vue'
 import BannerSwiper from '../components/banner-swiper.vue'
 import TopicList from '../components/topic-list.vue'
+import $$ from 'dom7'
 import { createNamespacedHelpers } from 'vuex'
-const { mapActions, mapState } = createNamespacedHelpers('home')
+const { mapActions, mapState, mapGetters } = createNamespacedHelpers('home')
 
 export default {
   components: {
@@ -51,31 +52,48 @@ export default {
     TopicList
   },
   computed: {
-    ...mapState(['tweets'])
+    ...mapState(['tweets']),
+    ...mapGetters(['isTweetLoadAll'])
   },
   data() {
     return {
       bannerImages: [],
-      topics: [],
       showPreloader: true,
       allowInfinite: true,
-      isLoadAll: false
+      isIninite: true
     }
   },
   created() {
     this.getBannerImages()
     this.getIndexTweets()
   },
-  destroyed() {
-    console.log('--------------home被销毁了')
-  },
   methods: {
     ...mapActions(['getIndexTweets', 'loadMoreTweets']),
-    onRefresh() {
-      // TODO:
+    onRefresh(event, done) {
+      // TODO: 重载数据
+      setTimeout(() => {
+        this.getIndexTweets()
+        done()
+      }, 500)
     },
-    loadMore() {
-      // TODO:
+    loadMore(el, event) {
+      // TODO: 加载更多
+      if (!this.allowInfinite) {
+        return
+      }
+
+      this.allowInfinite = false
+
+      console.log(22222222222222222222)
+      setTimeout(() => {
+        this.loadMoreTweets()
+        this.allowInfinite = true
+
+        if (this.isTweetLoadAll) {
+          // $$('.preloader.infinite-scroll-preloader').remove()
+          this.isIninite = false
+        }
+      }, 1000)
     },
     getBannerImages() {
       // TODO: 获取轮播图图片信息

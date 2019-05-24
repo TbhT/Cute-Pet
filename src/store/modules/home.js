@@ -12,7 +12,8 @@ const getters = {
     const tweet = state.tweets.find(t => t.tweetId === id)
     tweet.liked = liked
     return tweet
-  }
+  },
+  isTweetLoadAll: state => state.tweetsIsLoadAll
 }
 
 const mutations = {
@@ -26,11 +27,17 @@ const mutations = {
     const t = state.tweets.find(t => t.tweetId === tweet.tweetId)
     t.liked = tweet.liked
     t.likeCount = tweet.likeCount
+  },
+  resetTweets(state, { tweets }) {
+    state.tweets = tweets
+  },
+  addPageNum(state) {
+    state.tweetPage += 1
   }
 }
 
 const actions = {
-  async getIndexTweets({ commit }) {
+  async getIndexTweets({ commit, state }) {
     try {
       // const data = await Framework7.request.promise.postJSON('/tweet', {
       //   page: state.tweetPage
@@ -40,7 +47,7 @@ const actions = {
       //   commit('updateAllTweets', data.data)
       // }
       setTimeout(() => {
-        console.log('加载 默认的 tweets')
+        console.log('加载 默认的 tweets', state.tweetPage)
         const tweets = [
           {
             tweetId: 1,
@@ -77,7 +84,7 @@ const actions = {
           }
         ]
 
-        commit('appendTweets', { tweets })
+        commit('resetTweets', { tweets })
       }, 1000)
     } catch (error) {
       console.log(error)
@@ -89,6 +96,10 @@ const actions = {
         return
       }
 
+      if (state.tweetPage === 4) {
+        state.tweetsIsLoadAll = true
+      }
+
       // TODO: 获取所有的信息流
       // 模拟ajax请求
 
@@ -96,7 +107,7 @@ const actions = {
         console.log('加载 更多tweets')
         const tweets = [
           {
-            tweetId: 1,
+            tweetId: state.tweetPage * 10 + 1,
             userId: 10,
             nickname: 'Tom',
             createTime: Date.now(),
@@ -104,7 +115,7 @@ const actions = {
             image: 'https://loremflickr.com/1000/700/nature?lock=5'
           },
           {
-            tweetId: 2,
+            tweetId: state.tweetPage * 10 + 2,
             userId: 11,
             nickname: 'Alice',
             createTime: Date.now(),
@@ -112,7 +123,7 @@ const actions = {
             image: 'https://loremflickr.com/1000/700/nature?lock=3'
           },
           {
-            tweetId: 4,
+            tweetId: state.tweetPage * 10 + 4,
             userId: 114,
             nickname: 'Hello',
             createTime: Date.now(),
@@ -120,7 +131,7 @@ const actions = {
             image: 'https://loremflickr.com/1000/700/nature?lock=7'
           },
           {
-            tweetId: 5,
+            tweetId: state.tweetPage * 10 + 5,
             userId: 90,
             nickname: 'James',
             createTime: Date.now(),
@@ -130,7 +141,8 @@ const actions = {
           }
         ]
 
-        commit('append', { tweets })
+        commit('addPageNum')
+        commit('appendTweets', { tweets })
       }, 2000)
 
       // const data = await Framework7.request.promise.postJSON('/tweet', {

@@ -1,6 +1,6 @@
 <template>
   <f7-page class="me-tweet-detail" no-toolbar>
-    <f7-navbar :back-link="backText" sliding @click="console.log(2222222222222222222222)"></f7-navbar>
+    <f7-navbar :back-link="backText" sliding></f7-navbar>
 
     <card :enableToolBar="false" :data="tweet"></card>
 

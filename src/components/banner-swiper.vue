@@ -14,6 +14,9 @@
   width: 100%;
   height: 20%;
 }
+#homeView div.me-swiper.swiper-container {
+  margin-top: 0px;
+}
 </style>
 
 
