@@ -41,6 +41,8 @@
 import CardList from '../components/card-list.vue'
 import BannerSwiper from '../components/banner-swiper.vue'
 import TopicList from '../components/topic-list.vue'
+import { createNamespacedHelpers } from 'vuex'
+const { mapActions, mapState } = createNamespacedHelpers('home')
 
 export default {
   components: {
@@ -48,69 +50,34 @@ export default {
     BannerSwiper,
     TopicList
   },
+  computed: {
+    ...mapState([
+      'tweets'
+    ])
+  },
   data() {
     return {
       bannerImages: [],
-      tweets: [],
       topics: [],
       showPreloader: true,
       allowInfinite: true,
       isLoadAll: false
     }
   },
-  mounted() {
-    this.getAllTweets()
+  created() {
     this.getBannerImages()
+    this.getIndexTweets()
   },
   methods: {
+    ...mapActions([
+      'getIndexTweets',
+      'loadMoreTweets'
+    ]),
     onRefresh() {
       // TODO:
     },
     loadMore() {
       // TODO:
-    },
-    getAllTweets() {
-      // TODO: 获取所有的信息流
-
-      // 模拟ajax请求
-      setTimeout(() => {
-        console.log('加载 tweets')
-        this.tweets = [
-          {
-            tweetId: 1,
-            userId: 10,
-            nickname: 'Tom',
-            createTime: Date.now(),
-            text: 'yes aaaaaaaaaaaaaaaaaa',
-            image: 'https://loremflickr.com/1000/700/nature?lock=5'
-          },
-          {
-            tweetId: 2,
-            userId: 11,
-            nickname: 'Alice',
-            createTime: Date.now(),
-            text: 'lfakdjfklajdkflajldkjflkajdlfkjalkdjflkajdslfjald',
-            imgage: 'https://loremflickr.com/1000/700/nature?lock=3'
-          },
-          {
-            tweetId: 4,
-            userId: 114,
-            nickname: 'Hello',
-            createTime: Date.now(),
-            text: 'dklsjfaldjflkajdlfkjalkfjlakjflkajldfjaldjflkajfljalf',
-            image: 'https://loremflickr.com/1000/700/nature?lock=7'
-          },
-          {
-            tweetId: 5,
-            userId: 90,
-            nickname: 'James',
-            createTime: Date.now(),
-            text:
-              'lkdfjakldfa 发快递了放假啊看到法兰克都快疯了安居房卡房间里肯德基奥菲罗克的',
-            image: 'https://loremflickr.com/1000/700/nature?lock=8'
-          }
-        ]
-      }, 2000)
     },
     getBannerImages() {
       // TODO: 获取轮播图图片信息

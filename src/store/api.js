@@ -1,3 +1,4 @@
 export default {
-  userStatus: '/user/status'
+  userStatus: '/user/status',
+  getTweets: '/tweet'
 }

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import actions from './actions.js'
 import getters from './getters.js'
 import mutations from './mutations.js'
+import home from './modules/home.js'
 
 Vue.use(Vuex)
 
@@ -23,5 +24,8 @@ export default new Vuex.Store({
   state,
   getters,
   actions,
-  mutations
+  mutations,
+  modules: {
+    home
+  }
 })
