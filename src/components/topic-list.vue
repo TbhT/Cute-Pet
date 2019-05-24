@@ -15,9 +15,6 @@
 
 <script>
 export default {
-  props: {
-    topicId: null
-  },
   data() {
     return {
       topics: []

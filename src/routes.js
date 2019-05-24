@@ -20,6 +20,7 @@ const routes = [
   {
     path: '/',
     component: HomePage,
+    keepAlive: true,
   },
   {
     path: '/topic/:topicId/',
@@ -87,24 +88,28 @@ const routes = [
     path: '/tweet/:tweetId',
     async: function (to, from, resolve, reject) {
       const tweetId = to.params.tweetId
-
+      console.log(`tweet ${tweetId} 加载`)
       // TODO: 拉取某条tweet下的评论
+      this.app.preloader.show()
       const comments = [
         {
           commentId: 1,
           userId: 114,
+          nickname: 'Tom',
           createTime: Date.now(),
           text: '这是第一条评论'
         },
         {
           commentId: 2,
           userId: 115,
+          nickname: 'Tom',
           createTime: Date.now(),
           text: '这是第二条评论'
         },
         {
           commentId: 3,
           userId: 116,
+          nickname: 'Tom',
           createTime: Date.now(),
           text: '这是第三条评论'
         }
@@ -121,6 +126,7 @@ const routes = [
             }
           }
         )
+        this.app.preloader.hide()
       }, 1000);
     }
   },

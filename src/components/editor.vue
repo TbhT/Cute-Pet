@@ -16,7 +16,9 @@ export default {
   props: {
     enableTools: {
       type: Array,
-      default: []
+      default: function () {
+        return []
+      }
     },
     placeholder: {
       type: String,

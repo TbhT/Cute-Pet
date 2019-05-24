@@ -51,9 +51,7 @@ export default {
     TopicList
   },
   computed: {
-    ...mapState([
-      'tweets'
-    ])
+    ...mapState(['tweets'])
   },
   data() {
     return {
@@ -68,11 +66,11 @@ export default {
     this.getBannerImages()
     this.getIndexTweets()
   },
+  destroyed() {
+    console.log('--------------home被销毁了')
+  },
   methods: {
-    ...mapActions([
-      'getIndexTweets',
-      'loadMoreTweets'
-    ]),
+    ...mapActions(['getIndexTweets', 'loadMoreTweets']),
     onRefresh() {
       // TODO:
     },

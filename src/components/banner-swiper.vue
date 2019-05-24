@@ -22,7 +22,9 @@ export default {
   props: {
     bannerImages: {
       type: Array,
-      default: []
+      default: function () {
+        return []
+      }
     }
   },
   mounted() {},
