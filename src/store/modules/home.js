@@ -8,12 +8,9 @@ const state = {
 }
 
 const getters = {
-  updateTweetsById: state => ({ id, liked }) => {
-    const tweet = state.tweets.find(t => t.tweetId === id)
-    tweet.liked = liked
-    return tweet
-  },
-  isTweetLoadAll: state => state.tweetsIsLoadAll
+  isTweetLoadAll: state => state.tweetsIsLoadAll,
+  getTweetById: state => ({ tweetId }) =>
+    state.tweets.find(t => t.tweetId === tweetId)
 }
 
 const mutations = {
@@ -23,10 +20,16 @@ const mutations = {
   prependTweets(state, { tweets }) {
     state.tweets = [...tweets, ...state.tweets]
   },
-  updateTweetById(state, { tweet }) {
-    const t = state.tweets.find(t => t.tweetId === tweet.tweetId)
-    t.liked = tweet.liked
-    t.likeCount = tweet.likeCount
+  updateTweetById(state, { liked, tweetId }) {
+    const t = state.tweets.find(t => t.tweetId === tweetId)
+
+    if (liked === false) {
+      t.liked = true
+      t.likeCount += 1
+    } else {
+      t.liked = false
+      t.likeCount -= 1
+    }
   },
   resetTweets(state, { tweets }) {
     state.tweets = tweets
@@ -54,6 +57,9 @@ const actions = {
             userId: 10,
             nickname: 'Tom',
             createTime: Date.now(),
+            liked: false,
+            likeCount: 10,
+            commentCount: 20,
             text: 'yes aaaaaaaaaaaaaaaaaa',
             image: 'https://loremflickr.com/1000/700/nature?lock=5'
           },
@@ -62,6 +68,9 @@ const actions = {
             userId: 11,
             nickname: 'Alice',
             createTime: Date.now(),
+            liked: false,
+            likeCount: 10,
+            commentCount: 20,
             text: 'lfakdjfklajdkflajldkjflkajdlfkjalkdjflkajdslfjald',
             image: 'https://loremflickr.com/1000/700/nature?lock=3'
           },
@@ -70,6 +79,9 @@ const actions = {
             userId: 114,
             nickname: 'Hello',
             createTime: Date.now(),
+            liked: false,
+            likeCount: 10,
+            commentCount: 20,
             text: 'dklsjfaldjflkajdlfkjalkfjlakjflkajldfjaldjflkajfljalf',
             image: 'https://loremflickr.com/1000/700/nature?lock=7'
           },
@@ -78,6 +90,9 @@ const actions = {
             userId: 90,
             nickname: 'James',
             createTime: Date.now(),
+            liked: false,
+            likeCount: 10,
+            commentCount: 20,
             text:
               'lkdfjakldfa 发快递了放假啊看到法兰克都快疯了安居房卡房间里肯德基奥菲罗克的',
             image: 'https://loremflickr.com/1000/700/nature?lock=8'
@@ -111,6 +126,9 @@ const actions = {
             userId: 10,
             nickname: 'Tom',
             createTime: Date.now(),
+            liked: false,
+            likeCount: 10,
+            commentCount: 20,
             text: 'yes aaaaaaaaaaaaaaaaaa',
             image: 'https://loremflickr.com/1000/700/nature?lock=5'
           },
@@ -119,6 +137,9 @@ const actions = {
             userId: 11,
             nickname: 'Alice',
             createTime: Date.now(),
+            liked: false,
+            likeCount: 10,
+            commentCount: 20,
             text: 'lfakdjfklajdkflajldkjflkajdlfkjalkdjflkajdslfjald',
             image: 'https://loremflickr.com/1000/700/nature?lock=3'
           },
@@ -127,6 +148,9 @@ const actions = {
             userId: 114,
             nickname: 'Hello',
             createTime: Date.now(),
+            liked: false,
+            likeCount: 10,
+            commentCount: 20,
             text: 'dklsjfaldjflkajdlfkjalkfjlakjflkajldfjaldjflkajfljalf',
             image: 'https://loremflickr.com/1000/700/nature?lock=7'
           },
@@ -135,6 +159,9 @@ const actions = {
             userId: 90,
             nickname: 'James',
             createTime: Date.now(),
+            liked: false,
+            likeCount: 10,
+            commentCount: 20,
             text:
               'lkdfjakldfa 发快递了放假啊看到法兰克都快疯了安居房卡房间里肯德基奥菲罗克的',
             image: 'https://loremflickr.com/1000/700/nature?lock=8'

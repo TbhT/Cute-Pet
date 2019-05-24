@@ -22,11 +22,11 @@
       <f7-card-footer class="me-flex-row" v-if="enableToolBar">
         <f7-link>
           <i class="iconfont icon-comment"></i>
-          <span class="text me-comment"></span>
+          <span class="text me-comment">{{ data.commentCount }}</span>
         </f7-link>
         <f7-link @click="likeClick(data.tweetId)">
           <i class="iconfont icon-like"></i>
-          <span class="text me-like"></span>
+          <span class="text me-like">{{ data.likeCount }}</span>
         </f7-link>
       </f7-card-footer>
     </f7-card>

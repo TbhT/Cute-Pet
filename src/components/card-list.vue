@@ -4,7 +4,7 @@
       v-for="l in loadCardData"
       :key="l.tweetId"
       :data="l"
-      @card:content-click="routeToCardDetail"
+      @card:content-click="routeToCardDetail(l)"
     ></card>
   </div>
 </template>
@@ -29,9 +29,16 @@ export default {
       loadedEnd: false
     }
   },
+  updated() {
+    console.log('tweet 信息更新了')
+  },
   methods: {
     routeToCardDetail(data) {
-      this.$f7router.navigate(`/tweet/${data.tweetId}`)
+      this.$f7router.navigate(`/tweet/${data.tweetId}`, {
+        props: {
+          tweet: data
+        }
+      })
     }
   }
 }

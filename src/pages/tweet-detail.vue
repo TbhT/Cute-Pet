@@ -37,12 +37,8 @@
         <span class="iconfont icon-comment"></span>
         <span class="text" v-text="tweet.commentCount ? tweet.commentCount : '评论'"></span>
       </f7-link>
-      <f7-link
-        class="me-tool me-tool-border"
-        :class="{ liked: tweet.liked }"
-        @click="triggeLike(tweet.tweetId, tweet.liked)"
-      >
-        <span class="iconfont icon-like"></span>
+      <f7-link class="me-tool me-tool-border" @click="triggeLike(tweet.tweetId, tweet.liked)">
+        <span :class="tweet.liked ? 'me-liked' : 'me-liked' + ' iconfont icon-like'"></span>
         <span class="text" v-text="tweet.likeCount ? tweet.likeCount : '喜欢'"></span>
       </f7-link>
     </f7-toolbar>
@@ -96,6 +92,10 @@
   color: #929292;
   margin-top: 6px;
 }
+.me-comments .me-tool .me-liked {
+  /* color: #f7b452; */
+  color: red;
+}
 </style>
 
 <script>
@@ -109,16 +109,7 @@ export default {
   props: {
     tweet: {
       type: Object,
-      default: function() {
-        return {
-          tweetId: 1,
-          userId: 10,
-          nickname: 'Tom',
-          createTime: Date.now(),
-          text: 'yes aaaaaaaaaaaaaaaaaa',
-          image: 'https://loremflickr.com/1000/700/nature?lock=5'
-        }
-      }
+      required: true
     },
     comments: {
       type: Array,
@@ -133,11 +124,11 @@ export default {
     }
   },
   methods: {
-    ...mapMutations([
-      'updatePopup'
-    ]),
-    triggeLike() {
+    ...mapMutations(['updatePopup', 'home/updateTweetById']),
+    triggeLike(id, liked) {
       // TODO: 触发喜欢还是不喜欢
+      
+      this['home/updateTweetById']({ tweetId: id, liked })
     },
     openCommentPopup() {
       // TODO: 打开评论页面
