@@ -100,6 +100,7 @@
 
 <script>
 import Card from '../components/card.vue'
+import { mapMutations } from 'vuex'
 
 export default {
   components: {
@@ -132,11 +133,19 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'updatePopup'
+    ]),
     triggeLike() {
       // TODO: 触发喜欢还是不喜欢
     },
     openCommentPopup() {
       // TODO: 打开评论页面
+      console.log(2222222222222222)
+      this.updatePopup({
+        key: 'commentOpened',
+        value: true
+      })
     }
   }
 }

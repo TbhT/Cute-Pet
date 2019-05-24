@@ -26,13 +26,22 @@
       <f7-view id="me-view-market" stackPages tab url="/catalog/"></f7-view>
 
       <f7-view id="me-view-person" stackPages tab url="/settings/"></f7-view>
-
     </f7-views>
+
+    <f7-popup :opened="commentOpened" @popup:closed="closePopup('commentOpened')">
+      <comment></comment>
+    </f7-popup>
+
+    <f7-popup :opened="publisherOpened" @popup:closed="closePopup('publisherOpened')">
+      <publisher></publisher>
+    </f7-popup>
   </f7-app>
 </template>
 <script>
 import routes from './routes.js'
-import { mapGetters } from 'vuex'
+import Publisher from './components/publisher.vue'
+import Comment from './components/comment.vue'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   data() {
@@ -86,15 +95,31 @@ export default {
       password: ''
     }
   },
+  computed: {
+    ...mapState({
+      commentOpened: state => state.popup.commentOpened,
+      publisherOpened: state => state.popup.publisherOpened
+    })
+  },
+  components: {
+    Comment,
+    Publisher
+  },
   methods: {
+    ...mapMutations([
+      'updatePopup'
+    ]),
     alertLoginData() {
       this.$f7.dialog.alert(
         'Username: ' + this.username + '<br>Password: ' + this.password
       )
     },
-    ...mapGetters([
-      ''
-    ])
+    closePopup(s) {
+      this.updatePopup({
+        key: s,
+        value: false
+      })
+    }
   },
   mounted() {
     this.$f7ready(f7 => {

@@ -13,10 +13,10 @@ const state = {
     userId: null,
     isGetInfo: false
   },
-  tweets: [],
   popup: {
-    editTweet: false,
-    editComment: false
+    publisherOpened: false,
+    commentOpened: false,
+    editorText: ''
   }
 }
 
