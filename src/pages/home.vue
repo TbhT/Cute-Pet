@@ -2,6 +2,9 @@
   <f7-page id="homeView" :page-content="false" tabs with-subnavbar>
     <!-- ptr infinite @ptr:refresh="onRefresh" @inifinite="onInfiniteScroll" -->
     <f7-navbar title="宠伢">
+      <f7-nav-right>
+        <f7-link class="icon iconfont icon-feedback3" @click="triggePublisherClick"></f7-link>
+      </f7-nav-right>
       <f7-subnavbar class="me-home-subnavbar">
         <f7-segmented raised>
           <f7-button tab-link="#tab-tweets" tab-link-active>精选</f7-button>
@@ -75,6 +78,9 @@ export default {
         this.getIndexTweets()
         done()
       }, 500)
+    },
+    triggePublisherClick() {
+      this.$f7router.navigate('/publisher')
     },
     loadMore(el, event) {
       // TODO: 加载更多

@@ -48,6 +48,15 @@
     >
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
     </f7-page-content>
+
+    <f7-fab position="right-bottom" slot="fixed" color="orange">
+      <f7-icon ios="f7:add" aurora="f7:add" md="material:add"></f7-icon>
+      <f7-icon ios="f7:close" aurora="f7:close" md="material:close"></f7-icon>
+      <f7-fab-buttons position="top">
+        <f7-fab-button label="Action 1">1</f7-fab-button>
+        <f7-fab-button label="Action 2">2</f7-fab-button>
+      </f7-fab-buttons>
+    </f7-fab>
   </f7-page>
 </template>
 

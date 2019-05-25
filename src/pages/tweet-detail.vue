@@ -132,7 +132,6 @@ export default {
     },
     openCommentPopup() {
       // TODO: 打开评论页面
-      console.log(2222222222222222)
       this.updatePopup({
         key: 'commentOpened',
         value: true
