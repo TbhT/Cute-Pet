@@ -6,7 +6,7 @@
   </f7-swiper>
 </template>
 
-<style>
+<style scoped>
 .me-swiper.swiper-container.swiper-container {
   margin-top: 45px;
 }
@@ -25,7 +25,7 @@ export default {
   props: {
     bannerImages: {
       type: Array,
-      default: function () {
+      default: function() {
         return []
       }
     }
@@ -33,11 +33,16 @@ export default {
   mounted() {},
   data() {
     return {
+      loop: true,
       params: {
         speed: 400,
         spaceBetween: 10,
         observer: true,
-        observeParents: true
+        observeParents: true,
+        autoplay: {
+          delay: 1500,
+          disableOnInteraction: false
+        }
       }
     }
   }

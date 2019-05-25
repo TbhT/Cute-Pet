@@ -21,7 +21,7 @@
 
       <f7-view id="me-view-home" stackPages main tab tab-active url="/"></f7-view>
 
-      <f7-view id="me-view-activities" stackPages tab url="/catalog/"></f7-view>
+      <f7-view id="me-view-activities" stackPages tab url="/activities/"></f7-view>
 
       <f7-view id="me-view-market" stackPages tab url="/catalog/"></f7-view>
 

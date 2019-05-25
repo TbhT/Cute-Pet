@@ -14,6 +14,7 @@ import NotFoundPage from './pages/404.vue';
 import HomePage from './pages/home.vue'
 import TopicDetailPage from './pages/topic-detail.vue'
 import TweetDetailPage from './pages/tweet-detail.vue'
+import ActivitiesPage from './pages/activities.vue'
 
 
 const routes = [
@@ -129,6 +130,10 @@ const routes = [
         this.app.preloader.hide()
       }, 1000);
     }
+  },
+  {
+    path: '/activities/',
+    component: ActivitiesPage
   },
   {
     path: '/about/',
