@@ -44,6 +44,7 @@ module.exports = {
     compress: true,
     contentBase: '/www/',
     disableHostCheck: true,
+    host: '0.0.0.0',
     watchOptions: {
       poll: 1000,
     },

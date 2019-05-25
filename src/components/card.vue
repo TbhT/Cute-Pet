@@ -54,7 +54,7 @@
 }
 .me-user {
   font-size: 14px;
-  margin-right: 130px;
+  margin-right: 60%;
 }
 .me-user .me-name {
   color: #f7b453;
