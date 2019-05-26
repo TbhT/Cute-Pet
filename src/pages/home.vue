@@ -3,7 +3,7 @@
     <!-- ptr infinite @ptr:refresh="onRefresh" @inifinite="onInfiniteScroll" -->
     <f7-navbar title="宠伢">
       <f7-nav-right>
-        <f7-link class="icon iconfont icon-feedback3" @click="triggePublisherClick"></f7-link>
+        <f7-link class="icon iconfont icon-feedback3" @click="openPublisherPopup"></f7-link>
       </f7-nav-right>
       <f7-subnavbar class="me-home-subnavbar">
         <f7-segmented raised>
@@ -45,7 +45,10 @@ import CardList from '../components/card-list.vue'
 import BannerSwiper from '../components/banner-swiper.vue'
 import TopicList from '../components/topic-list.vue'
 import $$ from 'dom7'
-import { createNamespacedHelpers } from 'vuex'
+import {
+  createNamespacedHelpers,
+  mapMutations as globalMapMutations
+} from 'vuex'
 const { mapActions, mapState, mapGetters } = createNamespacedHelpers('home')
 
 export default {
@@ -72,6 +75,7 @@ export default {
   },
   methods: {
     ...mapActions(['getIndexTweets', 'loadMoreTweets']),
+    ...globalMapMutations(['updatePopup']),
     onRefresh(event, done) {
       // TODO: 重载数据
       setTimeout(() => {
@@ -79,8 +83,11 @@ export default {
         done()
       }, 500)
     },
-    triggePublisherClick() {
-      this.$f7router.navigate('/publisher')
+    openPublisherPopup() {
+      this.updatePopup({
+        key: 'publisherOpened',
+        value: true
+      })
     },
     loadMore(el, event) {
       // TODO: 加载更多
@@ -90,7 +97,6 @@ export default {
 
       this.allowInfinite = false
 
-      console.log(22222222222222222222)
       setTimeout(() => {
         this.loadMoreTweets()
         this.allowInfinite = true

@@ -37,7 +37,7 @@ export default {
   methods: {
     ...mapMutations(['updatePopup', 'updateEditorText']),
     closePopup() {
-      this.updateEditorText('')
+      this.updateEditorText({ text: '' })
     },
     textInputChange(text) {
       this.updateEditorText({ text })

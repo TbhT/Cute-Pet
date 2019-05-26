@@ -131,7 +131,6 @@ export default {
       this['home/updateTweetById']({ tweetId: id, liked })
     },
     openCommentPopup() {
-      // TODO: 打开评论页面
       this.updatePopup({
         key: 'commentOpened',
         value: true
