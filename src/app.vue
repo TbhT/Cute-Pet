@@ -49,7 +49,7 @@ export default {
       // Framework7 Parameters
       f7params: {
         name: 'CutePet', // App name
-        theme: 'auto', // Automatic theme detection
+        theme: 'ios', // Automatic theme detection
         // App root data
         data: function() {
           return {
@@ -106,9 +106,7 @@ export default {
     Publisher
   },
   methods: {
-    ...mapMutations([
-      'updatePopup'
-    ]),
+    ...mapMutations(['updatePopup']),
     alertLoginData() {
       this.$f7.dialog.alert(
         'Username: ' + this.username + '<br>Password: ' + this.password

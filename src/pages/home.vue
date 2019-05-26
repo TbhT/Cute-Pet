@@ -31,6 +31,10 @@
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
       <topic-list></topic-list>
     </f7-page-content>
+
+    <f7-fab position="right-bottom" slot="fixed" color="orange" href="/user/login">
+      <f7-icon ios="f7:add" aurora="f7:add" md="material:add"></f7-icon>
+    </f7-fab>
   </f7-page>
 </template>
 
