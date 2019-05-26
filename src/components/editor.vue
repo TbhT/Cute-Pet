@@ -68,11 +68,8 @@ function imgFileOnChange(input) {
   }
 
   if (!imgFilterReg.test(file.type)) {
-    this.$f7.toast.create({
-      text: '请上传图片',
-      position: 'center',
-      closeTimeout: 2000
-    })
+    console.log(this.$f7.toast)
+    this.$f7.dialog.alert('请上传图片', '格式不正确')
     file = input = null
     return
   } else {
