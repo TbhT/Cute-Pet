@@ -35,7 +35,7 @@ export default {
   },
   data: function() {
     return {
-      imagePreviewUrl: null,
+      imagePreviewUrl: 'https://s3.amazonaws.com/FringeBucket/default-user.png',
       file: null
     }
   },
@@ -45,12 +45,14 @@ export default {
     closePopup() {
       this.updateEditorText({ text: '' })
       this.file = null
-      this.imagePreviewUrl = null
+      this.imagePreviewUrl =
+        'https://s3.amazonaws.com/FringeBucket/default-user.png'
     },
     textInputChange(text) {
       this.updateEditorText({ text })
     },
     imageUpload(imgTarget, file) {
+      console.log(imgTarget, file)
       this.imagePreviewUrl = imgTarget.result
       this.file = file
     },
