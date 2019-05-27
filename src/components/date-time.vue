@@ -9,6 +9,14 @@
 </template>
 
 <script>
+import {
+  getLocaleDatetime,
+  getDaysInMonthAsArray,
+  MONTHS,
+  HOURS,
+  MINUTES
+} from '../utils/index.js'
+
 export default {
   props: {
     placeholder: {
@@ -21,18 +29,67 @@ export default {
     }
   },
   mounted() {
+    const today = getLocaleDatetime()
+
     this.$f7.picker.create({
       inputEl: this.elementId,
       toolbar: false,
       rotateEffect: true,
       value: [
-        
-      ]
+        today.getFullYear(),
+        today.getMonth() + 1,
+        today.getDay(),
+        today.getHours(),
+        today.getMinutes() < 10 ? `0${today.getMinutes()}` : today.getMinutes(),
+        today.getSeconds()
+      ],
+      formatValue(values) {
+        return `${values[0]}-${values[1]}-${values[2]} ${values[3]}:${
+          values[4]
+        }:${values[5]}`
+      },
+      cols: [
+        {
+          values: [
+            today.getFullYear(),
+            today.getFullYear() + 1,
+            today.getFullYear() + 2,
+            today.getFullYear() + 3,
+            today.getFullYear() + 4
+          ]
+        },
+        {
+          values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+          displayValues: MONTHS,
+          textAlign: 'left'
+        },
+        {
+          values: getDaysInMonthAsArray(today.getFullYear(), today.getMonth())
+        },
+        {
+          divider: true,
+          content: ' '
+        },
+        {
+          values: HOURS
+        },
+        {
+          values: MINUTES
+        },
+        {
+          values: MINUTES
+        }
+      ],
+      on: {
+        change: function(picker, values, displayValues) {
+          const days = getDaysInMonthAsArray(picker.value[0], picker.value[1])
+          picker.cols[2].setValues(days)
+        }
+      }
     })
   }
 }
 </script>
 
 <style>
-
 </style>
