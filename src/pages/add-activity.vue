@@ -96,6 +96,13 @@
         @input="coorganizer = $event.target.value"
       ></f7-list-input>
     </f7-list>
+
+    <f7-block>
+      <f7-row>
+        <f7-button class="col" raised @click="back">取消</f7-button>
+        <f7-button class="col" fill raised color="green" @click="submitActivityData">提交</f7-button>
+      </f7-row>
+    </f7-block>
   </f7-page>
 </template>
 
@@ -167,6 +174,30 @@ export default {
       } else if (type === 'joinEndTime') {
         this.joinEndTime = value
       }
+    },
+    submitActivityData() {
+      // TODO: 提交数据
+      this.$f7.preloader.show()
+      setTimeout(() => {
+        this.$f7.preloader.hide()
+        this.$f7router.back()
+      }, 1000);
+    },
+    resetAllProps() {
+      this.name = ''
+      this.beginTime = ''
+      this.endTime = ''
+      this.totalCount = 0
+      this.totalCost = 0
+      this.joinBeginTime = ''
+      this.joinEndTime = ''
+      this.organizer = ''
+      this.coorganizer = ''
+      this.type = -1
+      this.place = ''
+    },
+    back() {
+      this.$f7router.back('/')
     }
   }
 }
