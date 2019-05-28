@@ -40,15 +40,17 @@
         @input="totalCost = $event.target.value"
       ></f7-list-input>
 
-      <f7-list-input
+      <!-- <f7-list-input
         label="活动开始时间"
         type="datetime-local"
         :value="beginTime"
         placeholder="开始时间"
         @input="beginTime = $event.target.value"
-      ></f7-list-input>
+      ></f7-list-input> -->
 
-      <f7-list-input
+      <date-time elementId="me-activity-begin-time" placeholder="活动开始时间"></date-time>
+
+      <!-- <f7-list-input
         label="活动截止时间"
         type="datepicker"
         :value="endTime"
@@ -70,7 +72,7 @@
         :value="joinEndTime"
         placeholder="报名截止时间"
         @input="joinEndTime = $event.target.value"
-      ></f7-list-input>
+      ></f7-list-input> -->
 
       <f7-list-input
         label="主办方"
@@ -92,7 +94,13 @@
 </template>
 
 <script>
+import DateTime from '../components/date-time.vue'
+
 export default {
+  components: {
+    DateTime
+  },
+
   data() {
     return {
       name: '',
@@ -130,17 +138,9 @@ export default {
           '星期五',
           '星期六'
         ],
-        dayNamesShort: [
-          '周日',
-          '周一',
-          '周二',
-          '周三',
-          '周四',
-          '周五',
-          '周六'
-        ],
+        dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
         firstDay: 2,
-        dateFormat:'yyyy-mm-dd '
+        dateFormat: 'yyyy-mm-dd '
       }
     }
   }

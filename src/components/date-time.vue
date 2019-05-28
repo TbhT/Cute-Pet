@@ -32,17 +32,18 @@ export default {
     const today = getLocaleDatetime()
 
     this.$f7.picker.create({
-      inputEl: this.elementId,
-      toolbar: false,
+      inputEl: `#${this.elementId}`,
+      // toolbar: false,
       rotateEffect: true,
-      value: [
-        today.getFullYear(),
-        today.getMonth() + 1,
-        today.getDay(),
-        today.getHours(),
-        today.getMinutes() < 10 ? `0${today.getMinutes()}` : today.getMinutes(),
-        today.getSeconds()
-      ],
+      openIn: 'sheet',
+      // value: [
+      //   today.getFullYear(),
+      //   today.getMonth() + 1,
+      //   today.getDay(),
+      //   today.getHours(),
+      //   today.getMinutes() < 10 ? `0${today.getMinutes()}` : today.getMinutes(),
+      //   today.getSeconds()
+      // ],
       formatValue(values) {
         return `${values[0]}-${values[1]}-${values[2]} ${values[3]}:${
           values[4]
@@ -74,7 +75,15 @@ export default {
           values: HOURS
         },
         {
+          divider: true,
+          content: ':'
+        },
+        {
           values: MINUTES
+        },
+        {
+          divider: true,
+          content: ':'
         },
         {
           values: MINUTES
@@ -82,8 +91,10 @@ export default {
       ],
       on: {
         change: function(picker, values, displayValues) {
-          const days = getDaysInMonthAsArray(picker.value[0], picker.value[1])
-          picker.cols[2].setValues(days)
+          console.log(picker)
+          // const days = getDaysInMonthAsArray(picker.value[0], picker.value[1])
+          // console.log(picker)
+          // picker.cols[2].setValue(days)
         }
       }
     })

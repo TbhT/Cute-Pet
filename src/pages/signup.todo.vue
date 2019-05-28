@@ -41,7 +41,13 @@
 </template>
 
 <script>
-export default {}
+import DateTime from '../components/date-time.vue'
+
+export default {
+  components: {
+    DateTime
+  }
+}
 </script>
 
 <style>

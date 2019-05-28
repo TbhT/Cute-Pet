@@ -61,7 +61,7 @@ export const MINUTES = (() => {
   const m = []
 
   for (let index = 0; index < 60; index++) {
-    m[index] = index
+    m[index] = index < 10 ? `0${index}` : index
   }
 
   return m
