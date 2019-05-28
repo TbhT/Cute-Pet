@@ -12,6 +12,7 @@
 import {
   getLocaleDatetime,
   getDaysInMonthAsArray,
+  getRecentYearsAsArray,
   MONTHS,
   HOURS,
   MINUTES
@@ -36,28 +37,21 @@ export default {
       // toolbar: false,
       rotateEffect: true,
       openIn: 'sheet',
-      // value: [
-      //   today.getFullYear(),
-      //   today.getMonth() + 1,
-      //   today.getDay(),
-      //   today.getHours(),
-      //   today.getMinutes() < 10 ? `0${today.getMinutes()}` : today.getMinutes(),
-      //   today.getSeconds()
-      // ],
       formatValue(values) {
+        values = [
+          values[0],
+          ...values.slice(1, 4).map(v => (v < 10 ? `0${v}` : v)),
+          ...values.slice(4)
+        ]
+        console.log(values)
+
         return `${values[0]}-${values[1]}-${values[2]} ${values[3]}:${
           values[4]
         }:${values[5]}`
       },
       cols: [
         {
-          values: [
-            today.getFullYear(),
-            today.getFullYear() + 1,
-            today.getFullYear() + 2,
-            today.getFullYear() + 3,
-            today.getFullYear() + 4
-          ]
+          values: getRecentYearsAsArray()
         },
         {
           values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -66,10 +60,6 @@ export default {
         },
         {
           values: getDaysInMonthAsArray(today.getFullYear(), today.getMonth())
-        },
-        {
-          divider: true,
-          content: ' '
         },
         {
           values: HOURS
@@ -91,10 +81,11 @@ export default {
       ],
       on: {
         change: function(picker, values, displayValues) {
-          console.log(picker)
-          // const days = getDaysInMonthAsArray(picker.value[0], picker.value[1])
-          // console.log(picker)
-          // picker.cols[2].setValue(days)
+          const days = new Date(values[0], values[1], 0).getDate()
+
+          if (values[2] > days) {
+            picker.cols[2].setValue(days)
+          }
         }
       }
     })

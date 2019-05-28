@@ -17,7 +17,7 @@ export function getLocaleDatetime() {
 }
 
 export function getDaysInMonth(year, month) {
-  return new Date(year, month, 0).getDate()
+  return new Date(year, month - 1, 0).getDate()
 }
 
 export function getDaysInMonthAsArray(year, month) {
@@ -25,10 +25,21 @@ export function getDaysInMonthAsArray(year, month) {
   const da = []
 
   for (let index = 0; index < d; index++) {
-    da[index] = index + 1
+    da[index] = `${index + 1}`
   }
 
   return da
+}
+
+export function getRecentYearsAsArray(years = 5) {
+  const d = []
+  const dd = getLocaleDatetime().getFullYear()
+
+  for (let index = 0; index < years; index++) {
+    d.push(`${dd + index}`)
+  }
+
+  return d
 }
 
 export const MONTHS = [
@@ -49,7 +60,7 @@ export const MONTHS = [
 export const HOURS = (() => {
   const h = []
 
-  for (let index = 0; index < 24; index++) {
+  for (let index = 0; index < 23; index++) {
     h[index] = index + 1
   }
 
