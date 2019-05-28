@@ -1,8 +1,15 @@
 <template>
   <div class="item-content item-input">
     <div class="item-inner">
+      <div class="item-title item-label">{{ placeholder }}</div>
       <div class="item-input-wrap">
-        <input type="text" :placeholder="placeholder" readonly="readonly" :id="elementId">
+        <input
+          type="text"
+          @change="onChange"
+          :placeholder="placeholder"
+          readonly="readonly"
+          :id="elementId"
+        >
       </div>
     </div>
   </div>
@@ -25,6 +32,14 @@ export default {
       default: ''
     },
     elementId: {
+      type: String,
+      required: true
+    },
+    time: {
+      type: String,
+      required: true
+    },
+    type: {
       type: String,
       required: true
     }
@@ -89,6 +104,11 @@ export default {
         }
       }
     })
+  },
+  methods: {
+    onChange(event) {
+      this.$emit('input:change', { type: this.type, value: event.target.value })
+    }
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <f7-page class="me-add-activity" no-toolbar>
-    <f7-navbar back-link="返回" sliding></f7-navbar>
+    <f7-navbar back-link="返回" sliding title="添加活动"></f7-navbar>
 
     <f7-list no-hairlines-md>
       <f7-list-input
@@ -40,39 +40,45 @@
         @input="totalCost = $event.target.value"
       ></f7-list-input>
 
-      <!-- <f7-list-input
-        label="活动开始时间"
-        type="datetime-local"
-        :value="beginTime"
-        placeholder="开始时间"
-        @input="beginTime = $event.target.value"
-      ></f7-list-input> -->
+      <li>
+        <date-time
+          elementId="me-activity-begin-time"
+          :time="beginTime"
+          :type="'beginTime'"
+          placeholder="活动开始时间"
+          @input:change="dateTimeChange"
+        ></date-time>
+      </li>
 
-      <date-time elementId="me-activity-begin-time" placeholder="活动开始时间"></date-time>
+      <li>
+        <date-time
+          elementId="me-activity-end-time"
+          :time="endTime"
+          :type="'endTime'"
+          placeholder="活动截止时间"
+          @input:change="dateTimeChange"
+        ></date-time>
+      </li>
 
-      <!-- <f7-list-input
-        label="活动截止时间"
-        type="datepicker"
-        :value="endTime"
-        placeholder="活动截止时间"
-        @input="endTime = $event.target.value"
-      ></f7-list-input>
+      <li>
+        <date-time
+          elementId="me-activity-join-begin-time"
+          :time="joinBeginTime"
+          :type="'joinBeginTime'"
+          placeholder="报名开始时间"
+          @input:change="dateTimeChange"
+        ></date-time>
+      </li>
 
-      <f7-list-input
-        label="报名开始时间"
-        type="datepicker"
-        :value="joinBeginTime"
-        placeholder="报名开始时间"
-        @input="joinBeginTime = $event.target.value"
-      ></f7-list-input>
-
-      <f7-list-input
-        label="报名截止时间"
-        type="datepicker"
-        :value="joinEndTime"
-        placeholder="报名截止时间"
-        @input="joinEndTime = $event.target.value"
-      ></f7-list-input> -->
+      <li>
+        <date-time
+          elementId="me-activity-join-end-time"
+          :time="joinEndTime"
+          :type="'joinEndTime'"
+          placeholder="报名截止时间"
+          @input:change="dateTimeChange"
+        ></date-time>
+      </li>
 
       <f7-list-input
         label="主办方"
@@ -100,47 +106,66 @@ export default {
   components: {
     DateTime
   },
-
   data() {
     return {
       name: '',
-      beginTime: 0,
-      endTime: 0,
+      beginTime: '',
+      endTime: '',
       totalCount: 0,
       totalCost: 0,
-      joinBeginTime: 0,
-      joinEndTime: 0,
+      joinBeginTime: '',
+      joinEndTime: '',
       organizer: '',
       coorganizer: '',
       type: -1,
-      place: '',
-      calendarParams: {
-        monthNames: [
-          '一月',
-          '二月',
-          '三月',
-          '四月',
-          '五月',
-          '六月',
-          '七月',
-          '八月',
-          '九月',
-          '十月',
-          '十一月',
-          '十二月'
-        ],
-        dayNames: [
-          '星期日',
-          '星期一',
-          '星期二',
-          '星期三',
-          '星期四',
-          '星期五',
-          '星期六'
-        ],
-        dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-        firstDay: 2,
-        dateFormat: 'yyyy-mm-dd '
+      place: ''
+    }
+  },
+  computed: {
+    $$name: function() {
+      return this.name
+    },
+    $$beginTime: function() {
+      return this.beginTime
+    },
+    $$endTime: function() {
+      return this.endTime
+    },
+    $$totalCount: function() {
+      return Number(this.totalCount)
+    },
+    $$totalCost: function() {
+      return Number(this.totalCost)
+    },
+    $$joinBeginTime: function() {
+      return this.joinBeginTime
+    },
+    $$joinEndTime: function() {
+      return this.joinEndTime
+    },
+    $$organizer: function() {
+      return this.organizer
+    },
+    $$coorganizer: function() {
+      return this.coorganizer
+    },
+    $$type: function() {
+      return Number(this.type)
+    },
+    $$place: function() {
+      return this.place
+    }
+  },
+  methods: {
+    dateTimeChange({ type, value }) {
+      if (type === 'beginTime') {
+        this.beginTime = value
+      } else if (type === 'endTime') {
+        this.endTime = value
+      } else if (type === 'joinBeginTime') {
+        this.joinBeginTime = value
+      } else if (type === 'joinEndTime') {
+        this.joinEndTime = value
       }
     }
   }
