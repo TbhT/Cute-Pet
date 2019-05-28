@@ -16,9 +16,10 @@ import TopicDetailPage from './pages/topic-detail.vue'
 import TweetDetailPage from './pages/tweet-detail.vue'
 import ActivitiesPage from './pages/activities.vue'
 import AddActivitiesPage from './pages/add-activity.vue'
-import AddPetPage from './pages/add-pet.todo.vue'
+import AddPetPage from './pages/add-pet.vue'
 import LoginPage from './pages/login.vue'
 import SignupPage from './pages/signup.vue'
+import PersonPage from './pages/person.vue'
 
 
 const routes = [
@@ -142,6 +143,14 @@ const routes = [
   {
     path: '/activities/add',
     component: AddActivitiesPage
+  },
+  {
+    path: '/pet/add',
+    component: AddPetPage
+  },
+  {
+    path: '/person',
+    component: PersonPage
   },
   {
     path: '/user/login',

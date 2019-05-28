@@ -25,7 +25,7 @@
 
       <f7-view id="me-view-market" stackPages tab url="/catalog/"></f7-view>
 
-      <f7-view id="me-view-person" stackPages tab url="/settings/"></f7-view>
+      <f7-view id="me-view-person" stackPages tab url="/person/"></f7-view>
     </f7-views>
 
     <f7-popup :opened="commentOpened" @popup:closed="closePopup('commentOpened')">
