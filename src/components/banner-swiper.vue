@@ -7,14 +7,11 @@
 </template>
 
 <style scoped>
-.me-swiper.swiper-container.swiper-container {
-  margin-top: 45px;
-}
 .me-swiper img {
   width: 100%;
   height: 20%;
 }
-#homeView div.me-swiper.swiper-container {
+div.me-swiper.swiper-container {
   margin-top: 0px;
 }
 </style>

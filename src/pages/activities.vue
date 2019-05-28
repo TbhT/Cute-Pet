@@ -35,6 +35,8 @@
       @infinite="loadMore"
     >
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
+      <compete-activity v-if="competeActivities.length" :competeActivities="competeActivities"></compete-activity>
+      <f7-block v-else>暂无宠物赛事~</f7-block>
     </f7-page-content>
 
     <f7-page-content
@@ -47,6 +49,8 @@
       @infinite="loadMore"
     >
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
+      <compete-activity v-if="competeActivities.length" :competeActivities="competeActivities"></compete-activity>
+      <f7-block v-else>暂无宠物赛事~</f7-block>
     </f7-page-content>
 
     <f7-fab position="right-bottom" slot="fixed" color="orange" href="/activities/add">
@@ -54,16 +58,6 @@
     </f7-fab>
   </f7-page>
 </template>
-
-<style scoped>
-/* #activitiesView .me-swiper {
-  margin-top: 50px;
-} */
-#me-activity-1 {
-  padding-top: 0;
-}
-</style>
-
 
 <script>
 import BannerSwiper from '../components/banner-swiper.vue'
