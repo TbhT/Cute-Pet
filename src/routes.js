@@ -15,9 +15,9 @@ import HomePage from './pages/home.vue'
 import TopicDetailPage from './pages/topic-detail.vue'
 import TweetDetailPage from './pages/tweet-detail.vue'
 import ActivitiesPage from './pages/activities.vue'
-import AddActivitiesPage from './pages/add-activity.todo.vue'
-import LoginPage from './pages/login.todo.vue'
-import SignupPage from './pages/signup.todo.vue'
+import AddActivitiesPage from './pages/add-activity.vue'
+import LoginPage from './pages/login.vue'
+import SignupPage from './pages/signup.vue'
 
 
 const routes = [
