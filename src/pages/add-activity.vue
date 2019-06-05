@@ -1,4 +1,4 @@
-<template>
+ <template>
   <f7-page class="me-add-activity" no-toolbar>
     <f7-navbar back-link="返回" sliding title="添加活动"></f7-navbar>
 

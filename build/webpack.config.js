@@ -42,12 +42,16 @@ module.exports = {
     hot: true,
     open: true,
     compress: true,
+    lazy: true,
     contentBase: '/www/',
     disableHostCheck: true,
     host: '0.0.0.0',
     watchOptions: {
       poll: 1000,
     },
+    proxy: {
+      '/': 'http://cutepet.localhost'
+    }
   },
   module: {
     rules: [
