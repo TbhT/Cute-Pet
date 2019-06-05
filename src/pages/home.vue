@@ -49,11 +49,13 @@ import CardList from '../components/card-list.vue'
 import BannerSwiper from '../components/banner-swiper.vue'
 import TopicList from '../components/topic-list.vue'
 import $$ from 'dom7'
+import F7 from 'framework7'
 import {
   createNamespacedHelpers,
   mapMutations as globalMapMutations
 } from 'vuex'
 const { mapActions, mapState, mapGetters } = createNamespacedHelpers('home')
+import { GET_BANNERS, GET_ALL_TWEETS } from '../store/api.js'
 
 export default {
   components: {
@@ -80,12 +82,14 @@ export default {
   methods: {
     ...mapActions(['getIndexTweets', 'loadMoreTweets']),
     ...globalMapMutations(['updatePopup']),
-    onRefresh(event, done) {
+    async onRefresh(event, done) {
       // TODO: 重载数据
-      setTimeout(() => {
-        this.getIndexTweets()
-        done()
-      }, 500)
+      
+
+      // setTimeout(() => {
+      //   this.getIndexTweets()
+      //   done()
+      // }, 500)
     },
     openPublisherPopup() {
       this.updatePopup({
