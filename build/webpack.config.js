@@ -44,6 +44,7 @@ module.exports = {
     host: '127.0.0.1',
     proxy: {
       '/api': {
+        // TODO: 最好不要配置成虚拟主机
         target: 'http://cutepet.localhost',
         pathRewrite: {
           '^/api': ''
