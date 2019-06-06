@@ -34,7 +34,8 @@
 </template>
 
 <script>
-import { addPet } from '../utils';
+import { addPet } from '../utils/index.js';
+
 export default {
   data() {
     return {
@@ -47,7 +48,7 @@ export default {
     }
   },
   methods: {
-    submitPetData() {
+    async submitPetData() {
       try {
         this.$f7.preloader.show()
         const result = await addPet()

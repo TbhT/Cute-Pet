@@ -52,7 +52,8 @@ import F7 from 'framework7'
 import {
   createNamespacedHelpers,
   mapMutations as globalMapMutations,
-  mapActions as globalMapActions
+  mapActions as globalMapActions,
+  mapState as globalMapState
 } from 'vuex'
 const { mapActions, mapState, mapGetters } = createNamespacedHelpers('home')
 import { GET_BANNERS, GET_ALL_TWEETS } from '../store/api.js'
@@ -66,21 +67,28 @@ export default {
   },
   computed: {
     ...mapState(['tweets']),
-    ...mapGetters(['isTweetLoadAll'])
+    ...mapGetters(['isTweetLoadAll']),
+    ...globalMapState(['user'])
   },
-  data() {
+  data: function() {
     return {
       bannerImages: [],
       showPreloader: true,
       allowInfinite: true,
-      isInFinite: true
+      isInfinite: true
     }
   },
   async mounted() {
     this.$f7.preloader.show()
-    await this.getBannerImages()
-    await this.getIndexTweets()
-    this.$f7.preloader.hide()
+    await this.getUserStatus()
+    if (this.user.isLogin === true) {
+      await this.getBannerImages()
+      await this.getIndexTweets()
+      this.$f7.preloader.hide()
+    } else {
+      this.$f7.preloader.hide()
+      this.$f7router.back('/user/login')
+    }
   },
   methods: {
     ...mapActions(['getIndexTweets', 'loadMoreTweets']),
