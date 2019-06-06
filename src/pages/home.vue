@@ -83,13 +83,8 @@ export default {
     ...mapActions(['getIndexTweets', 'loadMoreTweets']),
     ...globalMapMutations(['updatePopup']),
     async onRefresh(event, done) {
-      // TODO: 重载数据
-      
-
-      // setTimeout(() => {
-      //   this.getIndexTweets()
-      //   done()
-      // }, 500)
+      await this.getIndexTweets()
+      done()
     },
     openPublisherPopup() {
       this.updatePopup({
@@ -98,7 +93,6 @@ export default {
       })
     },
     loadMore(el, event) {
-      // TODO: 加载更多
       if (!this.allowInfinite) {
         return
       }
@@ -116,32 +110,33 @@ export default {
       }, 1000)
     },
     getBannerImages() {
-      // TODO: 获取轮播图图片信息
 
-      setTimeout(() => {
-        this.bannerImages = [
-          {
-            id: 1,
-            imgUrl: 'https://loremflickr.com/1000/700/nature?lock=5'
-          },
-          {
-            id: 2,
-            imgUrl: 'https://loremflickr.com/1000/700/nature?lock=3'
-          },
-          {
-            id: 3,
-            imgUrl: 'https://loremflickr.com/1000/700/nature?lock=7'
-          },
-          {
-            id: 4,
-            imgUrl: 'https://loremflickr.com/1000/700/nature?lock=1'
-          },
-          {
-            id: 5,
-            imgUrl: 'https://loremflickr.com/1000/700/nature?lock=8'
-          }
-        ]
-      }, 1000)
+      
+
+      // setTimeout(() => {
+      //   this.bannerImages = [
+      //     {
+      //       id: 1,
+      //       imgUrl: 'https://loremflickr.com/1000/700/nature?lock=5'
+      //     },
+      //     {
+      //       id: 2,
+      //       imgUrl: 'https://loremflickr.com/1000/700/nature?lock=3'
+      //     },
+      //     {
+      //       id: 3,
+      //       imgUrl: 'https://loremflickr.com/1000/700/nature?lock=7'
+      //     },
+      //     {
+      //       id: 4,
+      //       imgUrl: 'https://loremflickr.com/1000/700/nature?lock=1'
+      //     },
+      //     {
+      //       id: 5,
+      //       imgUrl: 'https://loremflickr.com/1000/700/nature?lock=8'
+      //     }
+      //   ]
+      // }, 1000)
     }
   }
 }

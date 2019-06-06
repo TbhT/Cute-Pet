@@ -108,6 +108,7 @@
 
 <script>
 import DateTime from '../components/date-time.vue'
+import { addActivity } from '../utils/index.js'
 
 export default {
   components: {
@@ -175,13 +176,37 @@ export default {
         this.joinEndTime = value
       }
     },
-    submitActivityData() {
-      // TODO: 提交数据
-      this.$f7.preloader.show()
-      setTimeout(() => {
+    async submitActivityData() {
+      try {
+        this.$f7.preloader.show()
+
+        const result = await addActivity(this)
         this.$f7.preloader.hide()
-        this.$f7router.back()
-      }, 1000);
+
+        if (!result) {
+          console.log('创建活动失败', result)
+          this.$f7.toast.create({
+            text: '创建活动失败'
+          })
+
+          return
+        }
+
+        this.$f7.toast.create({
+          text: '创建活动成功'
+        })
+        this.resetAllProps()
+
+        setTimeout(() => {
+          this.$f7router.back()
+        }, 1000)
+      } catch (error) {
+        console.error(error)
+        this.$f7.preloader.hide()
+        this.$f7.toast.create({
+          text: '创建活动失败'
+        })
+      }
     },
     resetAllProps() {
       this.name = ''

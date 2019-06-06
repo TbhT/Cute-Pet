@@ -67,7 +67,7 @@ const actions = {
       }
 
       const data = await postJSON(GET_ALL_TWEETS, {
-        offset: state.tweetPage
+        offset: state.tweetPage + 1
       })
 
       if (data.iRet === 0) {

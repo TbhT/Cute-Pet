@@ -14,11 +14,11 @@
       id="me-activity-1"
       tab
       tab-active
-      inifite
       ptr
       infinite
-      @ptr:refresh="onRefresh"
-      @infinite="loadMore"
+      :infinite-preloader="showCompetePre"
+      @ptr:refresh="onCompetePageRefresh"
+      @infinite="onCompetePageLoadMore"
     >
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
       <compete-activity v-if="competeActivities.length" :competeActivities="competeActivities"></compete-activity>
@@ -30,11 +30,11 @@
       tab
       inifite
       ptr
-      infinite
-      @ptr:refresh="onRefresh"
-      @infinite="loadMore"
+      :infinite-preloader="showPartyPre"
+      @ptr:refresh="onPartyPageRefresh"
+      @infinite="onPartyPageLoadMore"
     >
-      <banner-swiper :bannerImages="bannerImages"></banner-swiper>
+      <banner-swiper v-if="bannerImages.length" :bannerImages="bannerImages"></banner-swiper>
       <compete-activity v-if="competeActivities.length" :competeActivities="competeActivities"></compete-activity>
       <f7-block v-else>暂无宠物赛事~</f7-block>
     </f7-page-content>
@@ -42,13 +42,13 @@
     <f7-page-content
       id="me-activity-3"
       tab
-      inifite
       ptr
+      :infinite-preloader="showTravelPre"
       infinite
-      @ptr:refresh="onRefresh"
-      @infinite="loadMore"
+      @ptr:refresh="onTravelPageRefresh"
+      @infinite="onTravelPageLoadMore"
     >
-      <banner-swiper :bannerImages="bannerImages"></banner-swiper>
+      <banner-swiper v-if="bannerImages.length" :bannerImages="bannerImages"></banner-swiper>
       <compete-activity v-if="competeActivities.length" :competeActivities="competeActivities"></compete-activity>
       <f7-block v-else>暂无宠物赛事~</f7-block>
     </f7-page-content>
@@ -61,7 +61,8 @@
 
 <script>
 import BannerSwiper from '../components/banner-swiper.vue'
-import CompeteActivity from '../components/competeActivity.vue'
+import CompeteActivity from '../components/compete-activity.vue'
+import { getBanners, getActivities } from '../utils/index.js'
 
 export default {
   components: {
@@ -70,39 +71,17 @@ export default {
   },
   data() {
     return {
+      competePage: 1,
+      partyPage: 1,
+      travelPage: 1,
+      competeAllowInfinite: true,
+      partyAllowInfinite: true,
+      travelAllowInfinite: true,
+      showCompetePre: true,
+      showPartyPre: true,
+      showTravelPre: true,
       bannerImages: [],
-      competeActivities: [
-        {
-          activityId: 1,
-          imgUrl: 'https://loremflickr.com/1000/700/nature?lock=5',
-          peopleCount: 10,
-          totalCount: 100,
-          petCost: 200,
-          peopleCose: 250,
-          place: '江夏区',
-          title: '活动1 哈哈哈哈哈'
-        },
-        {
-          activityId: 116,
-          imgUrl: 'https://loremflickr.com/1000/700/nature?lock=8',
-          peopleCount: 10,
-          totalCount: 100,
-          petCost: 200,
-          peopleCose: 250,
-          place: '江夏区',
-          title: '活动2 啊啊啊啊啊啊'
-        },
-        {
-          activityId: 136,
-          imgUrl: 'https://loremflickr.com/1000/700/nature?lock=4',
-          peopleCount: 10,
-          totalCount: 100,
-          petCost: 200,
-          peopleCose: 250,
-          place: '江夏区',
-          title: '活动3 iiiiiiiiii'
-        }
-      ],
+      competeActivities: [],
       partyActivities: [],
       travelActivities: []
     }
@@ -111,35 +90,135 @@ export default {
     this.getBannerImages()
   },
   methods: {
-    onRefresh() {},
-    loadMore() {},
-    getBannerImages() {
-      // TODO: 获取轮播图图片信息
+    async onCompetePageRefresh(event, done) {
+      try {
+        const data = await getActivities(1)
+        if (data.iRet === 0) {
+          this.competeActivities = data.data
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        done()
+      }
+    },
+    async onPartyPageRefresh(event, done) {
+      try {
+        const data = await getActivities(2)
+        if (data.iRet === 0) {
+          this.partyActivities = data.data
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        done()
+      }
+    },
+    async onTravelPageRefresh(event, done) {
+      try {
+        const data = await getActivities(3)
+        if (data.iRet === 0) {
+          this.travelActivities = data.data
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        done()
+      }
+    },
+    async onCompetePageLoadMore() {
+      try {
+        if (!this.competeAllowInfinite) {
+          return
+        }
 
-      setTimeout(() => {
-        this.bannerImages = [
-          {
-            id: 1,
-            imgUrl: 'https://loremflickr.com/1000/700/nature?lock=5'
-          },
-          {
-            id: 2,
-            imgUrl: 'https://loremflickr.com/1000/700/nature?lock=3'
-          },
-          {
-            id: 3,
-            imgUrl: 'https://loremflickr.com/1000/700/nature?lock=7'
-          },
-          {
-            id: 4,
-            imgUrl: 'https://loremflickr.com/1000/700/nature?lock=1'
-          },
-          {
-            id: 5,
-            imgUrl: 'https://loremflickr.com/1000/700/nature?lock=8'
+        this.competeAllowInfinite = false
+
+        const data = await getActivities(1, this.competePage + 1)
+
+        if (data.iRet === 0) {
+          if (data.data.length === 0) {
+            this.showCompetePre = false
+            return
           }
-        ]
-      }, 1000)
+          this.competePage += 1
+          this.competeActivities = [...this.competeActivities, ...data.data]
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        this.competeAllowInfinite = true
+      }
+    },
+    async onPartyPageLoadMore() {
+      try {
+        if (!this.partyAllowInfinite) {
+          return
+        }
+
+        this.partyAllowInfinite = false
+
+        const data = await getActivities(2, this.partyPage + 1)
+
+        if (data.iRet === 0) {
+          if (data.data.length === 0) {
+            this.showPartyPre = false
+            return
+          }
+
+          this.partyPage += 1
+          this.partyActivities = [...this.partyActivities, ...data.data]
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        this.partyAllowInfinite = true
+      }
+    },
+    async onTravelPageLoadMore() {
+      try {
+        if (!this.travelAllowInfinite) {
+          return
+        }
+
+        this.travelAllowInfinite = false
+
+        const data = await getActivities(3, this.travelPage + 1)
+
+        if (data.iRet === 0) {
+          if (data.data.length === 0) {
+            this.showTravelPre = false
+            return
+          }
+
+          this.travelPage += 1
+          this.travelActivities = [...this.travelActivities, ...data.data]
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        this.travelAllowInfinite = true
+      }
+    },
+    async getBannerImages() {
+      try {
+        const data = await getBanners()
+        this.bannerImages = data
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 }

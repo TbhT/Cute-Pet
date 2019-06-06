@@ -3,6 +3,10 @@ export const CREATE_ACTIVITY = '/api/activity/j-create'
 
 export const JOIN_ACTIVITY = '/api/activity/j-join'
 
+export const GET_ACTIVITY = '/api/activity/j-activities'
+
+export const DETAIL_ACTIVITY = '/api/activity/j-detail'
+
 export const GET_BANNERS = '/api/banner/j-get'
 
 export const CREATE_COMMENT = '/api/comment/j-create'

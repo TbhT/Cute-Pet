@@ -1,3 +1,134 @@
+import F7 from 'framework7'
+import {
+  GET_BANNERS,
+  GET_ACTIVITY,
+  CREATE_ACTIVITY,
+  CREATE_PET,
+  JOIN_ACTIVITY,
+  DETAIL_ACTIVITY
+} from '../store/api.js'
+const { postJSON } = F7.request.promise
+
+/**
+ * 获取活动详情
+ */
+export async function getActivityDetail({ activityId }) {
+  const data = await postJSON(DETAIL_ACTIVITY, { activityId })
+
+  if (data.iRet === 0) {
+    return data.data
+  } else {
+    return null
+  }
+}
+
+/**
+ * 参加活动
+ */
+export async function joinActivity({ activityId }) {
+  const data = await postJSON(JOIN_ACTIVITY, { activityId })
+
+  if (data.iRet === 0) {
+    return true
+  } else {
+    console.error(data)
+    return false
+  }
+}
+
+/**
+ * 获取轮播图
+ */
+export async function getBanners() {
+  const data = await postJSON(GET_BANNERS)
+
+  if (data.iRet === 0) {
+    return data.data
+  } else {
+    console.error(data)
+    return []
+  }
+}
+
+/**
+ * 添加宠物
+ */
+export async function addPet({
+  nickname,
+  gender,
+  age,
+  vaccineStatus,
+  petType,
+  type
+}) {
+  const data = await postJSON(CREATE_PET, {
+    nickname,
+    gender,
+    age,
+    vaccineStatus,
+    petType,
+    type
+  })
+
+  if (data.iRet === 0) {
+    return true
+  } else {
+    console.error(data)
+    return false
+  }
+}
+
+/**
+ * 添加活动赛事
+ */
+export async function addActivity({
+  name,
+  beginTime,
+  endTime,
+  totalCount,
+  totalCost,
+  joinBeginTime,
+  joinEndTime,
+  organizer,
+  coorganizer,
+  type,
+  place
+}) {
+  const data = await postJSON(CREATE_ACTIVITY, {
+    name,
+    beginTime,
+    endTime,
+    totalCount,
+    totalCost,
+    joinBeginTime,
+    joinEndTime,
+    organizer,
+    coorganizer,
+    type,
+    place
+  })
+
+  if (data.iRet === 0) {
+    return true
+  } else {
+    console.error(error)
+    return false
+  }
+}
+
+/**
+ * 获取活动，赛事
+ */
+export async function getActivities(type, offset = 1) {
+  const data = await postJSON(GET_ACTIVITY, { type, offset })
+  if (data.iRet === 0) {
+    return data.data
+  } else {
+    console.error(data)
+    return []
+  }
+}
+
 export function getRemoteAvatar(userId) {
   return `/user/avatar?uid=${userId}`
 }
@@ -66,7 +197,6 @@ export const HOURS = (() => {
 
   return h
 })()
-
 
 export const MINUTES = (() => {
   const m = []
