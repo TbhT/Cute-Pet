@@ -1,10 +1,17 @@
+import F7 from 'framework7'
 import { GET_USER_STATUS } from './api.js'
+const { postJSON } = F7.request.promise
 
-export async function getUserStatus() {
+export async function getUserStatus({ commit, state }) {
   try {
-    const data = await Framework7.request.promise.postJSON(GET_USER_STATUS)
-    console.log('---用户状态', data)
+    const data = await postJSON(GET_USER_STATUS)
+    if (data.iRet === 0) {
+      commit('updateUserStatus', data.data)
+    }
+
+    console.error('---用户状态', data)
+
   } catch (error) {
-    console.log('---用户状态出错了', error)
+    console.error('---用户状态出错了', error)
   }
 }

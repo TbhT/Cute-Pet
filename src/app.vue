@@ -41,7 +41,7 @@
 import routes from './routes.js'
 import Publisher from './components/publisher.vue'
 import Comment from './components/comment.vue'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   data() {
@@ -107,6 +107,7 @@ export default {
   },
   methods: {
     ...mapMutations(['updatePopup']),
+    ...mapActions(['updateUserStatus']),
     alertLoginData() {
       this.$f7.dialog.alert(
         'Username: ' + this.username + '<br>Password: ' + this.password
@@ -120,7 +121,7 @@ export default {
     }
   },
   mounted() {
-    this.$f7ready(f7 => {
+    this.$f7ready(async f7 => {
       // Call F7 APIs here
     })
   }

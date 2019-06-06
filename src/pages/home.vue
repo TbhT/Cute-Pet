@@ -1,6 +1,5 @@
 <template>
   <f7-page id="homeView" :page-content="false" tabs with-subnavbar>
-    <!-- ptr infinite @ptr:refresh="onRefresh" @inifinite="onInfiniteScroll" -->
     <f7-navbar title="宠伢">
       <f7-nav-right>
         <f7-link class="icon iconfont icon-feedback3" @click="openPublisherPopup"></f7-link>
@@ -19,7 +18,7 @@
       tab-active
       tab
       ptr
-      :infinite="isIninite"
+      :infinite="isInfinite"
       @ptr:refresh="onRefresh"
       @infinite="loadMore"
     >
@@ -52,10 +51,12 @@ import $$ from 'dom7'
 import F7 from 'framework7'
 import {
   createNamespacedHelpers,
-  mapMutations as globalMapMutations
+  mapMutations as globalMapMutations,
+  mapActions as globalMapActions
 } from 'vuex'
 const { mapActions, mapState, mapGetters } = createNamespacedHelpers('home')
 import { GET_BANNERS, GET_ALL_TWEETS } from '../store/api.js'
+import { getBanners } from '../utils/index.js'
 
 export default {
   components: {
@@ -72,16 +73,19 @@ export default {
       bannerImages: [],
       showPreloader: true,
       allowInfinite: true,
-      isIninite: true
+      isInFinite: true
     }
   },
-  created() {
-    this.getBannerImages()
-    this.getIndexTweets()
+  async mounted() {
+    this.$f7.preloader.show()
+    await this.getBannerImages()
+    await this.getIndexTweets()
+    this.$f7.preloader.hide()
   },
   methods: {
     ...mapActions(['getIndexTweets', 'loadMoreTweets']),
     ...globalMapMutations(['updatePopup']),
+    ...globalMapActions(['getUserStatus']),
     async onRefresh(event, done) {
       await this.getIndexTweets()
       done()
@@ -92,51 +96,31 @@ export default {
         value: true
       })
     },
-    loadMore(el, event) {
+    async loadMore(el, event) {
       if (!this.allowInfinite) {
         return
       }
 
       this.allowInfinite = false
 
-      setTimeout(() => {
-        this.loadMoreTweets()
+      try {
+        await this.loadMoreTweets()
         this.allowInfinite = true
 
         if (this.isTweetLoadAll) {
-          // $$('.preloader.infinite-scroll-preloader').remove()
-          this.isIninite = false
+          this.isInfinite = false
         }
-      }, 1000)
+      } catch (error) {
+        console.error(error)
+      }
     },
-    getBannerImages() {
-
-      
-
-      // setTimeout(() => {
-      //   this.bannerImages = [
-      //     {
-      //       id: 1,
-      //       imgUrl: 'https://loremflickr.com/1000/700/nature?lock=5'
-      //     },
-      //     {
-      //       id: 2,
-      //       imgUrl: 'https://loremflickr.com/1000/700/nature?lock=3'
-      //     },
-      //     {
-      //       id: 3,
-      //       imgUrl: 'https://loremflickr.com/1000/700/nature?lock=7'
-      //     },
-      //     {
-      //       id: 4,
-      //       imgUrl: 'https://loremflickr.com/1000/700/nature?lock=1'
-      //     },
-      //     {
-      //       id: 5,
-      //       imgUrl: 'https://loremflickr.com/1000/700/nature?lock=8'
-      //     }
-      //   ]
-      // }, 1000)
+    async getBannerImages() {
+      try {
+        const data = await getBanners()
+        this.bannerImages = data
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 }
