@@ -67,6 +67,7 @@ export default {
         setTimeout(() => {
           this.showPasswordError = false
         }, 1000)
+        return
       } else if (this.password.length < 6) {
         this.showPasswordError = true
         this.passwordErrorMsg = '密码不能小于6位'
@@ -90,7 +91,6 @@ export default {
         })
 
         if (data) {
-
         }
       } catch (error) {
         console.error(error)
