@@ -1,12 +1,14 @@
 <template>
   <f7-page no-toolbar no-navbar no-swipeback login-screen>
     <f7-login-screen-title>宠伢</f7-login-screen-title>
-    
+
     <f7-list form>
       <f7-list-input
         label="手机号"
         type="text"
         placeholder="12366660000"
+        error-message="手机号格式不正确"
+        :error-message-force="showUsernamError"
         :value="username"
         @input="username = $event.target.value"
       ></f7-list-input>
@@ -15,6 +17,8 @@
         label="密码"
         type="password"
         placeholder="密码"
+        :error-message="passwordErrorMsg"
+        :error-message-force="showPasswordError"
         :value="password"
         @input="password = $event.target.value"
       ></f7-list-input>
@@ -28,24 +32,70 @@
 </template>
 
 <script>
+import { getUserLogin } from '../utils'
+const phoneRegExp = new RegExp(
+  '^(?=\\d{11}$)^1(?:3\\d|4[57]|5[^4\\D]|66|7[^249\\D]|8\\d|9[89])\\d{8}$'
+)
+
 export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      showUsernamError: false,
+      showPasswordError: false,
+      passwordErrorMsg: ''
     }
   },
   methods: {
-    signIn() {
+    async signIn() {
       const self = this
       const app = self.$f7
       const router = self.$f7router
-      app.dialog.alert(
-        `Username: ${self.username}<br>Password: ${self.password}`,
-        () => {
-          router.back()
+
+      if (!phoneRegExp.test(this.username)) {
+        this.showUsernamError = true
+        setTimeout(() => {
+          this.showUsernamError = false
+        }, 1000)
+        return
+      }
+
+      if (this.password.length === 0) {
+        this.showPasswordError = true
+        this.passwordErrorMsg = '密码不能为空'
+        setTimeout(() => {
+          this.showPasswordError = false
+        }, 1000)
+      } else if (this.password.length < 6) {
+        this.showPasswordError = true
+        this.passwordErrorMsg = '密码不能小于6位'
+        setTimeout(() => {
+          this.showPasswordError = false
+        }, 1000)
+        return
+      } else if (this.password.length > 64) {
+        this.showPasswordError = true
+        this.passwordErrorMsg = '密码不能大于64位'
+        setTimeout(() => {
+          this.showPasswordError = false
+        }, 1000)
+        return
+      }
+
+      try {
+        const data = await getUserLogin({
+          username: this.username,
+          password: this.password
+        })
+
+        if (data) {
+
         }
-      )
+      } catch (error) {
+        console.error(error)
+        app.dialog.alert('登录失败')
+      }
     },
     signUp() {
       this.$f7router.navigate('/user/signup')

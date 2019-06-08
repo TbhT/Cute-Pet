@@ -5,9 +5,59 @@ import {
   CREATE_ACTIVITY,
   CREATE_PET,
   JOIN_ACTIVITY,
-  DETAIL_ACTIVITY
+  DETAIL_ACTIVITY,
+  USER_LOGIN,
+  USER_SIGN_UP
 } from '../store/api.js'
 const { postJSON } = F7.request.promise
+
+/**
+ * 登录
+ */
+export async function getUserLogin({ username, password }) {
+  const data = await postJSON(USER_LOGIN, { username, password })
+
+  if (data.iRet === 0) {
+    return data.data
+  } else {
+    console.error(data)
+    return {}
+  }
+}
+
+/**
+ * 注册
+ */
+export async function getUserSignUp({
+  name,
+  email,
+  nickname,
+  phoneNumber,
+  password,
+  gender,
+  age,
+  homeAddress,
+  workAddress
+}) {
+  const data = await postJSON(USER_SIGN_UP, {
+    name,
+    email,
+    nickname,
+    phoneNumber,
+    password,
+    gender,
+    age,
+    homeAddress,
+    workAddress
+  })
+
+  if (data.iRet === 0) {
+    return data.data
+  } else {
+    console.error(data)
+    return {}
+  }
+}
 
 /**
  * 获取活动详情
