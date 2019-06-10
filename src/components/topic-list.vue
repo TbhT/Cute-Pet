@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { getTopicAll } from '../utils';
 export default {
   data() {
     return {
@@ -27,30 +28,20 @@ export default {
     getTopicLink(data) {
       return `/topic/${data.topicId}/`
     },
-    getAllTopics() {
+    async getAllTopics() {
       // TODO: 获取近期话题的接口
-      console.log('获取近期话题----------')
+      try {
+        const data = await getTopicAll()
 
-      setTimeout(() => {
-        this.topics = [
-          {
-            topicId: 1,
-            text: '#这里是第一条#'
-          },
-          {
-            topicId: 2,
-            text: '#这里是第二条#'
-          },
-          {
-            topicId: 3,
-            text: '#这里是第三条#'
-          },
-          {
-            topicId: 4,
-            text: '#这里是第四条#'
-          }
-        ]
-      }, 1000)
+        if (data.length > 0) {
+          this.topics = data.data
+        } else {
+          console.error(data)
+        }
+
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 }

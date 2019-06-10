@@ -7,9 +7,39 @@ import {
   JOIN_ACTIVITY,
   DETAIL_ACTIVITY,
   USER_LOGIN,
-  USER_SIGN_UP
+  USER_SIGN_UP,
+  TOPIC_ALL,
+  TOPIC_TWEET_ALL
 } from '../store/api.js'
 const { postJSON } = F7.request.promise
+
+/**
+ * 获取主题动态信息列表
+ */
+export async function getTopicTweets({ topicId }) {
+  const data = await postJSON(TOPIC_TWEET_ALL, { topicId })
+
+  if (data.iRet === 0) {
+    return data.data
+  } else {
+    console.error(data)
+    return []
+  }
+}
+
+/**
+ * 获取主题列表
+ */
+export async function getTopicAll() {
+  const data = await postJSON(TOPIC_ALL)
+
+  if (data.iRet === 0) {
+    return data.data
+  } else {
+    console.error(data)
+    return []
+  }
+}
 
 /**
  * 登录

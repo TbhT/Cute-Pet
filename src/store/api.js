@@ -11,6 +11,12 @@ export const GET_BANNERS = '/api/banner/j-get'
 
 export const CREATE_COMMENT = '/api/comment/j-create'
 
+export const TWEET_ALL_COMMENT = '/api/comment/j-tweet'
+
+export const TOPIC_ALL = '/api/topic/j-all'
+
+export const TOPIC_TWEET_ALL = '/api/topic/j-list'
+
 export const CREATE_PET = '/api/pet/j-create'
 
 export const GET_PET_DETAIL = '/api/pet/j-detail'
