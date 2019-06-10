@@ -18,6 +18,7 @@ import AddPetPage from './pages/add-pet.vue'
 import LoginPage from './pages/login.vue'
 import SignupPage from './pages/signup.vue'
 import PersonPage from './pages/person.vue'
+import MarketPage from './pages/market.vue'
 import { getTopicTweets } from './utils'
 
 const routes = [
@@ -113,6 +114,10 @@ const routes = [
   {
     path: '/person',
     component: PersonPage
+  },
+  {
+    path: '/market',
+    component: MarketPage
   },
   {
     path: '/user/login',

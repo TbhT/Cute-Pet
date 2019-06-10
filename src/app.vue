@@ -23,7 +23,7 @@
 
       <f7-view id="me-view-activities" stackPages tab url="/activities/"></f7-view>
 
-      <f7-view id="me-view-market" stackPages tab url="/catalog/"></f7-view>
+      <f7-view id="me-view-market" stackPages tab url="/market/"></f7-view>
 
       <f7-view id="me-view-person" stackPages tab url="/person/"></f7-view>
     </f7-views>
