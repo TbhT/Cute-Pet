@@ -28,7 +28,7 @@
 
     <f7-page-content id="tab-topics" class="page-content" tab>
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
-      <topic-list></topic-list>
+      <topic-list :topics="topics"></topic-list>
     </f7-page-content>
 
     <f7-fab position="right-bottom" slot="fixed" color="orange" href="/user/login">
@@ -36,12 +36,6 @@
     </f7-fab>
   </f7-page>
 </template>
-
-<style>
-/* .me-home-subnavbar.subnavbar {
-  margin-top: 70%;
-} */
-</style>
 
 <script>
 import CardList from '../components/card-list.vue'
@@ -57,7 +51,8 @@ import {
 } from 'vuex'
 const { mapActions, mapState, mapGetters } = createNamespacedHelpers('home')
 import { GET_BANNERS, GET_ALL_TWEETS } from '../store/api.js'
-import { getBanners } from '../utils/index.js'
+import { getBanners, getTopicAll } from '../utils/index.js'
+
 
 export default {
   components: {
@@ -75,7 +70,8 @@ export default {
       bannerImages: [],
       showPreloader: true,
       allowInfinite: true,
-      isInfinite: true
+      isInfinite: true,
+      topics: []
     }
   },
   async mounted() {
@@ -126,6 +122,23 @@ export default {
       try {
         const data = await getBanners()
         this.bannerImages = data
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async getAllTopics() {
+      try {
+        if (this.user.isLogin !== true) {
+          return
+        }
+
+        const data = await getTopicAll()
+
+        if (data) {
+          this.topics = data.data
+        } else {
+          console.error(data)
+        }
       } catch (error) {
         console.error(error)
       }

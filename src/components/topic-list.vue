@@ -14,34 +14,18 @@
 </template>
 
 <script>
-import { getTopicAll } from '../utils';
 export default {
-  data() {
-    return {
-      topics: []
+  props: {
+    topics: {
+      type: Array,
+      default: function() {
+        return []
+      }
     }
-  },
-  mounted() {
-    this.getAllTopics()
   },
   methods: {
     getTopicLink(data) {
       return `/topic/${data.topicId}/`
-    },
-    async getAllTopics() {
-      // TODO: 获取近期话题的接口
-      try {
-        const data = await getTopicAll()
-
-        if (data.length > 0) {
-          this.topics = data.data
-        } else {
-          console.error(data)
-        }
-
-      } catch (error) {
-        console.error(error)
-      }
     }
   }
 }
