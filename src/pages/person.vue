@@ -1,6 +1,6 @@
 <template>
   <f7-page id="personView">
-    <f7-navbar title="宠伢"></f7-navbar>
+    <f7-navbar title="我的"></f7-navbar>
 
     <f7-list class="me-person-profile">
       <f7-list-item link>

@@ -1,6 +1,6 @@
 <template>
   <f7-page id="activitiesView" :page-content="false" tabs with-subnavbar>
-    <f7-navbar title="宠伢">
+    <f7-navbar title="活动">
       <f7-subnavbar class="me-activity-subnavbar">
         <f7-segmented raised>
           <f7-button tab-link="#me-activity-1" tab-link-active>宠物赛事</f7-button>
