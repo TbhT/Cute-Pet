@@ -12,9 +12,23 @@ import {
   TOPIC_TWEET_ALL,
   GET_ALL_MARKET,
   CREATE_MARKET,
-  GET_MARKET_DETAIL
+  GET_MARKET_DETAIL,
+  GET_USER_ALL_TWEETS
 } from '../store/api.js'
 const { postJSON } = F7.request.promise
+
+/**
+ * 获取用户个人的动态信息流
+ */
+export async function getUserAllTweets({ page }) {
+  const data = await postJSON(GET_USER_ALL_TWEETS, { offset: page })
+
+  if (data.iRet === 0) {
+    return data.data
+  } else {
+    return null
+  }
+}
 
 /**
  * 获取商家详情

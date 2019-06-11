@@ -43,6 +43,8 @@ export const USER_SIGN_UP = '/api/user/person/j-sign-up'
 
 export const GET_USER_ALL_PETS = '/api/user/person/j-all-pets'
 
+export const GET_USER_ALL_TWEETS = '/api/user/person/j-all-tweets'
+
 
 
 

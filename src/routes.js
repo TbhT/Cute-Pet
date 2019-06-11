@@ -19,6 +19,9 @@ import SignupPage from './pages/signup.vue'
 import PersonPage from './pages/person.vue'
 import MarketPage from './pages/market.vue'
 import AddMarketPage from './pages/add-market.vue'
+import PersonPetsPage from './pages/all-pet.vue'
+import PersonActivitiesPage from './pages/person-activities.vue'
+import PersonTweetsPage from  './pages/person-tweets.vue'
 import { getTopicTweets } from './utils'
 
 const routes = [
@@ -101,7 +104,8 @@ const routes = [
   },
   {
     path: '/activities/',
-    component: ActivitiesPage
+    component: ActivitiesPage,
+    keepAlive: true
   },
   {
     path: '/activities/add',
@@ -113,11 +117,25 @@ const routes = [
   },
   {
     path: '/person',
-    component: PersonPage
+    component: PersonPage,
+    keepAlive: true
+  },
+  {
+    path: '/person/pets',
+    component: PersonPetsPage
+  },
+  {
+    path: '/person/activities',
+    component: PersonActivitiesPage
+  },
+  {
+    path: '/person/tweets',
+    component: PersonTweetsPage
   },
   {
     path: '/market',
-    component: MarketPage
+    component: MarketPage,
+    keepAlive: true
   },
   {
     path: '/market/add',
