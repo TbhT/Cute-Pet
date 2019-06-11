@@ -9,9 +9,72 @@ import {
   USER_LOGIN,
   USER_SIGN_UP,
   TOPIC_ALL,
-  TOPIC_TWEET_ALL
+  TOPIC_TWEET_ALL,
+  GET_ALL_MARKET,
+  CREATE_MARKET,
+  GET_MARKET_DETAIL
 } from '../store/api.js'
 const { postJSON } = F7.request.promise
+
+/**
+ * 获取商家详情
+ */
+export async function getMarketDetail() {
+  const data = await postJSON(GET_MARKET_DETAIL)
+
+  if (data.iRet === 0) {
+    return data.data
+  } else {
+    console.error(data)
+    return null
+  }
+}
+
+/**
+ * 新建商家
+ */
+export async function createMarket({
+  name,
+  contact,
+  phoneNumber,
+  place,
+  serveType,
+  workTime,
+  intro,
+  picture
+}) {
+  const data = await postJSON(CREATE_MARKET, {
+    name,
+    contact,
+    phoneNumber,
+    place,
+    serveType,
+    workTime,
+    intro,
+    picture
+  })
+
+  if (data.iRet === 0) {
+    return data.data
+  } else {
+    console.error(data)
+    return null
+  }
+}
+
+/**
+ * 获取所有的商家列表
+ */
+export async function getMarketAll({}) {
+  const data = await postJSON(GET_ALL_MARKET)
+
+  if (data.iRet === 0) {
+    return data.data
+  } else {
+    console.error(data)
+    return []
+  }
+}
 
 /**
  * 获取主题动态信息列表

@@ -1,4 +1,3 @@
-// import HomePage from './pages/home.vue';
 import AboutPage from './pages/about.vue'
 import FormPage from './pages/form.vue'
 import CatalogPage from './pages/catalog.vue'
@@ -19,6 +18,7 @@ import LoginPage from './pages/login.vue'
 import SignupPage from './pages/signup.vue'
 import PersonPage from './pages/person.vue'
 import MarketPage from './pages/market.vue'
+import AddMarketPage from './pages/add-market.todo.vue'
 import { getTopicTweets } from './utils'
 
 const routes = [
@@ -118,6 +118,10 @@ const routes = [
   {
     path: '/market',
     component: MarketPage
+  },
+  {
+    path: '/market/add',
+    component: AddMarketPage
   },
   {
     path: '/user/login',

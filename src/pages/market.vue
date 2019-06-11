@@ -8,7 +8,7 @@
       </f7-subnavbar>
     </f7-navbar>
 
-    <f7-page-content 
+    <f7-page-content
       id="me-market"
       tab
       tab-active
@@ -21,6 +21,10 @@
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
       <market-list :marketList="marketList"></market-list>
     </f7-page-content>
+
+    <f7-fab position="right-bottom" slot="fixed" color="orange" href="/market/add">
+      <f7-icon ios="f7:add" aurora="f7:add" md="material:add"></f7-icon>
+    </f7-fab>
   </f7-page>
 </template>
 
@@ -48,9 +52,7 @@ export default {
   methods: {
     async onMarketPageRefresh() {},
     async onMarketLoadMore() {},
-    async getIndexMarketList() {
-
-    }
+    async getIndexMarketList() {}
   }
 }
 </script>
