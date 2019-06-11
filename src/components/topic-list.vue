@@ -9,7 +9,7 @@
         :key="topic.id"
       ></f7-list-item>
     </f7-list>
-    <div class="div" v-else>暂无内容</div>
+    <f7-block v-else inset>暂无话题</f7-block>
   </div>
 </template>
 

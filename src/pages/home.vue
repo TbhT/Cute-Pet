@@ -18,7 +18,7 @@
       tab-active
       tab
       ptr
-      :infinite="isInfinite"
+      :infinite-preloader="showPreloader"
       @ptr:refresh="onRefresh"
       @infinite="loadMore"
     >
@@ -30,7 +30,6 @@
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
       <topic-list :topics="topics"></topic-list>
     </f7-page-content>
-
   </f7-page>
 </template>
 
@@ -49,7 +48,6 @@ import {
 const { mapActions, mapState, mapGetters } = createNamespacedHelpers('home')
 import { GET_BANNERS, GET_ALL_TWEETS } from '../store/api.js'
 import { getBanners, getTopicAll } from '../utils/index.js'
-
 
 export default {
   components: {
@@ -77,6 +75,11 @@ export default {
     if (this.user.isLogin === true) {
       await this.getBannerImages()
       await this.getIndexTweets()
+
+      if (this.tweets.length < 6) {
+        this.showPreloader = false
+      }
+
       this.$f7.preloader.hide()
     } else {
       this.$f7.preloader.hide()
@@ -110,6 +113,7 @@ export default {
 
         if (this.isTweetLoadAll) {
           this.isInfinite = false
+          this.showPreloader = false
         }
       } catch (error) {
         console.error(error)

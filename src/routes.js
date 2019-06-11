@@ -18,7 +18,7 @@ import LoginPage from './pages/login.vue'
 import SignupPage from './pages/signup.vue'
 import PersonPage from './pages/person.vue'
 import MarketPage from './pages/market.vue'
-import AddMarketPage from './pages/add-market.todo.vue'
+import AddMarketPage from './pages/add-market.vue'
 import { getTopicTweets } from './utils'
 
 const routes = [

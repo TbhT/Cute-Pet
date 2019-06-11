@@ -1,15 +1,9 @@
 <template>
-  <f7-page id="marketView" :page-content="false" tabs with-subnavbar>
-    <f7-navbar title="宠伢">
-      <f7-subnavbar class="me-market-subnavbar">
-        <f7-segmented raised>
-          <f7-button tab-link="#me-market" tab-link-active>市场</f7-button>
-        </f7-segmented>
-      </f7-subnavbar>
-    </f7-navbar>
+  <f7-page id="marketView" tabs :page-content="false">
+    <f7-navbar title="市场"></f7-navbar>
 
     <f7-page-content
-      id="me-market"
+      class="me-market-page-content"
       tab
       tab-active
       ptr
@@ -19,7 +13,10 @@
       @infinite="onMarketLoadMore"
     >
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
-      <market-list :marketList="marketList"></market-list>
+      <market-list :marketList="marketList" v-if="marketList.length"></market-list>
+      <f7-block v-else inset strong>
+        <p>暂无相关市场信息</p>
+      </f7-block>
     </f7-page-content>
 
     <f7-fab position="right-bottom" slot="fixed" color="orange" href="/market/add">
@@ -27,6 +24,13 @@
     </f7-fab>
   </f7-page>
 </template>
+
+<style scoped>
+/* .me-market-page-content {
+  padding: 0;
+} */
+</style>
+
 
 <script>
 import BannerSwiper from '../components/banner-swiper.vue'
@@ -47,6 +51,11 @@ export default {
   },
   async mounted() {
     const data = await getBanners()
+
+    if (data.length < 6) {
+      this.showMarketPreloader = false
+    }
+
     this.bannerImages = data
   },
   methods: {

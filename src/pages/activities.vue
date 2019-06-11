@@ -22,7 +22,9 @@
     >
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
       <compete-activity v-if="competeActivities.length" :competeActivities="competeActivities"></compete-activity>
-      <f7-block v-else>暂无宠物赛事~</f7-block>
+      <f7-block v-else inset>
+        <p>暂无宠物赛事~</p>
+      </f7-block>
     </f7-page-content>
 
     <f7-page-content
@@ -36,7 +38,7 @@
     >
       <banner-swiper v-if="bannerImages.length" :bannerImages="bannerImages"></banner-swiper>
       <compete-activity v-if="competeActivities.length" :competeActivities="competeActivities"></compete-activity>
-      <f7-block v-else>暂无宠物赛事~</f7-block>
+      <f7-block v-else inset>暂无宠物趴体~</f7-block>
     </f7-page-content>
 
     <f7-page-content
@@ -50,7 +52,7 @@
     >
       <banner-swiper v-if="bannerImages.length" :bannerImages="bannerImages"></banner-swiper>
       <compete-activity v-if="competeActivities.length" :competeActivities="competeActivities"></compete-activity>
-      <f7-block v-else>暂无宠物赛事~</f7-block>
+      <f7-block v-else inset>暂无带宠旅行~</f7-block>
     </f7-page-content>
 
     <f7-fab position="right-bottom" slot="fixed" color="orange" href="/activities/add">
@@ -88,8 +90,23 @@ export default {
   },
   created() {
     this.getBannerImages()
+    this.initActivities()
   },
   methods: {
+    async initActivities() {
+      const data1 = await getActivities(1)
+      if (data1.length < 6) {
+        this.showCompetePre = false
+      }
+      const data2 = await getActivities(2)
+      if (data2.length < 6) {
+        this.showPartyPre = false
+      }
+      const data3 = await getActivities(3)
+      if (data3.length < 6) {
+        this.showTravelPre = false
+      }
+    },
     async onCompetePageRefresh(event, done) {
       try {
         const data = await getActivities(1)
