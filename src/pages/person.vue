@@ -83,15 +83,12 @@
   </f7-page>
 </template>
 
-<style scoped>
-.list {
-  margin: 10px 0;
-}
-</style>
-
-
 <script>
-export default {}
+export default {
+  async mounted() {
+    
+  }
+}
 </script>
 
 <style scoped>
@@ -100,4 +97,8 @@ export default {}
   height: 80px;
   border-radius: 50%;
 }
+.list {
+  margin: 10px 0;
+}
+
 </style>

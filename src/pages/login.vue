@@ -33,6 +33,7 @@
 
 <script>
 import { getUserLogin } from '../utils'
+import { mapState, mapMutations } from 'vuex'
 const phoneRegExp = new RegExp(
   '^(?=\\d{11}$)^1(?:3\\d|4[57]|5[^4\\D]|66|7[^249\\D]|8\\d|9[89])\\d{8}$'
 )
@@ -48,6 +49,8 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['updateUserStatus']),
+
     async signIn() {
       const self = this
       const app = self.$f7
@@ -90,15 +93,33 @@ export default {
           password: this.password
         })
 
-        if (data) {
+        if (data.iRet === 0) {
+          this.updateUserStatus({
+            userId: data.data.userId,
+            userInfo: data.data
+          })
+          // this.$f7.router.navigate('/')
+          this.$f7.views.main.router.navigate('/')
+          // location.reload()
+        } else {
+          console.error(data)
+          this.toast('登录失败')
         }
       } catch (error) {
         console.error(error)
-        app.dialog.alert('登录失败')
+        this.toast('登录失败')
       }
     },
     signUp() {
       this.$f7router.navigate('/user/signup')
+    },
+    toast(msg) {
+      const toast = this.$f7.toast.create({
+        text: msg,
+        closeTimeout: 2000,
+        position: 'center'
+      })
+      toast.open()
     }
   }
 }

@@ -11,7 +11,8 @@ const state = {
   user: {
     isLogin: false,
     userId: null,
-    isGetInfo: false
+    isGetInfo: false,
+    userInfo: null
   },
   popup: {
     publisherOpened: false,

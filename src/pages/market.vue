@@ -36,8 +36,12 @@
 import BannerSwiper from '../components/banner-swiper.vue'
 import MarketList from '../components/market-list.vue'
 import { getBanners } from '../utils'
+import { mapState } from 'vuex'
 
 export default {
+  computed: {
+    ...mapState(['user'])
+  },
   components: {
     BannerSwiper,
     MarketList
@@ -50,13 +54,15 @@ export default {
     }
   },
   async mounted() {
-    const data = await getBanners()
+    if (this.user.isLogin === true) {
+      const data = await getBanners()
 
-    if (data.length < 6) {
-      this.showMarketPreloader = false
+      if (data.length < 6) {
+        this.showMarketPreloader = false
+      }
+
+      this.bannerImages = data
     }
-
-    this.bannerImages = data
   },
   methods: {
     async onMarketPageRefresh() {},

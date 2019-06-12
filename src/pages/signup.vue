@@ -30,8 +30,8 @@
       <f7-list-input
         error-message="手机号格式不正确"
         :error-message-force="showUsernamError"
-        :value="phoneNumber"
-        @input="phoneNumber = $event.target.value"
+        :value="username"
+        @input="username = $event.target.value"
         label="手机号"
         placeholder="手机号"
       ></f7-list-input>
@@ -53,7 +53,15 @@
       </f7-list-input>
 
       <f7-list-input label="年龄" :input="false">
-        <f7-range label slot="input" :value="1" :min="0" :max="100" :step="1"></f7-range>
+        <f7-range
+          label
+          slot="input"
+          :value="18"
+          :min="0"
+          :max="100"
+          :step="1"
+          @rangeChange="onAgeChange"
+        ></f7-range>
       </f7-list-input>
 
       <f7-list-input
@@ -100,7 +108,7 @@ export default {
       name: '',
       email: '',
       nickname: '',
-      phoneNumber: '',
+      username: '',
       password: '',
       gender: '',
       age: '',
@@ -112,9 +120,41 @@ export default {
     }
   },
   methods: {
+    resetAllProps() {
+      this.name = ''
+      this.email = ''
+      this.nickname = ''
+      this.username = ''
+      this.password = ''
+      this.gender = ''
+      this.age = ''
+      this.homeAddress = ''
+      this.workAddress = ''
+      this.showUsernamError = false
+      this.showPasswordError = false
+      this.passwordErrorMsg = ''
+    },
+    onAgeChange(value) {
+      this.age = value
+    },
+    toast(msg, open = true) {
+      const toast = this.$f7.toast.create({
+        text: msg,
+        closeTimeout: 2000,
+        position: 'center',
+        on: {
+          close: () => {
+            if (open) {
+              this.back()
+            }
+          }
+        }
+      })
+      toast.open()
+    },
     async submitSignupData() {
-      console.log(phoneRegExp.test(this.phoneNumber), this.phoneNumber)
-      if (!phoneRegExp.test(this.phoneNumber)) {
+      console.log(phoneRegExp.test(this.username), this.username)
+      if (!phoneRegExp.test(this.username)) {
         this.showUsernamError = true
         setTimeout(() => {
           this.showUsernamError = false
@@ -150,23 +190,27 @@ export default {
           name: this.name,
           email: this.email,
           nickname: this.nickname,
-          phoneNumber: this.phoneNumber,
+          username: this.username,
           password: this.password,
           gender: this.gender,
           age: this.age,
           homeAddress: this.homeAddress,
           workAddress: this.workAddress
         })
+
+        if (data.iRet === 0) {
+          this.toast('注册成功')
+          this.resetAllProps()
+        } else {
+          if (data.data[0] === '该用户名已被注册') {
+            data.data[0] = '该手机号已被注册'
+          }
+          this.toast(data.data[0], false)
+        }
       } catch (error) {
         console.error(error)
         this.$f7.dialog.alert('注册失败, 请重试')
       }
-
-      this.$f7.preloader.show()
-      setTimeout(() => {
-        this.$f7.preloader.hide()
-        this.$f7router.back()
-      }, 1000)
     },
     back() {
       this.$f7router.back()

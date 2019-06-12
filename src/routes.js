@@ -21,14 +21,32 @@ import MarketPage from './pages/market.vue'
 import AddMarketPage from './pages/add-market.vue'
 import PersonPetsPage from './pages/all-pet.vue'
 import PersonActivitiesPage from './pages/person-activities.vue'
-import PersonTweetsPage from  './pages/person-tweets.vue'
-import { getTopicTweets } from './utils'
+import PersonTweetsPage from './pages/person-tweets.vue'
+import { getTopicTweets, getUserStatus } from './utils'
 
 const routes = [
   {
     path: '/',
     component: HomePage,
     keepAlive: true
+    // async: async function(to, from, resolve, reject) {
+    //   this.app.preloader.show()
+    //   const data = await getUserStatus()
+    //   if (data.iRet === 0 && data.data.userId) {
+    //     resolve(
+    //       {
+    //         component: HomePage
+    //       },
+    //       {
+    //         props: {
+    //           user: data.data
+    //         }
+    //       }
+    //     )
+    //   } else {
+    //     this.app.views.main.router.navigate('/user/login')
+    //   }
+    // }
   },
   {
     path: '/topic/:topicId/',

@@ -85,9 +85,9 @@ export default {
         routes: routes,
 
         // Register service worker
-        serviceWorker: {
-          path: '/service-worker.js'
-        }
+        // serviceWorker: {
+        //   path: '/service-worker.js'
+        // }
       },
 
       // Login screen data

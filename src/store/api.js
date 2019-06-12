@@ -45,6 +45,10 @@ export const GET_USER_ALL_PETS = '/api/user/person/j-all-pets'
 
 export const GET_USER_ALL_TWEETS = '/api/user/person/j-all-tweets'
 
+export const GET_USER_INFO = '/api/user/person/j-info'
+
+export const GET_USER_DETAIL_INFO = '/api/user/person/j-detail-info'
+
 
 
 

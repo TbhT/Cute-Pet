@@ -64,12 +64,16 @@
 <script>
 import BannerSwiper from '../components/banner-swiper.vue'
 import CompeteActivity from '../components/compete-activity.vue'
+import { mapState } from 'vuex'
 import { getBanners, getActivities } from '../utils/index.js'
 
 export default {
   components: {
     BannerSwiper,
     CompeteActivity
+  },
+  computed: {
+    ...mapState(['user'])
   },
   data() {
     return {
@@ -88,9 +92,11 @@ export default {
       travelActivities: []
     }
   },
-  created() {
-    this.getBannerImages()
-    this.initActivities()
+  mounted() {
+    if (this.user.isLogin === true) {
+      this.getBannerImages()
+      this.initActivities()
+    }
   },
   methods: {
     async initActivities() {

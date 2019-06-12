@@ -1,5 +1,5 @@
 <template>
-  <f7-page id="homeView" :page-content="false" tabs with-subnavbar>
+  <f7-page id="homeView" :page-content="false" tabs with-subnavbar no-swipeback>
     <f7-navbar title="首页">
       <f7-nav-right>
         <f7-link class="icon iconfont icon-edit1" @click="openPublisherPopup"></f7-link>
@@ -72,6 +72,7 @@ export default {
   async mounted() {
     this.$f7.preloader.show()
     await this.getUserStatus()
+    
     if (this.user.isLogin === true) {
       await this.getBannerImages()
       await this.getIndexTweets()

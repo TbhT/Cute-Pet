@@ -13,9 +13,40 @@ import {
   GET_ALL_MARKET,
   CREATE_MARKET,
   GET_MARKET_DETAIL,
-  GET_USER_ALL_TWEETS
+  GET_USER_ALL_TWEETS,
+  GET_USER_INFO,
+  GET_USER_DETAIL_INFO,
+  GET_USER_STATUS
 } from '../store/api.js'
 const { postJSON } = F7.request.promise
+
+
+/**
+ * 获取个人的基本信息
+ */
+export async function getUserInfo() {
+  const data = await postJSON(GET_USER_INFO)
+
+  if (data.iRet === 0) {
+    return data.data
+  } else {
+    return null
+  }
+}
+
+
+/**
+ * 获取个人的详细信息
+ */
+export async function getUserDetailInfo() {
+  const data = await postJSON(GET_USER_DETAIL_INFO)
+
+  if (data.iRet === 0) {
+    return data.data
+  } else {
+    return null
+  }
+}
 
 /**
  * 获取用户个人的动态信息流
@@ -119,17 +150,20 @@ export async function getTopicAll() {
 }
 
 /**
+ * 获取用户状态
+ */
+export async function getUserStatus() {
+  const data = await postJSON(GET_USER_STATUS)
+  return data
+}
+
+/**
  * 登录
  */
 export async function getUserLogin({ username, password }) {
   const data = await postJSON(USER_LOGIN, { username, password })
-
-  if (data.iRet === 0) {
-    return data.data
-  } else {
-    console.error(data)
-    return {}
-  }
+  
+  return data
 }
 
 /**
@@ -139,7 +173,7 @@ export async function getUserSignUp({
   name,
   email,
   nickname,
-  phoneNumber,
+  username,
   password,
   gender,
   age,
@@ -150,7 +184,7 @@ export async function getUserSignUp({
     name,
     email,
     nickname,
-    phoneNumber,
+    username,
     password,
     gender,
     age,
@@ -158,12 +192,7 @@ export async function getUserSignUp({
     workAddress
   })
 
-  if (data.iRet === 0) {
-    return data.data
-  } else {
-    console.error(data)
-    return {}
-  }
+  return data
 }
 
 /**

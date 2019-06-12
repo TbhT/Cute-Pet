@@ -12,7 +12,7 @@ export default {
         commit('updateUserStatus', data.data)
       }
 
-      console.error('---用户状态', data)
+      console.log('---用户状态', data)
     } catch (error) {
       console.error('---用户状态出错了', error)
     }
