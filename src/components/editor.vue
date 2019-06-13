@@ -8,8 +8,9 @@
     ></textarea>
 
     <div class="block me-profile-image-container" v-if="enableTools">
-      <div class="me-profile-image-div" v-if="imagePreviewUrl">
-        <img :src="imagePreviewUrl" class="me-profile-image">
+      <div class="me-profile-image-div">
+        <i class="iconfont icon-shangchuantupian me-upload-image-icon" v-if="!imagePreviewUrl"></i>
+        <img :src="imagePreviewUrl" class="me-profile-image" v-else>
       </div>
 
       <div class="me-profile-buttons-div" v-if="enableTools">
@@ -34,13 +35,14 @@
   position: relative;
   margin: 10px 0;
   border-radius: 5px;
+  cursor: pointer;
 }
 .me-profile-image-container .me-profile-image-div {
   width: 100%;
-  height: 150px;
+  height: 100px;
 }
 .me-profile-image-container .me-profile-image-div .me-profile-image {
-  width: 150px;
+  width: 100px;
   height: 100%;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -49,9 +51,10 @@
 .me-profile-image-container .me-profile-buttons-div {
   position: relative;
   display: block;
+  margin-top: 23px;
 }
 .me-profile-image-container .me-profile-buttons-div .me-profile-img-input {
-  width: 150px;
+  width: 100px;
   display: block;
 }
 .me-profile-image-container .me-profile-img-input .me-upload-image {
@@ -61,7 +64,7 @@
   padding: 7px;
   text-align: center;
   color: white;
-  background-color: #f7b453;
+  background-color: #6baa99;
   overflow: hidden;
   cursor: pointer;
   -webkit-font-smoothing: antialiased;
@@ -71,6 +74,9 @@
 }
 .me-profile-image-container .me-input-image {
   display: none;
+}
+.me-upload-image-icon {
+  font-size: 100px;
 }
 
 .me-editor-container > textarea {
@@ -127,7 +133,7 @@ export default {
       } else {
         const reader = new FileReader()
 
-        reader.onload = (e) => {
+        reader.onload = e => {
           // console.log(e.target, file)
           this.$emit('image:input', e.target, file)
         }

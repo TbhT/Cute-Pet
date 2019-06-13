@@ -35,7 +35,7 @@ export default {
   },
   data: function() {
     return {
-      imagePreviewUrl: 'https://s3.amazonaws.com/FringeBucket/default-user.png',
+      imagePreviewUrl: '',
       file: null
     }
   },
@@ -45,19 +45,17 @@ export default {
     closePopup() {
       this.updateEditorText({ text: '' })
       this.file = null
-      this.imagePreviewUrl =
-        'https://s3.amazonaws.com/FringeBucket/default-user.png'
+      this.imagePreviewUrl = ''
     },
     textInputChange(text) {
       this.updateEditorText({ text })
     },
     imageUpload(imgTarget, file) {
-      console.log(imgTarget, file)
       this.imagePreviewUrl = imgTarget.result
       this.file = file
     },
     sendTweet() {
-      this.$f7.preloader.show('正在发送...')
+      this.$f7.preloader.show()
       const f = new FormData()
       f.append('text', this.editorText)
       f.append('image', this.file)
