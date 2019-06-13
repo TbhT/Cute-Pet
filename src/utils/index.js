@@ -97,12 +97,7 @@ export async function createMarket({
     picture
   })
 
-  if (data.iRet === 0) {
-    return data.data
-  } else {
-    console.error(data)
-    return null
-  }
+  return data
 }
 
 /**
@@ -111,12 +106,7 @@ export async function createMarket({
 export async function getMarketAll({ offset = 1 }) {
   const data = await postJSON(GET_ALL_MARKET, { offset })
 
-  if (data.iRet === 0) {
-    return data.data
-  } else {
-    console.error(data)
-    return []
-  }
+  return data
 }
 
 /**

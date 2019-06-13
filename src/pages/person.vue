@@ -1,13 +1,13 @@
 <template>
-  <f7-page id="personView">
+  <f7-page id="personView" @page:beforein="onPageBeforeIn">
     <f7-navbar title="我的"></f7-navbar>
 
     <f7-list class="me-person-profile">
       <f7-list-item link>
-        <img src="https://loremflickr.com/1000/700/nature?lock=5" slot="media">
+        <img src="{{user.image}}" slot="media">
         <div class slot="inner-start">
-          <div class="me-person-name">假装这里有个人</div>
-          <div class="me-person-master-pet">这里是我的宠物</div>
+          <div class="me-person-name">{{user.nickname}}</div>
+          <div class="me-person-master-pet">{{pet.nickname}}</div>
         </div>
       </f7-list-item>
     </f7-list>
@@ -84,9 +84,24 @@
 </template>
 
 <script>
+import { getUserInfo } from '../utils'
 export default {
-  async mounted() {
-    
+  data: function() {
+    return {
+      user: {},
+      pet: {}
+    }
+  },
+  methods: {
+    async onPageBeforeIn() {
+      const data = await getUserInfo()
+      if (data.iRet === 0) {
+        this.user = data.data.userInfo
+        this.pet = data.data.pet
+      } else {
+        console.error(data)
+      }
+    }
   }
 }
 </script>
@@ -100,5 +115,4 @@ export default {
 .list {
   margin: 10px 0;
 }
-
 </style>

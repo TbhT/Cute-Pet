@@ -108,6 +108,9 @@ export default {
         const data = await getMarketAll({ offset: 1 })
 
         if (data.iRet === 0) {
+          if (data.data.length < 6) {
+            this.showMarketPreloader = false
+          }
           this.marketList = data.data
         } else {
           console.error(data)

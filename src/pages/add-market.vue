@@ -8,6 +8,8 @@
         type="text"
         :value="name"
         placeholder="商家名称"
+        error-message="商家名称不能为空"
+        :error-message-force="showNameErrorMsg"
         @input="name = $event.target.value"
       ></f7-list-input>
 
@@ -16,6 +18,8 @@
         type="text"
         :value="contact"
         placeholder="联系人"
+        error-message="联系人不能为空"
+        :error-messsage-force="showContactErrorMsg"
         @input="contact = $event.target.value"
       ></f7-list-input>
 
@@ -24,6 +28,8 @@
         type="text"
         :value="phoneNumber"
         placeholder="联系方式"
+        error-message="联系方式不能为空"
+        :error-message-force="showPhoneNumberErrorMsg"
         @input="phoneNumber = $event.target.value"
       ></f7-list-input>
 
@@ -32,6 +38,8 @@
         type="text"
         :value="place"
         placeholder="商家地址"
+        error-message="商家地址不能为空"
+        :error-message-force="showPlaceErrorMsg"
         @input="place = $event.target.value"
       ></f7-list-input>
 
@@ -39,6 +47,8 @@
         label="服务类型"
         type="select"
         :value="serveType"
+        error-message="服务类型不能为空"
+        :error-message-force="showServeTypeErrorMsg"
         @input="serveType = $event.target.value"
       >
         <option value="1">医疗</option>
@@ -50,12 +60,19 @@
 
       <f7-list-input
         label="工作时间"
-        type="text"
+        type="textarea"
+        resizable
         :value="workTime"
         @input="workTime = $event.target.value"
       ></f7-list-input>
 
-      <f7-list-input label="简介" type="text" :value="intro" @input="intro = $event.target.value"></f7-list-input>
+      <f7-list-input
+        label="简介"
+        type="textarea"
+        resizable
+        :value="intro"
+        @input="intro = $event.target.value"
+      ></f7-list-input>
     </f7-list>
 
     <f7-block>
@@ -79,7 +96,13 @@ export default {
       serveType: -1,
       workTime: '',
       intro: '',
-      picture: ''
+      picture: '',
+      showNameErrorMsg: false,
+      showContactErrorMsg: false,
+      showPhoneNumberErrorMsg: false,
+      showPlaceErrorMsg: false,
+      showPictureErrorMsg: false,
+      showServeTypeErrorMsg: false
     }
   },
   methods: {
@@ -113,6 +136,33 @@ export default {
     },
     async submitMarketData() {
       try {
+        setTimeout(() => {
+          this.showNameErrorMsg = false
+          this.showContactErrorMsg = false
+          this.showPhoneNumberErrorMsg = false
+          this.showPlaceErrorMsg = false
+          this.showServeTypeErrorMsg = false
+        }, 2000)
+        if (!this.name) {
+          return (this.showNameErrorMsg = true)
+        }
+
+        if (!this.contact) {
+          return (this.showContactErrorMsg = true)
+        }
+
+        if (!this.phoneNumber) {
+          return (this.showPhoneNumberErrorMsg = true)
+        }
+
+        if (!this.place) {
+          return (this.showPlaceErrorMsg = true)
+        }
+
+        if (!this.serveType < 0) {
+          return (this.showServeTypeErrorMsg = true)
+        }
+
         const data = await createMarket({
           name: this.name,
           contact: this.contact,
@@ -120,11 +170,10 @@ export default {
           place: this.place,
           serveType: this.serveType,
           workTime: this.workTime,
-          intro: this.intro,
-          picture: this.picture
+          intro: this.intro
         })
 
-        if (data) {
+        if (data.iRet === 0) {
           this.toast('创建活动成功')
         } else {
           this.toast('创建活动失败', false)
