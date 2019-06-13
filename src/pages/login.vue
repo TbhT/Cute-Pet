@@ -7,7 +7,7 @@
         label="手机号"
         type="text"
         placeholder="12366660000"
-        error-message="手机号格式不正确"
+        :error-message="usernameErrorMsg"
         :error-message-force="showUsernamError"
         :value="username"
         @input="username = $event.target.value"
@@ -45,22 +45,28 @@ export default {
       password: '',
       showUsernamError: false,
       showPasswordError: false,
-      passwordErrorMsg: ''
+      passwordErrorMsg: '',
+      usernameErrorMsg: ''
     }
   },
   methods: {
     ...mapMutations(['updateUserStatus']),
-
     async signIn() {
       const self = this
       const app = self.$f7
       const router = self.$f7router
+      const phoneFlag =  phoneRegExp.test(this.username)
+      const emptyFlag = this.username.length === 0
 
-      if (!phoneRegExp.test(this.username)) {
+      if (!phoneFlag || emptyFlag) {
         this.showUsernamError = true
+        this.usernameErrorMsg = emptyFlag ? '请输入手机号' : '手机号格式不正确'
+
         setTimeout(() => {
           this.showUsernamError = false
+          this.usernameErrorMsg = ''
         }, 1000)
+
         return
       }
 
@@ -88,10 +94,14 @@ export default {
       }
 
       try {
+        this.$f7.preloader.show()
+
         const data = await getUserLogin({
           username: this.username,
           password: this.password
         })
+
+        this.$f7.preloader.hide()
 
         if (data.iRet === 0) {
           this.updateUserStatus({
@@ -100,12 +110,17 @@ export default {
           })
           // this.$f7.router.navigate('/')
           this.$f7.views.main.router.navigate('/')
-          // location.reload()
+          location.reload()
         } else {
           console.error(data)
-          this.toast('登录失败')
+          if (data.data[0] === 'Incorrect username or password.') {
+            this.toast('密码或者手机号不正确')
+          } else {
+            this.toast('登录失败')
+          }
         }
       } catch (error) {
+        this.$f7.preloader.hide()
         console.error(error)
         this.toast('登录失败')
       }
@@ -124,6 +139,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>
