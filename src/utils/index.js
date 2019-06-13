@@ -20,7 +20,6 @@ import {
 } from '../store/api.js'
 const { postJSON } = F7.request.promise
 
-
 /**
  * 获取个人的基本信息
  */
@@ -33,7 +32,6 @@ export async function getUserInfo() {
     return null
   }
 }
-
 
 /**
  * 获取个人的详细信息
@@ -110,8 +108,8 @@ export async function createMarket({
 /**
  * 获取所有的商家列表
  */
-export async function getMarketAll({}) {
-  const data = await postJSON(GET_ALL_MARKET)
+export async function getMarketAll({ offset = 1 }) {
+  const data = await postJSON(GET_ALL_MARKET, { offset })
 
   if (data.iRet === 0) {
     return data.data
@@ -162,7 +160,7 @@ export async function getUserStatus() {
  */
 export async function getUserLogin({ username, password }) {
   const data = await postJSON(USER_LOGIN, { username, password })
-  
+
   return data
 }
 

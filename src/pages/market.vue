@@ -1,5 +1,5 @@
 <template>
-  <f7-page id="marketView" tabs :page-content="false">
+  <f7-page id="marketView" tabs :page-content="false" @page:beforein="onPageBeforeIn">
     <f7-navbar title="市场"></f7-navbar>
 
     <f7-page-content
@@ -35,7 +35,7 @@
 <script>
 import BannerSwiper from '../components/banner-swiper.vue'
 import MarketList from '../components/market-list.vue'
-import { getBanners } from '../utils'
+import { getBanners, getMarketAll } from '../utils'
 import { mapState } from 'vuex'
 
 export default {
@@ -50,24 +50,72 @@ export default {
     return {
       bannerImages: [],
       showMarketPreloader: true,
-      marketList: []
-    }
-  },
-  async mounted() {
-    if (this.user.isLogin === true) {
-      const data = await getBanners()
-
-      if (data.length < 6) {
-        this.showMarketPreloader = false
-      }
-
-      this.bannerImages = data
+      allowInfinite: true,
+      marketList: [],
+      page: 1
     }
   },
   methods: {
-    async onMarketPageRefresh() {},
-    async onMarketLoadMore() {},
-    async getIndexMarketList() {}
+    onPageBeforeIn() {
+      this.getIndexMarketList()
+    },
+    async onMarketPageRefresh(event, done) {
+      try {
+        const data = await getMarketAll()
+
+        if (data.length < 6) {
+          this.showMarketPreloader = false
+        } else {
+          console.error(data)
+        }
+
+        this.marketList = data
+      } catch (error) {
+        console.error(error)
+      } finally {
+        done()
+      }
+    },
+    async onMarketLoadMore() {
+      try {
+        if (!this.allowInfinite) {
+          return
+        }
+
+        this.allowInfinite = true
+
+        const data = await getMarketAll({ offset: this.page + 1 })
+
+        if (data.iRet === 0) {
+          if (data.data.length === 0) {
+            this.showMarketPreloader = false
+            return
+          }
+
+          this.page += 1
+          this.marketList = [...this.marketList, ...data.data]
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        this.allowInfinite = true
+      }
+    },
+    async getIndexMarketList() {
+      try {
+        const data = await getMarketAll({ offset: 1 })
+
+        if (data.iRet === 0) {
+          this.marketList = data.data
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
   }
 }
 </script>
