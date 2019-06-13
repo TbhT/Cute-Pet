@@ -24,6 +24,22 @@
       <f7-list-input label="品种" :value="type" type="text" placeholder="品种"></f7-list-input>
     </f7-list>
 
+    <div class="block block-strong">
+      <div class="block-header">上传头像</div>
+      <picture-input
+        ref="pictureInput"
+        @change="onChange"
+        width="200"
+        height="200"
+        margin="16"
+        accept="image/*"
+        size="10"
+        hideChangeButton
+        :removable="true"
+        :customStrings="{upload: '<p>上传头像</p>', tap: '<p>上传头像</p>', remove: '清除'}"
+      ></picture-input>
+    </div>
+
     <f7-block>
       <f7-row>
         <f7-button class="col" raised @click="back">取消</f7-button>
@@ -34,9 +50,13 @@
 </template>
 
 <script>
-import { addPet } from '../utils/index.js';
+import { addPet } from '../utils/index.js'
+import PictureInput from 'vue-picture-input'
 
 export default {
+  components: {
+    PictureInput
+  },
   data() {
     return {
       nickname: '',
@@ -48,6 +68,7 @@ export default {
     }
   },
   methods: {
+    onChange() {},
     async submitPetData() {
       try {
         this.$f7.preloader.show()
@@ -71,8 +92,7 @@ export default {
 
         setTimeout(() => {
           this.back()
-        }, 1000);
-
+        }, 1000)
       } catch (error) {
         console.error(error)
         this.$f7.preloader.hide()
@@ -85,7 +105,7 @@ export default {
       this.$f7router.back()
     },
     resetAllProps() {
-      this.nickname = '';
+      this.nickname = ''
       this.gender = 0
       this.age = 0
       this.vaccineStatus = 0

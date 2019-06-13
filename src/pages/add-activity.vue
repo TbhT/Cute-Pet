@@ -97,6 +97,22 @@
       ></f7-list-input>
     </f7-list>
 
+    <div class="block block-strong">
+      <div class="block-header">上传活动图片</div>
+      <picture-input
+        ref="pictureInput"
+        @change="onChange"
+        width="200"
+        height="200"
+        margin="16"
+        accept="image/jpeg, image/png"
+        size="10"
+        hideChangeButton
+        :removable="true"
+        :customStrings="{upload: '<p>上传活动图片</p>', tap: '<p>上传活动图片</p>', remove: '清除'}"
+      ></picture-input>
+    </div>
+
     <f7-block>
       <f7-row>
         <f7-button class="col" raised @click="back">取消</f7-button>
@@ -109,10 +125,12 @@
 <script>
 import DateTime from '../components/date-time.vue'
 import { addActivity } from '../utils/index.js'
+import PictureInput from 'vue-picture-input'
 
 export default {
   components: {
-    DateTime
+    DateTime,
+    PictureInput
   },
   data() {
     return {
@@ -165,6 +183,7 @@ export default {
     }
   },
   methods: {
+    onChange() {},
     dateTimeChange({ type, value }) {
       if (type === 'beginTime') {
         this.beginTime = value

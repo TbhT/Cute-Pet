@@ -75,6 +75,22 @@
       ></f7-list-input>
     </f7-list>
 
+    <div class="block block-strong">
+      <div class="block-header">上传商家图片</div>
+      <picture-input
+        ref="pictureInput"
+        @change="onChange"
+        width="200"
+        height="200"
+        margin="16"
+        accept="image/*"
+        size="10"
+        hideChangeButton
+        :removable="true"
+        :customStrings="{upload: '<p>上传商家图片</p>', tap: '<p>上传商家图片</p>', remove: '清除'}"
+      ></picture-input>
+    </div>
+
     <f7-block>
       <f7-row>
         <f7-button class="col" raised @click="back">取消</f7-button>
@@ -86,7 +102,12 @@
 
 <script>
 import { createMarket } from '../utils'
+import PictureInput from 'vue-picture-input'
+
 export default {
+  components: {
+    PictureInput
+  },
   data() {
     return {
       name: '',
@@ -106,6 +127,9 @@ export default {
     }
   },
   methods: {
+    onChange() {
+
+    },
     toast(msg, open = true) {
       const toast = this.$f7.toast.create({
         text: msg,

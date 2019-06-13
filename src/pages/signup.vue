@@ -83,6 +83,22 @@
       ></f7-list-input>
     </f7-list>
 
+    <div class="block block-strong">
+      <div class="block-header">上传头像</div>
+      <picture-input
+        ref="pictureInput"
+        @change="onChange"
+        width="200"
+        height="200"
+        margin="16"
+        accept="image/*"
+        size="10"
+        hideChangeButton
+        :removable="true"
+        :customStrings="{upload: '<p>上传头像</p>', tap: '<p>上传头像</p>', remove: '清除'}"
+      ></picture-input>
+    </div>
+
     <f7-block>
       <f7-row>
         <f7-button class="col" @click="back" raised>取消</f7-button>
@@ -98,10 +114,12 @@ import { getUserSignUp } from '../utils'
 const phoneRegExp = new RegExp(
   '^(?=\\d{11}$)^1(?:3\\d|4[57]|5[^4\\D]|66|7[^249\\D]|8\\d|9[89])\\d{8}$'
 )
+import PictureInput from 'vue-picture-input'
 
 export default {
   components: {
-    DateTime
+    DateTime,
+    PictureInput
   },
   data() {
     return {
@@ -137,6 +155,7 @@ export default {
     onAgeChange(value) {
       this.age = value
     },
+    onChange() {},
     toast(msg, open = true) {
       const toast = this.$f7.toast.create({
         text: msg,

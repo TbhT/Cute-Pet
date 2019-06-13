@@ -4,7 +4,7 @@
 
     <f7-list class="me-person-profile">
       <f7-list-item link>
-        <img src="{{user.image}}" slot="media">
+        <img :src="user.image" slot="media">
         <div class slot="inner-start">
           <div class="me-person-name">{{user.nickname}}</div>
           <div class="me-person-master-pet">{{pet.nickname}}</div>
