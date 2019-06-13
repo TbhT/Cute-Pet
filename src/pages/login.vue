@@ -55,7 +55,7 @@ export default {
       const self = this
       const app = self.$f7
       const router = self.$f7router
-      const phoneFlag =  phoneRegExp.test(this.username)
+      const phoneFlag = phoneRegExp.test(this.username)
       const emptyFlag = this.username.length === 0
 
       if (!phoneFlag || emptyFlag) {
@@ -76,6 +76,7 @@ export default {
         setTimeout(() => {
           this.showPasswordError = false
         }, 1000)
+
         return
       } else if (this.password.length < 6) {
         this.showPasswordError = true
@@ -83,6 +84,7 @@ export default {
         setTimeout(() => {
           this.showPasswordError = false
         }, 1000)
+
         return
       } else if (this.password.length > 64) {
         this.showPasswordError = true
@@ -90,6 +92,7 @@ export default {
         setTimeout(() => {
           this.showPasswordError = false
         }, 1000)
+
         return
       }
 

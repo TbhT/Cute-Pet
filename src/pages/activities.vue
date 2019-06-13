@@ -1,5 +1,11 @@
 <template>
-  <f7-page id="activitiesView" :page-content="false" tabs with-subnavbar>
+  <f7-page
+    id="activitiesView"
+    :page-content="false"
+    tabs
+    with-subnavbar
+    @page:beforein="onPageBeforeIn"
+  >
     <f7-navbar title="活动">
       <f7-subnavbar class="me-activity-subnavbar">
         <f7-segmented raised>
@@ -92,26 +98,29 @@ export default {
       travelActivities: []
     }
   },
-  mounted() {
-    if (this.user.isLogin === true) {
+  methods: {
+    onPageBeforeIn() {
       this.getBannerImages()
       this.initActivities()
-    }
-  },
-  methods: {
+    },
     async initActivities() {
       const data1 = await getActivities(1)
       if (data1.length < 6) {
         this.showCompetePre = false
       }
+      this.competeActivities = data1
+
       const data2 = await getActivities(2)
       if (data2.length < 6) {
         this.showPartyPre = false
       }
+      this.partyActivities = data2
+
       const data3 = await getActivities(3)
       if (data3.length < 6) {
         this.showTravelPre = false
       }
+      this.travelActivities = data3
     },
     async onCompetePageRefresh(event, done) {
       try {
