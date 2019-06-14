@@ -3,9 +3,22 @@
     <f7-navbar back-link="返回" sliding title="添加宠物"></f7-navbar>
 
     <f7-list no-hairlines-md>
-      <f7-list-input :value="nickname" label="宠物昵称" type="text" placeholder="宠物昵称"></f7-list-input>
+      <f7-list-input
+        :value="nickname"
+        label="宠物昵称"
+        type="text"
+        placeholder="宠物昵称"
+        error-message="宠物昵称不能为空"
+        :error-message-force="showNicknameErrorFlag"
+      ></f7-list-input>
 
-      <f7-list-input :value="gender" label="性别" type="select">
+      <f7-list-input
+        :value="gender"
+        label="性别"
+        type="select"
+        error-message="性别不能为空"
+        :error-message-force="showGenderErrorFlag"
+      >
         <option value="1">公</option>
         <option value="2">母</option>
       </f7-list-input>
@@ -60,45 +73,69 @@ export default {
   data() {
     return {
       nickname: '',
+      showNicknameErrorFlag: false,
       gender: 0,
+      showGenderErrorFlag: false,
       age: 0,
       vaccineStatus: 0,
       petType: 0,
-      type: ''
+      type: '',
+      pictrue: ''
     }
   },
   methods: {
-    onChange() {},
+    onChange(image) {
+      this.pictrue = image
+    },
+    toast(msg) {
+      const toast = this.$f7.toast.create({
+        text: msg,
+        closeTimeout: 2000,
+        position: 'center'
+      })
+      toast.open()
+    },
     async submitPetData() {
       try {
+        setTimeout(() => {
+          this.showNicknameErrorFlag = false
+          this.showGenderErrorFlag = false
+        }, 3000)
+
+        if (!this.nickname) {
+          return (this.showNicknameErrorFlag = true)
+        }
+
+        if (!this.gender) {
+          return (this.showGenderErrorFlag = true)
+        }
+
+        if (!this.pictrue) {
+          return this.toast('宠物头像不能为空')
+        }
+
         this.$f7.preloader.show()
-        const result = await addPet()
+
+        const result = await addPet(this)
+
         this.$f7.preloader.hide()
 
         if (!result) {
           console.log('添加宠物失败', result)
-          this.$f7.toast.create({
-            text: '添加宠物失败'
-          })
-
+          this.toast('添加宠物失败')
           return
         }
 
-        this.$f7.toast.create({
-          text: '添加宠物成功'
-        })
-
+        this.toast('添加宠物成功')
         this.resetAllProps()
 
-        setTimeout(() => {
-          this.back()
-        }, 1000)
+        // setTimeout(() => {
+        //   this.back()
+        // }, 1000)
       } catch (error) {
         console.error(error)
         this.$f7.preloader.hide()
-        this.$f7.toast.create({
-          text: '创建活动失败'
-        })
+        this.toast('添加宠物失败')
       }
     },
     back() {
@@ -111,6 +148,7 @@ export default {
       this.vaccineStatus = 0
       this.petType = 0
       this.type = ''
+      this.pictrue = ''
     }
   }
 }

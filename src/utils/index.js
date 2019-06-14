@@ -166,7 +166,8 @@ export async function getUserSignUp({
   gender,
   age,
   homeAddress,
-  workAddress
+  workAddress,
+  picture
 }) {
   const data = await postJSON(USER_SIGN_UP, {
     name,
@@ -177,7 +178,8 @@ export async function getUserSignUp({
     gender,
     age,
     homeAddress,
-    workAddress
+    workAddress,
+    picture
   })
 
   return data
@@ -233,7 +235,8 @@ export async function addPet({
   age,
   vaccineStatus,
   petType,
-  type
+  type,
+  picture
 }) {
   const data = await postJSON(CREATE_PET, {
     nickname,
@@ -241,7 +244,8 @@ export async function addPet({
     age,
     vaccineStatus,
     petType,
-    type
+    type,
+    picture
   })
 
   if (data.iRet === 0) {
@@ -266,7 +270,8 @@ export async function addActivity({
   organizer,
   coorganizer,
   type,
-  place
+  place,
+  picture
 }) {
   const data = await postJSON(CREATE_ACTIVITY, {
     name,
@@ -279,7 +284,8 @@ export async function addActivity({
     organizer,
     coorganizer,
     type,
-    place
+    place,
+    picture
   })
 
   if (data.iRet === 0) {

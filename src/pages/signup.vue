@@ -132,6 +132,7 @@ export default {
       age: '',
       homeAddress: '',
       workAddress: '',
+      picture: '',
       showUsernamError: false,
       showPasswordError: false,
       passwordErrorMsg: ''
@@ -151,11 +152,15 @@ export default {
       this.showUsernamError = false
       this.showPasswordError = false
       this.passwordErrorMsg = ''
+      this.picture = ''
     },
     onAgeChange(value) {
       this.age = value
     },
-    onChange() {},
+    onChange(image) {
+      console.log(this.$refs.pictureInput.image)
+      this.picture = image
+    },
     toast(msg, open = true) {
       const toast = this.$f7.toast.create({
         text: msg,
@@ -172,7 +177,6 @@ export default {
       toast.open()
     },
     async submitSignupData() {
-      console.log(phoneRegExp.test(this.username), this.username)
       if (!phoneRegExp.test(this.username)) {
         this.showUsernamError = true
         setTimeout(() => {
@@ -214,7 +218,8 @@ export default {
           gender: this.gender,
           age: this.age,
           homeAddress: this.homeAddress,
-          workAddress: this.workAddress
+          workAddress: this.workAddress,
+          picture: this.picture
         })
 
         if (data.iRet === 0) {

@@ -127,21 +127,14 @@ export default {
     }
   },
   methods: {
-    onChange() {
-
+    onChange(image) {
+      this.picture = image
     },
-    toast(msg, open = true) {
+    toast(msg) {
       const toast = this.$f7.toast.create({
         text: msg,
         closeTimeout: 2000,
-        position: 'center',
-        on: {
-          close: () => {
-            if (open) {
-              this.back()
-            }
-          }
-        }
+        position: 'center'
       })
       toast.open()
     },
@@ -167,6 +160,7 @@ export default {
           this.showPlaceErrorMsg = false
           this.showServeTypeErrorMsg = false
         }, 2000)
+
         if (!this.name) {
           return (this.showNameErrorMsg = true)
         }
@@ -187,6 +181,12 @@ export default {
           return (this.showServeTypeErrorMsg = true)
         }
 
+        if (!this.picture) {
+          return this.toast('商家封面图片不能为空', false)
+        }
+
+        this.$f7.preloader.show()
+
         const data = await createMarket({
           name: this.name,
           contact: this.contact,
@@ -194,20 +194,23 @@ export default {
           place: this.place,
           serveType: this.serveType,
           workTime: this.workTime,
-          intro: this.intro
+          intro: this.intro,
+          picture: this.picture
         })
 
+        this.$f7.preloader.hide()
+
         if (data.iRet === 0) {
-          this.toast('创建活动成功')
+          this.toast('新建商家成功')
         } else {
-          this.toast('创建活动失败', false)
+          this.toast('新建商家失败', false)
           console.error(data)
         }
         this.resetAllProps()
       } catch (error) {
         console.error(error)
         this.$f7.preloader.hide()
-        this.toast('创建活动失败', false)
+        this.toast('创建商家失败', false)
       }
     }
   }
