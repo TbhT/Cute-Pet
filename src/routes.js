@@ -24,6 +24,7 @@ import PersonActivitiesPage from './pages/person-activities.vue'
 import PersonTweetsPage from './pages/person-tweets.vue'
 import { getTopicTweets, getUserStatus } from './utils'
 
+
 const routes = [
   {
     path: '/',
@@ -128,6 +129,10 @@ const routes = [
   {
     path: '/activities/add',
     component: AddActivitiesPage
+  },
+  {
+    path: '/activities/detail',
+    component: 
   },
   {
     path: '/pet/add',
