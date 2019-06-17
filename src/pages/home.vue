@@ -30,7 +30,8 @@
       @infinite="loadMore"
     >
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
-      <card-list :loadCardData="tweets"></card-list>
+      <card-list :loadCardData="tweets" v-if="tweets.length"></card-list>
+      <f7-block v-else inset>暂无动态~</f7-block>
     </f7-page-content>
 
     <f7-page-content id="tab-topics" class="page-content" tab>

@@ -26,11 +26,7 @@ const { postJSON } = F7.request.promise
 export async function getUserInfo() {
   const data = await postJSON(GET_USER_INFO)
 
-  if (data.iRet === 0) {
-    return data.data
-  } else {
-    return null
-  }
+  return data
 }
 
 /**

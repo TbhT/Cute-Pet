@@ -208,6 +208,11 @@ export default {
         return
       }
 
+      if (!this.picture) {
+        this.toast('请上传头像', false)
+        return
+      }
+
       try {
         const data = await getUserSignUp({
           name: this.name,

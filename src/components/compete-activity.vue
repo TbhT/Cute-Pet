@@ -1,7 +1,6 @@
 <template>
   <f7-list media-list class="me-media-list me-compete-activity">
     <f7-list-item
-      link="#"
       :key="activity.activityId"
       v-for="(activity) in competeActivities"
       media-item

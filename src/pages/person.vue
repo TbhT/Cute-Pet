@@ -85,6 +85,7 @@
 
 <script>
 import { getUserInfo } from '../utils'
+
 export default {
   data: function() {
     return {
@@ -94,12 +95,16 @@ export default {
   },
   methods: {
     async onPageBeforeIn() {
-      const data = await getUserInfo()
-      if (data.iRet === 0) {
-        this.user = data.data.userInfo
-        this.pet = data.data.pet
-      } else {
-        console.error(data)
+      try {
+        const data = await getUserInfo()
+        if (data.iRet === 0) {
+          this.user = data.data.userInfo
+          this.pet = data.data.pet
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
       }
     }
   }
