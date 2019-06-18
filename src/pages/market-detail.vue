@@ -2,6 +2,10 @@
   <f7-page name="marketDetail" no-toolbar>
     <f7-navbar :back-link="backText" sliding :title="marketDetail.name"></f7-navbar>
 
+    <f7-list>
+      
+    </f7-list>
+
     <f7-card>
       <f7-card-header valign="bottom" :style="style"></f7-card-header>
 

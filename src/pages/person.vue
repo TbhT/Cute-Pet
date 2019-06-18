@@ -3,11 +3,11 @@
     <f7-navbar title="我的"></f7-navbar>
 
     <f7-list class="me-person-profile">
-      <f7-list-item link>
+      <f7-list-item :link="link">
         <img :src="user.image" slot="media">
         <div class slot="inner-start">
           <div class="me-person-name">{{user.nickname}}</div>
-          <div class="me-person-master-pet">{{pet.nickname}}</div>
+          <div class="me-person-master-pet">{{(pet && pet.name) || ''}}</div>
         </div>
       </f7-list-item>
     </f7-list>
@@ -85,21 +85,36 @@
 
 <script>
 import { getUserInfo } from '../utils'
+import { mapState } from 'vuex'
 
 export default {
   data: function() {
     return {
       user: {},
-      pet: {}
+      pet: {},
+      isGetUserInfo: false
+    }
+  },
+  computed: {
+    ...mapState(['user']),
+    link() {
+      if (this.user.userId) {
+        return `/person/detail/${this.user.userId}`
+      }
     }
   },
   methods: {
     async onPageBeforeIn() {
       try {
+        if (this.isGetUserInfo) {
+          return
+        }
+
         const data = await getUserInfo()
         if (data.iRet === 0) {
           this.user = data.data.userInfo
           this.pet = data.data.pet
+          this.isGetUserInfo = true
         } else {
           console.error(data)
         }
