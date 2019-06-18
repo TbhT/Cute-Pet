@@ -16,9 +16,27 @@ import {
   GET_USER_ALL_TWEETS,
   GET_USER_INFO,
   GET_USER_DETAIL_INFO,
-  GET_USER_STATUS
+  GET_USER_STATUS,
+  GET_PET_DETAIL,
+  GET_USER_ALL_PETS
 } from '../store/api.js'
 const { postJSON } = F7.request.promise
+
+/**
+ * 获取用户所有的宠物列表
+ */
+export async function getAllPet() {
+  const data = await postJSON(GET_USER_ALL_PETS)
+  return data
+}
+
+/**
+ * 获取宠物详情
+ */
+export async function getPetDetail({ petId }) {
+  const data = await postJSON(GET_PET_DETAIL, { petId })
+  return data
+}
 
 /**
  * 获取个人的基本信息
@@ -187,11 +205,7 @@ export async function getUserSignUp({
 export async function getActivityDetail({ activityId }) {
   const data = await postJSON(DETAIL_ACTIVITY, { activityId })
 
-  if (data.iRet === 0) {
-    return data.data
-  } else {
-    return null
-  }
+  return data
 }
 
 /**

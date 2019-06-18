@@ -1,11 +1,3 @@
-import AboutPage from './pages/about.vue'
-import FormPage from './pages/form.vue'
-import CatalogPage from './pages/catalog.vue'
-import ProductPage from './pages/product.vue'
-import SettingsPage from './pages/settings.vue'
-
-import DynamicRoutePage from './pages/dynamic-route.vue'
-import RequestAndLoad from './pages/request-and-load.vue'
 import NotFoundPage from './pages/404.vue'
 
 import HomePage from './pages/home.vue'
@@ -22,36 +14,27 @@ import AddMarketPage from './pages/add-market.vue'
 import PersonPetsPage from './pages/all-pet.vue'
 import PersonActivitiesPage from './pages/person-activities.vue'
 import PersonTweetsPage from './pages/person-tweets.vue'
-import { getTopicTweets, getUserStatus } from './utils'
-
+import ActivityDetailPage from './pages/activity-detail.vue'
+import MarketDetailPage from './pages/market-detail.vue'
+import PersonDetailPage from './pages/person-detail.vue'
+import PetDetailPage from './pages/pet-detail.vue'
+import {
+  getTopicTweets,
+  getActivityDetail,
+  getPetDetail,
+  getMarketDetail,
+  getUserInfo
+} from './utils'
 
 const routes = [
   {
     path: '/',
     component: HomePage,
     keepAlive: true
-    // async: async function(to, from, resolve, reject) {
-    //   this.app.preloader.show()
-    //   const data = await getUserStatus()
-    //   if (data.iRet === 0 && data.data.userId) {
-    //     resolve(
-    //       {
-    //         component: HomePage
-    //       },
-    //       {
-    //         props: {
-    //           user: data.data
-    //         }
-    //       }
-    //     )
-    //   } else {
-    //     this.app.views.main.router.navigate('/user/login')
-    //   }
-    // }
   },
   {
     path: '/topic/:topicId/',
-    async: async function(routeTo, routeFrom, resolve, reject) {
+    async: async function(routeTo, routeFrom, resolve) {
       this.app.preloader.show()
 
       const topicId = routeTo.params.topicId
@@ -77,7 +60,7 @@ const routes = [
   },
   {
     path: '/tweet/:tweetId',
-    async: function(to, from, resolve, reject) {
+    async: function(to, from, resolve) {
       const tweetId = to.params.tweetId
       console.log(`tweet ${tweetId} 加载`)
       // TODO: 拉取某条tweet下的评论
@@ -131,17 +114,97 @@ const routes = [
     component: AddActivitiesPage
   },
   {
-    path: '/activities/detail',
-    component: 
+    path: '/activities/detail/:activityId',
+    async: async function(to, from, resolve) {
+      this.app.preloader.show()
+
+      const activityId = to.params.activityId
+
+      try {
+        const activityDetail = await getActivityDetail({ activityId })
+
+        if (activityDetail.iRet === 0) {
+          resolve(
+            {
+              component: ActivityDetailPage
+            },
+            {
+              props: {
+                activityDetail
+              }
+            }
+          )
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        this.app.preloader.hide()
+      }
+    }
   },
   {
     path: '/pet/add',
     component: AddPetPage
   },
   {
+    path: '/pet/detail/:petId',
+    async: async function(to, from, resolve) {
+      this.app.preloader.show()
+
+      const petId = to.params.petId
+
+      try {
+        const petDetail = await getPetDetail({ petId })
+
+        if (petDetail.iRet === 0) {
+          resolve(
+            {
+              component: PetDetailPage
+            },
+            {
+              props: {
+                petDetail
+              }
+            }
+          )
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        this.app.preloader.hide()
+      }
+    }
+  },
+  {
     path: '/person',
     component: PersonPage,
     keepAlive: true
+  },
+  {
+    path: '/person/detail/:userId',
+    async: async function(to, from, resolve) {
+      this.app.preloader.show()
+
+
+      try {
+        const userDetailInfo = await getUserInfo()
+
+        if (userDetailInfo.iRet === 0) {
+          resolve(
+            {
+              component: PersonDetailPage
+            },
+            {
+              userDetailInfo
+            }
+          )
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        this.app.preloader.hide()
+      }
+    }
   },
   {
     path: '/person/pets',
@@ -165,87 +228,41 @@ const routes = [
     component: AddMarketPage
   },
   {
+    path: '/market/detail/:marketId',
+    async: async function(to, from, resolve) {
+      this.app.preloader.show()
+
+      const marketId = to.params.marketId
+
+      try {
+        const marketDetail = await getMarketDetail({ marketId })
+
+        if (marketDetail.iRet === 0) {
+          resolve(
+            {
+              component: MarketDetailPage
+            },
+            {
+              props: {
+                marketDetail
+              }
+            }
+          )
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        this.app.preloader.hide()
+      }
+    }
+  },
+  {
     path: '/user/login',
     component: LoginPage
   },
   {
     path: '/user/signup',
     component: SignupPage
-  },
-  {
-    path: '/about/',
-    component: AboutPage
-  },
-  {
-    path: '/form/',
-    component: FormPage
-  },
-  {
-    path: '/catalog/',
-    component: CatalogPage
-  },
-  {
-    path: '/product/:id/',
-    component: ProductPage
-  },
-  {
-    path: '/settings/',
-    component: SettingsPage
-  },
-
-  {
-    path: '/dynamic-route/blog/:blogId/post/:postId/',
-    component: DynamicRoutePage
-  },
-  {
-    path: '/request-and-load/user/:userId/',
-    async: function(routeTo, routeFrom, resolve, reject) {
-      // Router instance
-      var router = this
-
-      // App instance
-      var app = router.app
-
-      // Show Preloader
-      app.preloader.show()
-
-      // User ID from request
-      var userId = routeTo.params.userId
-
-      // Simulate Ajax Request
-      setTimeout(function() {
-        // We got user data from request
-        const user = {
-          firstName: 'Vladimir',
-          lastName: 'Kharlampidi',
-          about: 'Hello, i am creator of Framework7! Hope you like it!',
-          links: [
-            {
-              title: 'Framework7 Website',
-              url: 'http://framework7.io'
-            },
-            {
-              title: 'Framework7 Forum',
-              url: 'http://forum.framework7.io'
-            }
-          ]
-        }
-        // Hide Preloader
-        app.preloader.hide()
-
-        // Resolve route to load page
-        resolve(
-          {
-            component: RequestAndLoad
-          },
-          {
-            context: {
-              user: user
-            }
-          }
-        )
-      }, 1000)
-    }
   },
   {
     path: '(.*)',
