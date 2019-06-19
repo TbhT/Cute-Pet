@@ -4,12 +4,15 @@
 
     <f7-list media-list class="me-media-list me-person-all-pets" v-if="allPets.length">
       <f7-list-item
-        link="#"
         :key="pet.petId"
+        media-item
         v-for="pet in allPets"
-        :subtitle="pet.name"
-        :title="pet.name"
-      ></f7-list-item>
+        :subtitle="pet.age"
+        :title="pet.nickname"
+        :link="getDetailLink(pet)"
+      >
+        <img :src="pet.image" slot="media" width="80" class="lazy lazy-fade-in">
+      </f7-list-item>
     </f7-list>
 
     <f7-block inset v-else>
@@ -23,13 +26,23 @@
 </template>
 
 <script>
+import { getAllPet } from '../store/mock'
+
 export default {
   data() {
     return {
       allPets: []
     }
   },
-  methods: {}
+  async created() {
+    const data = await getAllPet()
+    this.allPets = data
+  },
+  methods: {
+    getDetailLink(pet) {
+      return `/pet/detail/${pet.petId}`
+    }
+  }
 }
 </script>
 

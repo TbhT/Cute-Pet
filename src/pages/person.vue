@@ -94,7 +94,7 @@ export default {
       user: {},
       pet: {},
       isGetUserInfo: false,
-      link: ''
+      link: '/person/detail'
     }
   },
   methods: {

@@ -1,14 +1,14 @@
 <template>
   <f7-list media-list class="me-media-list me-market-list">
     <f7-list-item
-      link="#"
       :key="market.marketId"
       v-for="market in marketList"
       media-item
       :title="market.name"
-      @click="trigeClick(market)"
+      :subtitle="market.place"
+      :link="getDetailLink(market)"
     >
-      <img :src="market.imgUrl" slot="media" width="80" class="lazy lazy-fade-in">
+      <img :src="market.image" slot="media" width="80" class="lazy lazy-fade-in">
     </f7-list-item>
   </f7-list>
 </template>
@@ -21,8 +21,8 @@ export default {
     }
   },
   methods: {
-    trigeClick() {
-      // TODO: 点击市场
+    getDetailLink(market) {
+      return `/market/detail/${market.marketId}`
     }
   }
 }

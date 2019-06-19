@@ -182,7 +182,7 @@ export function getCompeteActivities() {
       totalCost: '200'
     },
     {
-      activityId: 321 + Date.now(),
+      activityId: 1 + Date.now(),
       image: 'http://cdn.framework7.io/placeholder/nature-1000x600-3.jpg',
       name: '赛事2',
       beginTime: formatDate('YYYY-MM-DD HH:mm:ss', new Date()),
@@ -196,7 +196,7 @@ export function getCompeteActivities() {
       totalCost: '200'
     },
     {
-      activityId: 321 + Date.now(),
+      activityId: 21 + Date.now(),
       image: 'http://cdn.framework7.io/placeholder/nature-1000x600-3.jpg',
       name: '赛事3',
       beginTime: formatDate('YYYY-MM-DD HH:mm:ss', new Date()),
@@ -210,7 +210,7 @@ export function getCompeteActivities() {
       totalCost: '200'
     },
     {
-      activityId: 321 + Date.now(),
+      activityId: 1321 + Date.now(),
       image: 'http://cdn.framework7.io/placeholder/nature-1000x600-3.jpg',
       name: '赛事4',
       beginTime: formatDate('YYYY-MM-DD HH:mm:ss', new Date()),
@@ -224,7 +224,7 @@ export function getCompeteActivities() {
       totalCost: '200'
     },
     {
-      activityId: 321 + Date.now(),
+      activityId: 32221 + Date.now(),
       image: 'http://cdn.framework7.io/placeholder/nature-1000x600-3.jpg',
       name: '赛事5',
       beginTime: formatDate('YYYY-MM-DD HH:mm:ss', new Date()),
@@ -238,7 +238,7 @@ export function getCompeteActivities() {
       totalCost: '200'
     },
     {
-      activityId: 321 + Date.now(),
+      activityId: 321224 + Date.now(),
       image: 'http://cdn.framework7.io/placeholder/nature-1000x600-3.jpg',
       name: '赛事6',
       beginTime: formatDate('YYYY-MM-DD HH:mm:ss', new Date()),
@@ -252,7 +252,7 @@ export function getCompeteActivities() {
       totalCost: '200'
     },
     {
-      activityId: 321 + Date.now(),
+      activityId: 3213333 + Date.now(),
       image: 'http://cdn.framework7.io/placeholder/nature-1000x600-3.jpg',
       name: '赛事7',
       beginTime: formatDate('YYYY-MM-DD HH:mm:ss', new Date()),
@@ -266,7 +266,7 @@ export function getCompeteActivities() {
       totalCost: '200'
     },
     {
-      activityId: 321 + Date.now(),
+      activityId: 3244131 + Date.now(),
       image: 'http://cdn.framework7.io/placeholder/nature-1000x600-3.jpg',
       name: '赛事8',
       beginTime: formatDate('YYYY-MM-DD HH:mm:ss', new Date()),
@@ -304,10 +304,27 @@ export async function getPartyActivities(d = 123) {
   return a
 }
 
+export async function getActivityDetail() {
+  return {
+    activityId: 933 + Date.now(),
+    image: 'http://cdn.framework7.io/placeholder/nature-1000x600-3.jpg',
+    name: 'party44444444444444444',
+    beginTime: formatDate('YYYY-MM-DD HH:mm:ss', new Date()),
+    endTime: formatDate('YYYY-MM-DD HH:mm:ss', new Date()),
+    joinBeginTime: formatDate('YYYY-MM-DD HH:mm:ss', new Date()),
+    joinEndTime: formatDate('YYYY-MM-DD HH:mm:ss', new Date()),
+    organizer: formatDate('YYYY-MM-DD HH:mm:ss', new Date()),
+    coorganizer: formatDate('YYYY-MM-DD HH:mm:ss', new Date()),
+    place: '地点3333333333',
+    totalCount: '100',
+    totalCost: '200'
+  }
+}
+
 export async function getAllPet() {
   return [
     {
-      petId: Date.now(),
+      petId: Date.now() + 1,
       nickname: '宠物昵称1',
       gender: '男',
       age: 10,
@@ -317,7 +334,7 @@ export async function getAllPet() {
       image: 'https://cdn.framework7.io/placeholder/fashion-88x88-3.jpg'
     },
     {
-      petId: Date.now(),
+      petId: Date.now() + 222,
       nickname: '宠物昵称2',
       gender: '女',
       age: 3,
@@ -368,8 +385,9 @@ export async function getMarket() {
 
   for (let index = 0; index < 10; index++) {
     a.push({
-      marketId: Date.now(),
+      marketId: Date.now() + index,
       name: '商家店铺' + index,
+      place: '地点' + index,
       contact: '联系人张三',
       phoneNumber: '13312345678',
       image: 'https://cdn.framework7.io/placeholder/fashion-88x88-3.jpg'
@@ -382,7 +400,8 @@ export async function getMarket() {
 export async function getMarketDetail() {
   return {
     marketId: Date.now(),
-    name: '商家店铺' + index,
+    name: '商家店铺',
+    place: '地点333333',
     contact: '联系人张三',
     phoneNumber: '13312345678',
     image: 'https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg'

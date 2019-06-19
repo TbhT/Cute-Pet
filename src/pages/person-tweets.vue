@@ -9,6 +9,7 @@
 <script>
 import CardList from '../components/card-list.vue'
 import { getUserAllTweets } from '../utils'
+import { getTweetMessage } from '../store/mock'
 
 export default {
   components: {
@@ -29,10 +30,11 @@ export default {
     },
     async getIndexTweets() {
       // TODO: 加载首屏推特
-      const data = await getUserAllTweets({ page: 1 })
+      // const data = await getUserAllTweets({ page: 1 })
+      const data = await getTweetMessage()
 
       if (data) {
-        this.tweets = data
+        this.tweets = data.data
       }
     }
   }

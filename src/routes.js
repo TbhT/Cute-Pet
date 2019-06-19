@@ -20,12 +20,20 @@ import PersonDetailPage from './pages/person-detail.vue'
 import PetDetailPage from './pages/pet-detail.vue'
 import {
   getTopicTweets,
-  getActivityDetail,
-  getPetDetail,
-  getMarketDetail,
-  getUserInfo
+  getPetDetail as ___,
+  getMarketDetail as _,
+  getActivityDetail as __,
+  getUserInfo as ____
 } from './utils'
-import { getComment, getTopic, getTweetMessage } from './store/mock';
+import {
+  getComment,
+  getMarketDetail,
+  getActivityDetail,
+  getTopic,
+  getTweetMessage,
+  getPetDetail,
+  getUserInfo
+} from './store/mock'
 
 const routes = [
   {
@@ -103,9 +111,9 @@ const routes = [
       const activityId = to.params.activityId
 
       try {
-        const activityDetail = await getActivityDetail({ activityId })
-
-        if (activityDetail.iRet === 0) {
+        // const activityDetail = await getActivityDetail({ activityId })
+        const activityDetail = await getActivityDetail()
+        if (activityDetail) {
           resolve(
             {
               component: ActivityDetailPage
@@ -138,7 +146,7 @@ const routes = [
       try {
         const petDetail = await getPetDetail({ petId })
 
-        if (petDetail.iRet === 0) {
+        if (petDetail) {
           resolve(
             {
               component: PetDetailPage
@@ -163,10 +171,9 @@ const routes = [
     keepAlive: true
   },
   {
-    path: '/person/detail/:userId',
+    path: '/person/detail',
     async: async function(to, from, resolve) {
       this.app.preloader.show()
-
 
       try {
         const userDetailInfo = await getUserInfo()
@@ -177,7 +184,10 @@ const routes = [
               component: PersonDetailPage
             },
             {
-              userDetailInfo
+              props: {
+                userInfo: userDetailInfo.data.userInfo,
+                petInfo: userDetailInfo.data.pet
+              }
             }
           )
         }
@@ -219,7 +229,7 @@ const routes = [
       try {
         const marketDetail = await getMarketDetail({ marketId })
 
-        if (marketDetail.iRet === 0) {
+        if (marketDetail) {
           resolve(
             {
               component: MarketDetailPage

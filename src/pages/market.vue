@@ -37,6 +37,7 @@ import BannerSwiper from '../components/banner-swiper.vue'
 import MarketList from '../components/market-list.vue'
 import { getBanners, getMarketAll } from '../utils'
 import { mapState } from 'vuex'
+import { getMarket, getBannerImages } from '../store/mock'
 
 export default {
   computed: {
@@ -56,13 +57,15 @@ export default {
     }
   },
   methods: {
-    onPageBeforeIn() {
+    async onPageBeforeIn() {
       this.getIndexMarketList()
+      const data = await getBannerImages()
+      this.bannerImages = data
     },
     async onMarketPageRefresh(event, done) {
       try {
-        const data = await getMarketAll()
-
+        // const data = await getMarketAll()
+        const data = await getMarket()
         if (data.length < 6) {
           this.showMarketPreloader = false
         } else {
@@ -84,8 +87,8 @@ export default {
 
         this.allowInfinite = true
 
-        const data = await getMarketAll({ offset: this.page + 1 })
-
+        // const data = await getMarketAll({ offset: this.page + 1 })
+        const data = await getMarket()
         if (data.iRet === 0) {
           if (data.data.length === 0) {
             this.showMarketPreloader = false
@@ -105,13 +108,14 @@ export default {
     },
     async getIndexMarketList() {
       try {
-        const data = await getMarketAll({ offset: 1 })
+        // const data = await getMarketAll({ offset: 1 })
+        const data = await getMarket()
 
-        if (data.iRet === 0) {
-          if (data.data.length < 6) {
+        if (data) {
+          if (data.length < 6) {
             this.showMarketPreloader = false
           }
-          this.marketList = data.data
+          this.marketList = data
         } else {
           console.error(data)
         }

@@ -1,5 +1,5 @@
 <template>
-  <f7-page name="activityDetail" no-toolbar>
+  <f7-page :name="activityDetail.name" no-toolbar>
     <f7-navbar :back-link="backText" sliding :title="activityDetail.name"></f7-navbar>
 
     <f7-block-title>赛事信息</f7-block-title>
@@ -35,11 +35,6 @@ export default {
   data() {
     return {
       backText: '返回'
-    }
-  },
-  computed: {
-    style() {
-      return `background-image:url(${activityDetail.image})`
     }
   }
 }

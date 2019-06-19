@@ -43,7 +43,7 @@
       @infinite="onPartyPageLoadMore"
     >
       <banner-swiper v-if="bannerImages.length" :bannerImages="bannerImages"></banner-swiper>
-      <compete-activity v-if="competeActivities.length" :competeActivities="competeActivities"></compete-activity>
+      <compete-activity v-if="partyActivities.length" :competeActivities="partyActivities"></compete-activity>
       <f7-block v-else inset>暂无宠物趴体~</f7-block>
     </f7-page-content>
 
@@ -57,7 +57,7 @@
       @infinite="onTravelPageLoadMore"
     >
       <banner-swiper v-if="bannerImages.length" :bannerImages="bannerImages"></banner-swiper>
-      <compete-activity v-if="competeActivities.length" :competeActivities="competeActivities"></compete-activity>
+      <compete-activity v-if="travelActivities.length" :competeActivities="travelActivities"></compete-activity>
       <f7-block v-else inset>暂无带宠旅行~</f7-block>
     </f7-page-content>
 
@@ -116,6 +116,7 @@ export default {
       if (data1.length < 6) {
         this.showCompetePre = false
       }
+
       this.competeActivities = data1
 
       // const data2 = await getActivities(2)
