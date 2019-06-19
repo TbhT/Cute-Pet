@@ -9,7 +9,7 @@
 <style scoped>
 .me-swiper img {
   width: 100%;
-  height: 20%;
+  height: 200px;
 }
 div.me-swiper.swiper-container {
   margin-top: 0px;

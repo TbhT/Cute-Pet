@@ -84,23 +84,17 @@
 </template>
 
 <script>
-import { getUserInfo } from '../utils'
+// import { getUserInfo } from '../utils'
 import { mapState } from 'vuex'
+import { getUserInfo } from '../store/mock'
 
 export default {
   data: function() {
     return {
       user: {},
       pet: {},
-      isGetUserInfo: false
-    }
-  },
-  computed: {
-    ...mapState(['user']),
-    link() {
-      if (this.user.userId) {
-        return `/person/detail/${this.user.userId}`
-      }
+      isGetUserInfo: false,
+      link: ''
     }
   },
   methods: {

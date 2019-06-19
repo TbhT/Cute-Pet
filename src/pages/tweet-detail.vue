@@ -12,8 +12,7 @@
       <div class="me-comments-list" v-if="comments.length">
         <div class="me-comment" v-for="comment in comments" :key="comment.commentId">
           <img
-            :src="'https://loremflickr.com/70/70/people?lock=1'"
-            alt
+            :src="comment.avatar"
             class="me-avatar lazy lazy-fade-in"
           >
           <div class="me-detail">

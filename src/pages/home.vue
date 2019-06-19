@@ -56,6 +56,7 @@ import {
 const { mapActions, mapState, mapGetters } = createNamespacedHelpers('home')
 import { GET_BANNERS, GET_ALL_TWEETS } from '../store/api.js'
 import { getBanners, getTopicAll } from '../utils/index.js'
+import { getBannerImages, getTopic, getTweetMessage } from '../store/mock'
 
 export default {
   components: {
@@ -80,21 +81,22 @@ export default {
   methods: {
     async onPageBeforeIn() {
       this.$f7.preloader.show()
-      await this.getUserStatus()
+      // await this.getUserStatus()
 
-      if (this.user.isLogin === true) {
-        await this.getBannerImages()
-        await this.getIndexTweets()
+      // if (this.user.isLogin === true) {
+      await this.getBannerImages()
+      await this.getIndexTweets()
+      await this.getAllTopics()
 
-        if (this.tweets.length < 6) {
-          this.showPreloader = false
-        }
-
-        this.$f7.preloader.hide()
-      } else {
-        this.$f7.preloader.hide()
-        this.$f7router.back('/user/login')
+      if (this.tweets.length < 6) {
+        this.showPreloader = false
       }
+
+      this.$f7.preloader.hide()
+      // } else {
+      //   this.$f7.preloader.hide()
+      //   this.$f7router.back('/user/login')
+      // }
     },
     ...mapActions(['getIndexTweets', 'loadMoreTweets']),
     ...globalMapMutations(['updatePopup']),
@@ -118,6 +120,7 @@ export default {
 
       try {
         await this.loadMoreTweets()
+
         this.allowInfinite = true
 
         if (this.isTweetLoadAll) {
@@ -130,7 +133,8 @@ export default {
     },
     async getBannerImages() {
       try {
-        const data = await getBanners()
+        // const data = await getBanners()
+        const data = await getBannerImages()
         this.bannerImages = data
       } catch (error) {
         console.error(error)
@@ -138,14 +142,15 @@ export default {
     },
     async getAllTopics() {
       try {
-        if (this.user.isLogin !== true) {
-          return
-        }
+        // if (this.user.isLogin !== true) {
+        //   return
+        // }
 
-        const data = await getTopicAll()
+        // const data = await getTopicAll()
+        const data = await getTopic()
 
         if (data) {
-          this.topics = data.data
+          this.topics = data
         } else {
           console.error(data)
         }

@@ -1,6 +1,7 @@
 import Framework7 from 'framework7/framework7.esm.bundle.js'
 const { postJSON } = Framework7.request.promise
 import { GET_ALL_TWEETS, GET_BANNERS } from '../api.js'
+import { getTweetMessage } from '../mock'
 
 const state = {
   tweets: [],
@@ -44,9 +45,11 @@ const mutations = {
 const actions = {
   async getIndexTweets({ commit, state }) {
     try {
-      const data = await postJSON(GET_ALL_TWEETS, {
-        offset: state.tweetPage
-      })
+      // const data = await postJSON(GET_ALL_TWEETS, {
+      //   offset: state.tweetPage
+      // })
+      // TODO:
+      const data = await getTweetMessage()
 
       console.log('获取首页tweets信息流', data)
 
@@ -66,9 +69,11 @@ const actions = {
         return
       }
 
-      const data = await postJSON(GET_ALL_TWEETS, {
-        offset: state.tweetPage + 1
-      })
+      // const data = await postJSON(GET_ALL_TWEETS, {
+      //   offset: state.tweetPage + 1
+      // })
+      // TODO: 
+      const data = await getTweetMessage()
 
       if (data.iRet === 0) {
 

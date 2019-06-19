@@ -25,6 +25,7 @@ import {
   getMarketDetail,
   getUserInfo
 } from './utils'
+import { getComment, getTopic, getTweetMessage } from './store/mock';
 
 const routes = [
   {
@@ -40,7 +41,9 @@ const routes = [
       const topicId = routeTo.params.topicId
 
       try {
-        const tweets = await getTopicTweets({ topicId })
+        // const tweets = await getTopicTweets({ topicId })
+        const data = await getTweetMessage()
+        const tweets = data.data
         resolve(
           {
             component: TopicDetailPage
@@ -60,34 +63,13 @@ const routes = [
   },
   {
     path: '/tweet/:tweetId',
-    async: function(to, from, resolve) {
+    async: async function(to, from, resolve) {
       const tweetId = to.params.tweetId
       console.log(`tweet ${tweetId} 加载`)
       // TODO: 拉取某条tweet下的评论
       this.app.preloader.show()
-      const comments = [
-        {
-          commentId: 1,
-          userId: 114,
-          nickname: 'Tom',
-          createTime: Date.now(),
-          text: '这是第一条评论'
-        },
-        {
-          commentId: 2,
-          userId: 115,
-          nickname: 'Tom',
-          createTime: Date.now(),
-          text: '这是第二条评论'
-        },
-        {
-          commentId: 3,
-          userId: 116,
-          nickname: 'Tom',
-          createTime: Date.now(),
-          text: '这是第三条评论'
-        }
-      ]
+
+      const comments = await getComment()
 
       setTimeout(() => {
         resolve(

@@ -3,7 +3,7 @@
     <f7-card class="me-post-card">
       <f7-card-header>
         <div class="me-avatar">
-          <img src="https://loremflickr.com/70/70/people?lock=1" class="lazy lazy-fade-in">
+          <img :src="data.avatar" class="lazy lazy-fade-in">
         </div>
 
         <div class="me-user">
@@ -66,6 +66,7 @@
 }
 .me-image img {
   width: 100%;
+  height: 200px;
   padding: 4px;
 }
 </style>

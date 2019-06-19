@@ -72,6 +72,11 @@ import BannerSwiper from '../components/banner-swiper.vue'
 import CompeteActivity from '../components/compete-activity.vue'
 import { mapState } from 'vuex'
 import { getBanners, getActivities } from '../utils/index.js'
+import {
+  getBannerImages,
+  getCompeteActivities,
+  getPartyActivities
+} from '../store/mock'
 
 export default {
   components: {
@@ -98,34 +103,41 @@ export default {
       travelActivities: []
     }
   },
+  mounted() {
+    this.initActivities()
+  },
   methods: {
     onPageBeforeIn() {
       this.getBannerImages()
-      this.initActivities()
     },
     async initActivities() {
-      const data1 = await getActivities(1)
+      // const data1 = await getActivities(1)
+      const data1 = await getCompeteActivities()
       if (data1.length < 6) {
         this.showCompetePre = false
       }
       this.competeActivities = data1
 
-      const data2 = await getActivities(2)
-      if (data2.length < 6) {
-        this.showPartyPre = false
-      }
-      this.partyActivities = data2
+      // const data2 = await getActivities(2)
+      // const data2 = await getPartyActivities()
+      // if (data2.length < 6) {
+      //   this.showPartyPre = false
+      // }
+      // this.partyActivities = data2
 
-      const data3 = await getActivities(3)
-      if (data3.length < 6) {
-        this.showTravelPre = false
-      }
-      this.travelActivities = data3
+      // const data3 = await getActivities(3)
+      // const data3 = await getPartyActivities()
+      // if (data3.length < 6) {
+      //   this.showTravelPre = false
+      // }
+      // this.travelActivities = data3
     },
     async onCompetePageRefresh(event, done) {
       try {
-        const data = await getActivities(1)
-        if (data.iRet === 0) {
+        // const data = await getActivities(1)
+        const data = await getCompeteActivities()
+
+        if (data) {
           this.competeActivities = data.data
         } else {
           console.error(data)
@@ -138,8 +150,10 @@ export default {
     },
     async onPartyPageRefresh(event, done) {
       try {
-        const data = await getActivities(2)
-        if (data.iRet === 0) {
+        // const data = await getActivities(2)
+        const data = await getPartyActivities()
+
+        if (data === 0) {
           this.partyActivities = data.data
         } else {
           console.error(data)
@@ -152,8 +166,10 @@ export default {
     },
     async onTravelPageRefresh(event, done) {
       try {
-        const data = await getActivities(3)
-        if (data.iRet === 0) {
+        // const data = await getActivities(3)
+        const data = await getPartyActivities()
+
+        if (data === 0) {
           this.travelActivities = data.data
         } else {
           console.error(data)
@@ -172,10 +188,11 @@ export default {
 
         this.competeAllowInfinite = false
 
-        const data = await getActivities(1, this.competePage + 1)
+        // const data = await getActivities(1, this.competePage + 1)
+        const data = await getCompeteActivities()
 
-        if (data.iRet === 0) {
-          if (data.data.length === 0) {
+        if (data) {
+          if (data.length === 0) {
             this.showCompetePre = false
             return
           }
@@ -184,10 +201,10 @@ export default {
         } else {
           console.error(data)
         }
+
+        this.competeAllowInfinite = true
       } catch (error) {
         console.error(error)
-      } finally {
-        this.competeAllowInfinite = true
       }
     },
     async onPartyPageLoadMore() {
@@ -198,10 +215,11 @@ export default {
 
         this.partyAllowInfinite = false
 
-        const data = await getActivities(2, this.partyPage + 1)
+        // const data = await getActivities(2, this.partyPage + 1)
+        const data = await getPartyActivities()
 
-        if (data.iRet === 0) {
-          if (data.data.length === 0) {
+        if (data) {
+          if (data.length === 0) {
             this.showPartyPre = false
             return
           }
@@ -225,10 +243,11 @@ export default {
 
         this.travelAllowInfinite = false
 
-        const data = await getActivities(3, this.travelPage + 1)
+        // const data = await getActivities(3, this.travelPage + 1)
+        const data = await getPartyActivities()
 
-        if (data.iRet === 0) {
-          if (data.data.length === 0) {
+        if (data) {
+          if (data.length === 0) {
             this.showTravelPre = false
             return
           }
@@ -246,7 +265,8 @@ export default {
     },
     async getBannerImages() {
       try {
-        const data = await getBanners()
+        // const data = await getBanners()
+        const data = await getBannerImages()
         this.bannerImages = data
       } catch (error) {
         console.error(error)
