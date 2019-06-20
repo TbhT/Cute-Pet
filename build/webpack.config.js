@@ -57,6 +57,10 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         use: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env'],
+          plugins: ['@babel/plugin-transform-runtime']
+        },
         include: [
           resolvePath('src'),
           resolvePath('node_modules/framework7'),
@@ -64,7 +68,8 @@ module.exports = {
 
           resolvePath('node_modules/template7'),
           resolvePath('node_modules/dom7'),
-          resolvePath('node_modules/ssr-window')
+          resolvePath('node_modules/ssr-window'),
+          resolvePath('node_modules/vue-picture-input')
         ]
       },
 
@@ -172,9 +177,7 @@ module.exports = {
           // Production only plugins
           new UglifyJsPlugin({
             uglifyOptions: {
-              compress: {
-                warnings: false
-              }
+              warnings: false
             },
             sourceMap: true,
             parallel: true
@@ -225,5 +228,10 @@ module.exports = {
     new WorkboxPlugin.InjectManifest({
       swSrc: resolvePath('src/service-worker.js')
     })
-  ]
+  ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  }
 }

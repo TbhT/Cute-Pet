@@ -110,8 +110,14 @@ export default {
 
         const data = await getUserInfo()
         if (data.iRet === 0) {
-          this.user = data.data.userInfo
-          this.pet = data.data.pet
+          if (data.data.userInfo) {
+            this.user = data.data.userInfo
+          }
+
+          if (data.data.pet) {
+            this.pet = data.data.pet
+          }
+
           this.isGetUserInfo = true
         } else {
           console.error(data)
