@@ -34,6 +34,10 @@ export default {
   },
   methods: {
     routeToCardDetail(data) {
+      if (!data) {
+        return
+      }
+
       this.$f7router.navigate(`/tweet/${data.tweetId}`, {
         props: {
           tweet: data

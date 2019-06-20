@@ -38,7 +38,7 @@
         <span class="text" v-text="tweet.commentCount ? tweet.commentCount : '评论'"></span>
       </f7-link>
       <f7-link class="me-tool me-tool-border" @click="triggeLike(tweet.tweetId, tweet.liked)">
-        <span :class="tweet.liked ? 'me-liked' : 'me-liked' + ' iconfont icon-like'"></span>
+        <span :class="likeStyle"></span>
         <span class="text" v-text="tweet.likeCount ? tweet.likeCount : '喜欢'"></span>
       </f7-link>
     </f7-toolbar>
@@ -101,6 +101,7 @@
 <script>
 import Card from '../components/card.vue'
 import { mapMutations } from 'vuex'
+import { likeTweet } from '../utils'
 
 export default {
   components: {
@@ -120,15 +121,36 @@ export default {
   },
   data() {
     return {
-      backText: '返回'
+      backText: '返回',
+      likeStyle: 'iconfont icon-like'
     }
   },
   methods: {
     ...mapMutations(['updatePopup', 'home/updateTweetById']),
-    triggeLike(id, liked) {
-      // TODO: 触发喜欢还是不喜欢
-      
-      this['home/updateTweetById']({ tweetId: id, liked })
+    async triggeLike(tweetId, liked) {
+      try {
+        let type = 1
+
+        if (this.likeStyle !== 'iconfont icon-like') {
+          type = 2
+        }
+
+        const data = await likeTweet({ tweetId, type })
+
+        if (data.iRet === 0) {
+          if (this.likeStyle === 'iconfont icon-like') {
+            this.likeStyle = 'iconfont icon-like1'
+            this['home/updateTweetById']({ tweetId, liked: false })
+          } else {
+            this['home/updateTweetById']({ tweetId, liked: true })
+            this.likeStyle = 'iconfont icon-like'
+          }
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      }
     },
     openCommentPopup() {
       this.updatePopup({

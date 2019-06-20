@@ -74,11 +74,16 @@ export default {
       showPreloader: true,
       allowInfinite: true,
       isInfinite: true,
-      topics: []
+      topics: [],
+      isPageFirstIn: false
     }
   },
   methods: {
     async onPageBeforeIn() {
+      if (this.isPageFirstIn) {
+        return
+      }
+
       this.$f7.preloader.show()
       await this.getUserStatus()
 
@@ -95,6 +100,8 @@ export default {
         this.$f7.preloader.hide()
         this.$f7router.back('/user/login')
       }
+
+      this.isPageFirstIn = true
     },
     ...mapActions(['getIndexTweets', 'loadMoreTweets']),
     ...globalMapMutations(['updatePopup']),

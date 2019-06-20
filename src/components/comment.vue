@@ -19,6 +19,7 @@
 <script>
 import Editor from '../components/editor.vue'
 import { mapMutations, mapState } from 'vuex'
+import { createComment } from '../utils'
 
 export default {
   data() {
@@ -35,6 +36,14 @@ export default {
     Editor
   },
   methods: {
+    toast(msg) {
+      const toast = this.$f7.toast.create({
+        text: msg,
+        closeTimeout: 2000,
+        position: 'center'
+      })
+      toast.open()
+    },
     ...mapMutations(['updatePopup', 'updateEditorText']),
     closePopup() {
       this.updateEditorText({ text: '' })
@@ -42,17 +51,35 @@ export default {
     textInputChange(text) {
       this.updateEditorText({ text })
     },
-    sendComment() {
-      //  TODO: 发送评论
-      this.$f7.preloader.show('正在发送...')
-      setTimeout(() => {
+    async sendComment() {
+      if (this.editorText.length === 0) {
+        return this.toast('发送内容不能为空')
+      } else if (this.editorText.length > 200) {
+        return this.toast('发送内容不能超过200字')
+      }
+
+      this.$f7.preloader.show()
+
+      try {
+        const data = await createComment({ text: this.editorText })
+
+        if (data.iRet === 0) {
+          this.$f7.preloader.hide()
+          this.toast('评论成功')
+          this.updatePopup({
+            key: 'commentOpened',
+            value: false
+          })
+        } else {
+          this.toast('评论失败')
+          console.error(data)
+          this.$f7.preloader.hide()
+        }
+      } catch (error) {
+        this.toast('评论失败')
+        console.error(error)
         this.$f7.preloader.hide()
-        this.updatePopup({
-          key: 'commentOpened',
-          value: false
-        })
-        this.updateEditorText({ text: '' })
-      }, 1000)
+      }
     }
   }
 }

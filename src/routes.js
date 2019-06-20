@@ -23,7 +23,8 @@ import {
   getActivityDetail,
   getPetDetail,
   getMarketDetail,
-  getUserInfo
+  getUserInfo,
+  getUserAllTweets
 } from './utils'
 
 const routes = [
@@ -185,7 +186,6 @@ const routes = [
     async: async function(to, from, resolve) {
       this.app.preloader.show()
 
-
       try {
         const userDetailInfo = await getUserInfo()
 
@@ -216,7 +216,34 @@ const routes = [
   },
   {
     path: '/person/tweets',
-    component: PersonTweetsPage
+    async: async function(to, from, resolve) {
+      this.app.preloader.show()
+
+      try {
+        const data = await getUserAllTweets({ page: 1 })
+        console.log(data)
+        if (data.iRet === 0) {
+          const tweets = data.data
+
+          resolve(
+            {
+              component: PersonTweetsPage
+            },
+            {
+              props: {
+                loadCardData: tweets
+              }
+            }
+          )
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        this.app.preloader.hide()
+      }
+    }
   },
   {
     path: '/market',

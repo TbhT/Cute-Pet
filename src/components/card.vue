@@ -3,7 +3,7 @@
     <f7-card class="me-post-card">
       <f7-card-header>
         <div class="me-avatar">
-          <img src="https://loremflickr.com/70/70/people?lock=1" class="lazy lazy-fade-in">
+          <img :src="data.avatar" class="lazy lazy-fade-in">
         </div>
 
         <div class="me-user">
@@ -24,8 +24,8 @@
           <i class="iconfont icon-comment"></i>
           <span class="text me-comment">{{ data.commentCount }}</span>
         </f7-link>
-        <f7-link @click="likeClick(data.tweetId)">
-          <i class="iconfont icon-like"></i>
+        <f7-link @click.stop="likeClick(data.tweetId)">
+          <i :class="likeStyle"></i>
           <span class="text me-like">{{ data.likeCount }}</span>
         </f7-link>
       </f7-card-footer>
@@ -41,6 +41,9 @@
 .me-post-card {
   margin: 10px 0;
 }
+.me-post-card .card-header {
+  justify-content: inherit;
+}
 
 .me-post-card .card-content {
   padding-top: 0;
@@ -54,7 +57,7 @@
 }
 .me-user {
   font-size: 14px;
-  margin-right: 100px;
+  margin-left: 5px;
 }
 .me-user .me-name {
   color: #f7b453;
@@ -72,7 +75,8 @@
 
 
 <script>
-import { getRemoteAvatar } from '../utils/index.js'
+import { likeTweet } from '../utils/index.js'
+import { mapMutations } from 'vuex'
 
 export default {
   props: {
@@ -87,18 +91,40 @@ export default {
       default: true
     }
   },
+  data() {
+    return {
+      likeStyle: 'iconfont icon-like'
+    }
+  },
   methods: {
+    ...mapMutations(['home/updateTweetById']),
     cardClick(data) {
       this.$emit('card:content-click', data)
     },
-    formatTime(time) {
-      // TODO: 格式化时间
-    },
-    getAvatar(userId) {
-      return getRemoteAvatar(userId)
-    },
-    likeClick(tweetId) {
-      // TODO:
+    async likeClick(tweetId) {
+      let type = 1
+
+      if (this.likeStyle !== 'iconfont icon-like') {
+        type = 2
+      }
+
+      try {
+        const data = await likeTweet({ tweetId, type })
+
+        if (data.iRet === 0) {
+          if (this.likeStyle === 'iconfont icon-like') {
+            this.likeStyle = 'iconfont icon-like1'
+            this['home/updateTweetById']({ tweetId, liked: false })
+          } else {
+            this['home/updateTweetById']({ tweetId, liked: true })
+            this.likeStyle = 'iconfont icon-like'
+          }
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 }

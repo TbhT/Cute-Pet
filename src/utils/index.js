@@ -18,9 +18,36 @@ import {
   GET_USER_DETAIL_INFO,
   GET_USER_STATUS,
   GET_PET_DETAIL,
-  GET_USER_ALL_PETS
+  GET_USER_ALL_PETS,
+  CREATE_TWEET,
+  TWEET_LIKE,
+  CREATE_COMMENT
 } from '../store/api.js'
 const { postJSON } = F7.request.promise
+
+/**
+ * 添加评论
+ */
+export async function createComment() {
+  const data = await postJSON(CREATE_COMMENT, { text: text })
+  return data
+}
+
+/**
+ * 点赞处理
+ */
+export async function likeTweet({ type, tweetId }) {
+  const data = await postJSON(TWEET_LIKE, { type, tweetId })
+  return data
+}
+
+/**
+ * 新建动态信息
+ */
+export async function createTweet({ text, picture }) {
+  const data = await postJSON(CREATE_TWEET, { text, picture })
+  return data
+}
 
 /**
  * 获取用户所有的宠物列表
@@ -63,14 +90,10 @@ export async function getUserDetailInfo() {
 /**
  * 获取用户个人的动态信息流
  */
-export async function getUserAllTweets({ page }) {
+export async function getUserAllTweets({ page = 1 }) {
   const data = await postJSON(GET_USER_ALL_TWEETS, { offset: page })
 
-  if (data.iRet === 0) {
-    return data.data
-  } else {
-    return null
-  }
+  return data
 }
 
 /**

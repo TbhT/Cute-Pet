@@ -23,6 +23,7 @@
 <script>
 import Editor from '../components/editor.vue'
 import { mapActions, mapState, mapMutations } from 'vuex'
+import { createTweet } from '../utils'
 
 export default {
   components: {
@@ -46,31 +47,54 @@ export default {
       this.updateEditorText({ text: '' })
       this.file = null
       this.imagePreviewUrl = ''
+      this.text = ''
     },
     textInputChange(text) {
       this.updateEditorText({ text })
     },
-    imageUpload(imgTarget, file) {
+    imageUpload(imgTarget, base64File) {
       this.imagePreviewUrl = imgTarget.result
-      this.file = file
+      this.file = base64File
     },
-    sendTweet() {
-      this.$f7.preloader.show()
-      const f = new FormData()
-      f.append('text', this.editorText)
-      f.append('image', this.file)
-      console.log('--------formData-------', f.get('text'))
-      console.log('--------formData-------', f.get('image'))
+    toast(msg) {
+      const toast = this.$f7.toast.create({
+        text: msg,
+        closeTimeout: 2000,
+        position: 'center'
+      })
+      toast.open()
+    },
+    async sendTweet() {
 
-      setTimeout(() => {
-        this.$f7.preloader.hide()
-        this.updatePopup({
-          key: 'publisherOpened',
-          value: false
+      if (this.editorText.length === 0 && !this.file) {
+        return this.toast('发送内容不能为空')
+      } else if (this.editorText.length > 200) {
+        return this.toast('发送文字内容不能超过200字')
+      }
+
+      this.$f7.preloader.show()
+
+      try {
+        const data = await createTweet({
+          text: this.editorText,
+          picture: this.file
         })
-        this.updateEditorText({ text: '' })
-        this.imagePreviewUrl = ''
-      }, 1000)
+
+        this.$f7.preloader.hide()
+
+        if (data.iRet === 0) {
+          this.toast('发送成功')
+
+          setTimeout(() => {
+            this.closePopup()
+          }, 1000)
+        } else {
+          this.toast('发送失败')
+        }
+      } catch (error) {
+        console.error(error)
+        this.$f7.preloader.hide()
+      }
     }
   }
 }

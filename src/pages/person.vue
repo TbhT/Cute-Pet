@@ -85,7 +85,6 @@
 
 <script>
 import { getUserInfo } from '../utils'
-import { mapState } from 'vuex'
 
 export default {
   data: function() {
@@ -96,7 +95,6 @@ export default {
     }
   },
   computed: {
-    ...mapState(['user']),
     link() {
       if (this.user.userId) {
         return `/person/detail/${this.user.userId}`
