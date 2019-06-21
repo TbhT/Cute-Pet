@@ -29,9 +29,6 @@ export default {
       loadedEnd: false
     }
   },
-  updated() {
-    console.log('tweet 信息更新了')
-  },
   methods: {
     routeToCardDetail(data) {
       if (!data) {

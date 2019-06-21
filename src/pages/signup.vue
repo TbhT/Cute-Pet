@@ -29,7 +29,7 @@
 
       <f7-list-input
         error-message="手机号格式不正确"
-        :error-message-force="showUsernamError"
+        :error-message-force="showUsernameError"
         :value="username"
         @input="username = $event.target.value"
         label="手机号"
@@ -133,7 +133,7 @@ export default {
       homeAddress: '',
       workAddress: '',
       picture: '',
-      showUsernamError: false,
+      showUsernameError: false,
       showPasswordError: false,
       passwordErrorMsg: ''
     }
@@ -149,7 +149,7 @@ export default {
       this.age = ''
       this.homeAddress = ''
       this.workAddress = ''
-      this.showUsernamError = false
+      this.showUsernameError = false
       this.showPasswordError = false
       this.passwordErrorMsg = ''
       this.picture = ''
@@ -178,9 +178,9 @@ export default {
     },
     async submitSignupData() {
       if (!phoneRegExp.test(this.username)) {
-        this.showUsernamError = true
+        this.showUsernameError = true
         setTimeout(() => {
-          this.showUsernamError = false
+          this.showUsernameError = false
         }, 1000)
         return
       }

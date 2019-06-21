@@ -80,12 +80,12 @@ export default {
       vaccineStatus: 0,
       petType: 0,
       type: '',
-      pictrue: ''
+      picture: ''
     }
   },
   methods: {
     onChange(image) {
-      this.pictrue = image
+      this.picture = image
     },
     toast(msg) {
       const toast = this.$f7.toast.create({
@@ -110,7 +110,7 @@ export default {
           return (this.showGenderErrorFlag = true)
         }
 
-        if (!this.pictrue) {
+        if (!this.picture) {
           return this.toast('宠物头像不能为空')
         }
 
@@ -148,7 +148,7 @@ export default {
       this.vaccineStatus = 0
       this.petType = 0
       this.type = ''
-      this.pictrue = ''
+      this.picture = ''
     }
   }
 }

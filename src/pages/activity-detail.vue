@@ -1,19 +1,21 @@
 <template>
   <f7-page name="activityDetail" no-toolbar>
-    <f7-navbar :back-link="backText" sliding :title="activityDetail.name"></f7-navbar>
+    <f7-navbar :back-link="backText" sliding title="活动信息"></f7-navbar>
 
     <f7-block-title>赛事信息</f7-block-title>
-    <f7-list class="me-activity-detail-list">
-      <f7-list-item header="活动开始时间" :title="activityDetail.beginTime"></f7-list-item>
-      <f7-list-item header="活动结束时间" :title="activityDetail.endTime"></f7-list-item>
-      <f7-list-item header="报名总人数" :title="activityDetail.totalCount"></f7-list-item>
-      <f7-list-item header="报名总费用" :title="activityDetail.totalCost"></f7-list-item>
-      <f7-list-item header="报名开始时间" :title="activityDetail.joinBeginTime"></f7-list-item>
-      <f7-list-item header="报名结束时间" :title="activityDetail.joinEndTime"></f7-list-item>
-      <f7-list-item media-item header="主办方" :text="activityDetail.organizer"></f7-list-item>
-      <f7-list-item media-item header="承办方" :text="activityDetail.coorganizer"></f7-list-item>
-      <f7-list-item media-item header="活动地点" :text="activityDetail.place"></f7-list-item>
+    <f7-list class="me-activity-detail-list" v-if="activityInfo">
+      <f7-list-item header="活动开始时间" :title="activityInfo.beginTime"></f7-list-item>
+      <f7-list-item header="活动结束时间" :title="activityInfo.endTime"></f7-list-item>
+      <f7-list-item header="报名总人数" :title="activityInfo.totalCount"></f7-list-item>
+      <f7-list-item header="报名总费用" :title="activityInfo.totalCost"></f7-list-item>
+      <f7-list-item header="报名开始时间" :title="activityInfo.joinBeginTime"></f7-list-item>
+      <f7-list-item header="报名结束时间" :title="activityInfo.joinEndTime"></f7-list-item>
+      <f7-list-item media-item header="主办方" :text="activityInfo.organizer"></f7-list-item>
+      <f7-list-item media-item header="承办方" :text="activityInfo.coorganizer"></f7-list-item>
+      <f7-list-item media-item header="活动地点" :text="activityInfo.place"></f7-list-item>
     </f7-list>
+
+    <f7-block v-else inset>暂无赛事信息</f7-block>
   </f7-page>
 </template>
 
@@ -25,21 +27,34 @@
 
 
 <script>
+import { getActivityDetail } from '../utils'
+
 export default {
   props: {
-    activityDetail: {
-      type: Object,
-      required: true
-    }
+    activityId: null
   },
   data() {
     return {
-      backText: '返回'
+      backText: '返回',
+      activityInfo: null
     }
   },
-  computed: {
-    style() {
-      return `background-image:url(${activityDetail.image})`
+  methods: {
+    onPageBeforeIn() {
+      this.getActivityInfo()
+    },
+    async getActivityInfo() {
+      try {
+        const data = await getActivityDetail({ activityId: this.activityId })
+
+        if (data.iRet === 0) {
+          this.activityInfo = data.data
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 }

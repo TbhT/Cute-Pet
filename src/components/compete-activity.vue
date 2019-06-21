@@ -5,11 +5,11 @@
       v-for="(activity) in competeActivities"
       media-item
       :subtitle="formatSubtitle(activity)"
-      :title="activity.title"
+      :title="activity.name"
       :text="formatPlace(activity)"
-      @click="trigeClick(activity.activityId)"
+      :link="getDetailLink(activity)"
     >
-      <img :src="activity.imgUrl" slot="media" width="80" class="lazy lazy-fade-in">
+      <img :src="activity.image" slot="media" width="80" class="lazy lazy-fade-in">
     </f7-list-item>
   </f7-list>
 </template>
@@ -24,11 +24,11 @@ export default {
     }
   },
   methods: {
-    trigeClick() {
-      // TODO: 点击活动
+    getDetailLink(activity) {
+      return `/activities/detail/${activity.activityId}`
     },
     formatSubtitle(data) {
-      return `名额: ${data.peopleCount}/${data.totalCount} 人`
+      return `总人数: ${data.totalCount} 人`
     },
     formatPlace(data) {
       return `活动地点: ${data.place}`
@@ -36,6 +36,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

@@ -52,12 +52,18 @@ export default {
       showMarketPreloader: true,
       allowInfinite: true,
       marketList: [],
-      page: 1
+      page: 1,
+      isFirstPageIn: false
     }
   },
   methods: {
     onPageBeforeIn() {
+      if (this.isFirstPageIn) {
+        return
+      }
+
       this.getIndexMarketList()
+      this.isFirstPageIn = true
     },
     async onMarketPageRefresh(event, done) {
       try {

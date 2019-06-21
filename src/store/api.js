@@ -49,6 +49,8 @@ export const GET_USER_INFO = '/api/user/person/j-info'
 
 export const GET_USER_DETAIL_INFO = '/api/user/person/j-detail-info'
 
+export const GET_USER_ACTIVITIES = '/api/user/person/j-activities'
+
 
 
 

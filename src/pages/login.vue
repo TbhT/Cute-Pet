@@ -7,8 +7,8 @@
         label="手机号"
         type="text"
         placeholder="12366660000"
+        :error-message-force="showUsernameError"
         :error-message="usernameErrorMsg"
-        :error-message-force="showUsernamError"
         :value="username"
         @input="username = $event.target.value"
       ></f7-list-input>
@@ -43,7 +43,7 @@ export default {
     return {
       username: '',
       password: '',
-      showUsernamError: false,
+      showUsernameError: false,
       showPasswordError: false,
       passwordErrorMsg: '',
       usernameErrorMsg: ''
@@ -59,11 +59,11 @@ export default {
       const emptyFlag = this.username.length === 0
 
       if (!phoneFlag || emptyFlag) {
-        this.showUsernamError = true
+        this.showUsernameError = true
         this.usernameErrorMsg = emptyFlag ? '请输入手机号' : '手机号格式不正确'
 
         setTimeout(() => {
-          this.showUsernamError = false
+          this.showUsernameError = false
           this.usernameErrorMsg = ''
         }, 1000)
 

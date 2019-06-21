@@ -1,8 +1,17 @@
 <template>
-  <f7-page id="personTweetsView" no-toolbar>
+  <f7-page
+    id="personTweetsView"
+    no-toolbar
+    ptr
+    :infinite-preloader="showPreloader"
+    @ptr:refresh="onRefresh"
+    @infinite="loadMoreTweets"
+    @page:beforein="onPageBeforeIn"
+  >
     <f7-navbar title="我的动态" back-link="返回"></f7-navbar>
 
-    <card-list :loadCardData="tweets"></card-list>
+    <card-list :loadCardData="tweets" v-if="tweets.length"></card-list>
+    <f7-block v-else inset>暂无动态</f7-block>
   </f7-page>
 </template>
 
@@ -17,22 +26,65 @@ export default {
   data() {
     return {
       tweets: [],
-      page: 1
+      page: 1,
+      showPreloader: true,
+      allowInfinite: true,
+      isLoadAll: false,
+      isPageFirstIn: false
     }
   },
-  mounted() {
-    this.getIndexTweets()
-  },
   methods: {
-    loadMoreTweets() {
-      // TODO: 加载更多推特
+    onPageBeforeIn() {
+      if (this.isPageFirstIn) {
+        return
+      }
+
+      this.getIndexTweets()
+      this.isPageFirstIn = true
+    },
+    async onRefresh(done) {
+      await this.getIndexTweets()
+      done()
+    },
+    async loadMoreTweets() {
+      if (!this.allowInfinite || this.isLoadAll) {
+        return
+      }
+
+      this.allowInfinite = false
+
+      try {
+        const data = await getUserAllTweets({ page: this.page + 1 })
+
+        if (data.iRet === 0) {
+          this.page = this.page + 1
+
+          if (data.data.length === 0) {
+            this.showPreloader = false
+            this.isLoadAll = true
+          } else {
+            this.tweets = [...data.data, ...this.tweets]
+          }
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        this.allowInfinite = true
+      }
     },
     async getIndexTweets() {
-      // TODO: 加载首屏推特
-      const data = await getUserAllTweets({ page: 1 })
+      try {
+        const data = await getUserAllTweets({ page: 1 })
 
-      if (data) {
-        this.tweets = data
+        if (data.iRet === 0) {
+          this.tweets = data.data
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
       }
     }
   }

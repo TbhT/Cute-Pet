@@ -256,9 +256,9 @@ export default {
         this.toast('创建活动成功')
         this.resetAllProps()
 
-        // setTimeout(() => {
-        //   this.$f7router.back()
-        // }, 1000)
+        setTimeout(() => {
+          this.back()
+        }, 1000)
       } catch (error) {
         console.error(error)
         this.$f7.preloader.hide()

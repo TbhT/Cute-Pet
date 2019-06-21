@@ -247,7 +247,11 @@ export default {
     async getBannerImages() {
       try {
         const data = await getBanners()
-        this.bannerImages = data
+        if (data.iRet === 0) {
+          this.bannerImages = data.data
+        } else {
+          console.error(data)
+        }
       } catch (error) {
         console.error(error)
       }

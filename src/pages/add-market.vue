@@ -202,11 +202,14 @@ export default {
 
         if (data.iRet === 0) {
           this.toast('新建商家成功')
+          this.resetAllProps()
+          setTimeout(() => {
+            this.back()
+          }, 1000)
         } else {
           this.toast('新建商家失败', false)
           console.error(data)
         }
-        this.resetAllProps()
       } catch (error) {
         console.error(error)
         this.$f7.preloader.hide()

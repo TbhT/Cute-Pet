@@ -116,8 +116,8 @@ export default {
         value: true
       })
     },
-    async loadMore(el, event) {
-      if (!this.allowInfinite) {
+    async loadMore() {
+      if (!this.allowInfinite || this.isTweetLoadAll) {
         return
       }
 
@@ -125,7 +125,6 @@ export default {
 
       try {
         await this.loadMoreTweets()
-        this.allowInfinite = true
 
         if (this.isTweetLoadAll) {
           this.isInfinite = false
@@ -133,12 +132,18 @@ export default {
         }
       } catch (error) {
         console.error(error)
+      } finally {
+        this.allowInfinite = true
       }
     },
     async getBannerImages() {
       try {
         const data = await getBanners()
-        this.bannerImages = data
+        if (data.iRet === 0) {
+          this.bannerImages = data.data
+        } else {
+          console.error(error)
+        }
       } catch (error) {
         console.error(error)
       }
@@ -151,7 +156,7 @@ export default {
 
         const data = await getTopicAll()
 
-        if (data) {
+        if (data.iRet === 0) {
           this.topics = data.data
         } else {
           console.error(data)

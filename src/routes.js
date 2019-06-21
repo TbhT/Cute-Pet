@@ -19,12 +19,10 @@ import MarketDetailPage from './pages/market-detail.vue'
 import PersonDetailPage from './pages/person-detail.vue'
 import PetDetailPage from './pages/pet-detail.vue'
 import {
-  getTopicTweets,
   getActivityDetail,
   getPetDetail,
   getMarketDetail,
-  getUserInfo,
-  getUserAllTweets
+  getComment
 } from './utils'
 
 const routes = [
@@ -35,74 +33,51 @@ const routes = [
   },
   {
     path: '/topic/:topicId/',
-    async: async function(routeTo, routeFrom, resolve) {
-      this.app.preloader.show()
-
+    async: async function(to, from, resolve) {
       const topicId = routeTo.params.topicId
 
-      try {
-        const tweets = await getTopicTweets({ topicId })
-        resolve(
-          {
-            component: TopicDetailPage
-          },
-          {
-            props: {
-              tweets
-            }
+      resolve(
+        {
+          component: TopicDetailPage
+        },
+        {
+          props: {
+            topicId
           }
-        )
-      } catch (error) {
-        console.error(error)
-      } finally {
-        this.app.preloader.hide()
-      }
+        }
+      )
     }
   },
   {
     path: '/tweet/:tweetId',
     async: function(to, from, resolve) {
-      const tweetId = to.params.tweetId
-      console.log(`tweet ${tweetId} 加载`)
-      // TODO: 拉取某条tweet下的评论
       this.app.preloader.show()
-      const comments = [
-        {
-          commentId: 1,
-          userId: 114,
-          nickname: 'Tom',
-          createTime: Date.now(),
-          text: '这是第一条评论'
-        },
-        {
-          commentId: 2,
-          userId: 115,
-          nickname: 'Tom',
-          createTime: Date.now(),
-          text: '这是第二条评论'
-        },
-        {
-          commentId: 3,
-          userId: 116,
-          nickname: 'Tom',
-          createTime: Date.now(),
-          text: '这是第三条评论'
-        }
-      ]
 
-      setTimeout(() => {
-        resolve(
-          {
-            component: TweetDetailPage
-          },
-          {
-            props: {
-              comments
+      const tweetId = to.params.tweetId
+
+      try {
+        const comments = await getComment(tweetId)
+
+        if (comments.iRet === 0) {
+          resolve(
+            {
+              component: TweetDetailPage
+            },
+            {
+              props: {
+                comments: comments.data
+              }
             }
-          }
-        )
+          )
+        } else {
+          console.error(comments)
+        }
+  
+      } catch (error) {
+        console.error(error)
+      } finally {
         this.app.preloader.hide()
-      }, 1000)
+      }
     }
   },
   {
@@ -116,31 +91,18 @@ const routes = [
   },
   {
     path: '/activities/detail/:activityId',
-    async: async function(to, from, resolve) {
-      this.app.preloader.show()
-
+    async: function(to, from, resolve) {
       const activityId = to.params.activityId
-
-      try {
-        const activityDetail = await getActivityDetail({ activityId })
-
-        if (activityDetail.iRet === 0) {
-          resolve(
-            {
-              component: ActivityDetailPage
-            },
-            {
-              props: {
-                activityDetail
-              }
-            }
-          )
+      resolve(
+        {
+          component: ActivityDetailPage
+        },
+        {
+          props: {
+            activityId
+          }
         }
-      } catch (error) {
-        console.error(error)
-      } finally {
-        this.app.preloader.hide()
-      }
+      )
     }
   },
   {
@@ -149,31 +111,21 @@ const routes = [
   },
   {
     path: '/pet/detail/:petId',
-    async: async function(to, from, resolve) {
-      this.app.preloader.show()
-
+    async: function(to, from, resolve) {
       const petId = to.params.petId
 
-      try {
-        const petDetail = await getPetDetail({ petId })
-
-        if (petDetail.iRet === 0) {
-          resolve(
-            {
-              component: PetDetailPage
-            },
-            {
-              props: {
-                petDetail
-              }
-            }
-          )
+      resolve(
+        {
+          
+          component: PetDetailPage
+        },
+        {
+          props: {
+            petId
+          }
         }
-      } catch (error) {
-        console.error(error)
-      } finally {
-        this.app.preloader.hide()
-      }
+      )
+
     }
   },
   {
@@ -182,29 +134,8 @@ const routes = [
     keepAlive: true
   },
   {
-    path: '/person/detail/:userId',
-    async: async function(to, from, resolve) {
-      this.app.preloader.show()
-
-      try {
-        const userDetailInfo = await getUserInfo()
-
-        if (userDetailInfo.iRet === 0) {
-          resolve(
-            {
-              component: PersonDetailPage
-            },
-            {
-              userDetailInfo
-            }
-          )
-        }
-      } catch (error) {
-        console.error(error)
-      } finally {
-        this.app.preloader.hide()
-      }
-    }
+    path: '/person/detail',
+    component: PersonDetailPage
   },
   {
     path: '/person/pets',
@@ -216,34 +147,7 @@ const routes = [
   },
   {
     path: '/person/tweets',
-    async: async function(to, from, resolve) {
-      this.app.preloader.show()
-
-      try {
-        const data = await getUserAllTweets({ page: 1 })
-        console.log(data)
-        if (data.iRet === 0) {
-          const tweets = data.data
-
-          resolve(
-            {
-              component: PersonTweetsPage
-            },
-            {
-              props: {
-                loadCardData: tweets
-              }
-            }
-          )
-        } else {
-          console.error(data)
-        }
-      } catch (error) {
-        console.error(error)
-      } finally {
-        this.app.preloader.hide()
-      }
-    }
+    component: PersonTweetsPage
   },
   {
     path: '/market',
@@ -257,30 +161,17 @@ const routes = [
   {
     path: '/market/detail/:marketId',
     async: async function(to, from, resolve) {
-      this.app.preloader.show()
-
       const marketId = to.params.marketId
-
-      try {
-        const marketDetail = await getMarketDetail({ marketId })
-
-        if (marketDetail.iRet === 0) {
-          resolve(
-            {
-              component: MarketDetailPage
-            },
-            {
-              props: {
-                marketDetail
-              }
-            }
-          )
+      resolve(
+        {
+          component: MarketDetailPage
+        },
+        {
+          props: {
+            marketId
+          }
         }
-      } catch (error) {
-        console.error(error)
-      } finally {
-        this.app.preloader.hide()
-      }
+      )
     }
   },
   {

@@ -37,7 +37,7 @@
         <span class="iconfont icon-comment"></span>
         <span class="text" v-text="tweet.commentCount ? tweet.commentCount : '评论'"></span>
       </f7-link>
-      <f7-link class="me-tool me-tool-border" @click="triggeLike(tweet.tweetId, tweet.liked)">
+      <f7-link class="me-tool me-tool-border" @click="triggerLike(tweet.tweetId, tweet.liked)">
         <span :class="likeStyle"></span>
         <span class="text" v-text="tweet.likeCount ? tweet.likeCount : '喜欢'"></span>
       </f7-link>
@@ -127,7 +127,7 @@ export default {
   },
   methods: {
     ...mapMutations(['updatePopup', 'home/updateTweetById']),
-    async triggeLike(tweetId, liked) {
+    async triggerLike(tweetId, liked) {
       try {
         let type = 1
 

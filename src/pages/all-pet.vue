@@ -1,15 +1,17 @@
 <template>
-  <f7-page tabs no-toolbar>
+  <f7-page tabs no-toolbar @page:beforein="onPageBeforeIn">
     <f7-navbar title="我的宠物" back-link="返回"></f7-navbar>
 
     <f7-list media-list class="me-media-list me-person-all-pets" v-if="allPets.length">
       <f7-list-item
-        link="#"
+        media-item
+        :link="getDetailLink(pet)"
         :key="pet.petId"
         v-for="pet in allPets"
-        :subtitle="pet.name"
         :title="pet.name"
-      ></f7-list-item>
+      >
+        <img :src="pet.image" slot="media" width="80" class="lazy lazy-fade-in">
+      </f7-list-item>
     </f7-list>
 
     <f7-block inset v-else>
@@ -23,13 +25,39 @@
 </template>
 
 <script>
+import { getAllPet } from '../utils'
+
 export default {
   data() {
     return {
-      allPets: []
+      allPets: [],
+      isPageFirstIn: false
     }
   },
-  methods: {}
+  methods: {
+    getDetailLink(pet) {
+      return `/pet/detail/${pet.petId}`
+    },
+    onPageBeforeIn() {
+      if (this.isPageFirstIn) {
+        return
+      }
+
+      this.getAllPets()
+    },
+    async getAllPets() {
+      try {
+        const data = await getAllPets()
+        if (data.iRet === 0) {
+          this.allPets = data.data
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }
 }
 </script>
 

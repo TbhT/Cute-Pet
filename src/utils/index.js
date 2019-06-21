@@ -21,9 +21,19 @@ import {
   GET_USER_ALL_PETS,
   CREATE_TWEET,
   TWEET_LIKE,
-  CREATE_COMMENT
+  CREATE_COMMENT,
+  TWEET_ALL_COMMENT,
+  GET_USER_ACTIVITIES
 } from '../store/api.js'
 const { postJSON } = F7.request.promise
+
+/**
+ * 获取推特下的所有评论
+ */
+export async function getComment({ tweetId, page = 1 }) {
+  const data = await postJSON(TWEET_ALL_COMMENT, { tweetId, offset: page })
+  return data
+}
 
 /**
  * 添加评论
@@ -149,15 +159,10 @@ export async function getMarketAll({ offset = 1 }) {
 /**
  * 获取主题动态信息列表
  */
-export async function getTopicTweets({ topicId }) {
-  const data = await postJSON(TOPIC_TWEET_ALL, { topicId })
+export async function getTopicTweets({ topicId, page = 1 }) {
+  const data = await postJSON(TOPIC_TWEET_ALL, { topicId, offset: page })
 
-  if (data.iRet === 0) {
-    return data.data
-  } else {
-    console.error(data)
-    return []
-  }
+  return data
 }
 
 /**
@@ -165,13 +170,7 @@ export async function getTopicTweets({ topicId }) {
  */
 export async function getTopicAll() {
   const data = await postJSON(TOPIC_ALL)
-
-  if (data.iRet === 0) {
-    return data.data
-  } else {
-    console.error(data)
-    return []
-  }
+  return data
 }
 
 /**
@@ -223,6 +222,14 @@ export async function getUserSignUp({
 }
 
 /**
+ * 用户参加过的活动
+ */
+export async function getUserActivities({ page = 1 }) {
+  const data = await postJSON(GET_USER_ACTIVITIES, { offset: page })
+  return data
+}
+
+/**
  * 获取活动详情
  */
 export async function getActivityDetail({ activityId }) {
@@ -250,13 +257,7 @@ export async function joinActivity({ activityId }) {
  */
 export async function getBanners() {
   const data = await postJSON(GET_BANNERS)
-
-  if (data.iRet === 0) {
-    return data.data
-  } else {
-    console.error(data)
-    return []
-  }
+  return data
 }
 
 /**
@@ -340,10 +341,6 @@ export async function getActivities(type, offset = 1) {
     console.error(data)
     return []
   }
-}
-
-export function getRemoteAvatar(userId) {
-  return `/user/avatar?uid=${userId}`
 }
 
 export const imgFilterReg = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i
