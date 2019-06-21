@@ -5,13 +5,12 @@ const { postJSON } = F7.request.promise
 export default {
   async getUserStatus({ commit, state }) {
     try {
+      const data = await postJSON(GET_USER_STATUS)
 
-      // const data = await postJSON(GET_USER_STATUS)
-
-      // if (data.iRet === 0) {
-        // commit('updateUserStatus', data.data)
-        commit('updateUserStatus', {userId: 12312312312})
-      // }
+      if (data.iRet === 0) {
+        commit('updateUserStatus', data.data)
+        // commit('updateUserStatus', { userId: 12312312312 })
+      }
 
       console.log('---用户状态', data)
     } catch (error) {
