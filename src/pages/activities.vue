@@ -25,6 +25,7 @@
       :infinite-preloader="showCompetePre"
       @ptr:refresh="onCompetePageRefresh"
       @infinite="onCompetePageLoadMore"
+      @tab:show="onTabShow"
     >
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
       <compete-activity v-if="competeActivities.length" :competeActivities="competeActivities"></compete-activity>
@@ -95,15 +96,29 @@ export default {
       bannerImages: [],
       competeActivities: [],
       partyActivities: [],
-      travelActivities: []
+      travelActivities: [],
+      isTabFirstShow: false,
+      isPageFirstIn: false
     }
   },
   methods: {
+    onTabShow() {
+      // if (this.isTabFirstShow) {
+      //   return
+      // }
+      // this.isTabFirstShow = true
+      // this.onPageBeforeIn()
+    },
     onPageBeforeIn() {
-      if (this.user.isLogin) {
-        this.getBannerImages()
-        this.initActivities()
+      // if (this.user.isLogin) {
+      if (this.isPageFirstIn) {
+        return
       }
+
+      this.getBannerImages()
+      this.initActivities()
+      this.isPageFirstIn = true
+      // }
     },
     async initActivities() {
       const data1 = await getActivities(1)

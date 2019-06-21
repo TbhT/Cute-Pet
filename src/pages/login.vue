@@ -112,8 +112,12 @@ export default {
             userInfo: data.data
           })
           // this.$f7.router.navigate('/')
-          this.$f7.views.main.router.navigate('/')
-          // location.reload()
+          // this.$f7.views.main.router.navigate('/', {
+          //   props: {
+          //     isLoginNavigate: true
+          //   }
+          // })
+          location.reload()
         } else {
           console.error(data)
           if (data.data[0] === 'Incorrect username or password.') {

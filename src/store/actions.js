@@ -6,6 +6,10 @@ export default {
   async getUserStatus({ commit, state }) {
     try {
       const data = await postJSON(GET_USER_STATUS)
+      // const data = {
+      //   iRet: 0,
+      //   data: { userId: '915610820281836' }
+      // }
 
       if (data.iRet === 0) {
         commit('updateUserStatus', data.data)

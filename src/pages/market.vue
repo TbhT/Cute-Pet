@@ -11,6 +11,7 @@
       :infinite-preloader="showMarketPreloader"
       @ptr:refresh="onMarketPageRefresh"
       @infinite="onMarketLoadMore"
+      @tab:show="onTabShow"
     >
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
       <market-list :marketList="marketList" v-if="marketList.length"></market-list>
@@ -53,14 +54,23 @@ export default {
       allowInfinite: true,
       marketList: [],
       page: 1,
-      isFirstPageIn: false
+      isFirstPageIn: false,
+      isTabFirstIn: false
     }
   },
   methods: {
+    onTabShow() {
+      // if (this.isTabFirstIn) {
+      //   return
+      // }
+
+      // this.isTabFirstIn = true
+      // this.onPageBeforeIn()
+    },
     onPageBeforeIn() {
-      if (!this.user.isLogin) {
-        return
-      }
+      // if (!this.user.isLogin) {
+      //   return
+      // }
 
       if (this.isFirstPageIn) {
         return
