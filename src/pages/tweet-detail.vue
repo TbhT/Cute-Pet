@@ -12,7 +12,7 @@
       <div class="me-comments-list" v-if="comments.length">
         <div class="me-comment" v-for="comment in comments" :key="comment.commentId">
           <img
-            :src="'https://loremflickr.com/70/70/people?lock=1'"
+            :src="comment.avatar"
             alt
             class="me-avatar lazy lazy-fade-in"
           >
@@ -101,7 +101,7 @@
 <script>
 import Card from '../components/card.vue'
 import { mapMutations } from 'vuex'
-import { likeTweet } from '../utils'
+import { likeTweet, getComment } from '../utils'
 
 export default {
   components: {
@@ -111,22 +111,41 @@ export default {
     tweet: {
       type: Object,
       required: true
-    },
-    comments: {
-      type: Array,
-      default: function() {
-        return []
-      }
     }
   },
   data() {
     return {
       backText: '返回',
-      likeStyle: 'iconfont icon-like'
+      likeStyle: 'iconfont icon-like',
+      comments: [],
+      isPageFirstIn: false
     }
   },
   methods: {
+    onPageBeforeIn() {
+      if (this.isPageFirstIn) {
+        return
+      }
+    },
     ...mapMutations(['updatePopup', 'home/updateTweetById']),
+    async getAllComment() {
+      const tweetId = this.tweet.tweetId
+      if (!tweetId) {
+        return
+      }
+
+      try {
+        const data = await getComment({ tweetId })
+
+        if (data.iRet === 0) {
+          this.comments = data.data
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    },
     async triggerLike(tweetId, liked) {
       try {
         let type = 1

@@ -18,12 +18,7 @@ import ActivityDetailPage from './pages/activity-detail.vue'
 import MarketDetailPage from './pages/market-detail.vue'
 import PersonDetailPage from './pages/person-detail.vue'
 import PetDetailPage from './pages/pet-detail.vue'
-import {
-  getActivityDetail,
-  getPetDetail,
-  getMarketDetail,
-  getComment
-} from './utils'
+import { getComment } from './utils'
 
 const routes = [
   {
@@ -51,33 +46,18 @@ const routes = [
   {
     path: '/tweet/:tweetId',
     async: function(to, from, resolve) {
-      this.app.preloader.show()
-
       const tweetId = to.params.tweetId
 
-      try {
-        const comments = await getComment(tweetId)
-
-        if (comments.iRet === 0) {
-          resolve(
-            {
-              component: TweetDetailPage
-            },
-            {
-              props: {
-                comments: comments.data
-              }
-            }
-          )
-        } else {
-          console.error(comments)
+      resolve(
+        {
+          component: TweetDetailPage
+        },
+        {
+          props: {
+            tweetId
+          }
         }
-  
-      } catch (error) {
-        console.error(error)
-      } finally {
-        this.app.preloader.hide()
-      }
+      )
     }
   },
   {
@@ -116,7 +96,6 @@ const routes = [
 
       resolve(
         {
-          
           component: PetDetailPage
         },
         {
@@ -125,7 +104,6 @@ const routes = [
           }
         }
       )
-
     }
   },
   {
@@ -160,7 +138,7 @@ const routes = [
   },
   {
     path: '/market/detail/:marketId',
-    async: async function(to, from, resolve) {
+    async: function(to, from, resolve) {
       const marketId = to.params.marketId
       resolve(
         {
