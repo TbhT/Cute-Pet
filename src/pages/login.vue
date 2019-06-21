@@ -113,7 +113,7 @@ export default {
           })
           // this.$f7.router.navigate('/')
           this.$f7.views.main.router.navigate('/')
-          location.reload()
+          // location.reload()
         } else {
           console.error(data)
           if (data.data[0] === 'Incorrect username or password.') {

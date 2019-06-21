@@ -58,6 +58,10 @@ export default {
   },
   methods: {
     onPageBeforeIn() {
+      if (!this.user.isLogin) {
+        return
+      }
+
       if (this.isFirstPageIn) {
         return
       }

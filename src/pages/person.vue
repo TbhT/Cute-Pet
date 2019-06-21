@@ -85,6 +85,8 @@
 
 <script>
 import { getUserInfo } from '../utils'
+import { mapState } from 'vuex'
+
 
 export default {
   data: function() {
@@ -95,6 +97,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['user']),
     link() {
       if (this.user.userId) {
         return `/person/detail/${this.user.userId}`
@@ -104,6 +107,10 @@ export default {
   methods: {
     async onPageBeforeIn() {
       try {
+        if (!this.user.isLogin) {
+          return
+        }
+
         if (this.isGetUserInfo) {
           return
         }

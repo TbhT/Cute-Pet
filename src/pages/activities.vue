@@ -100,8 +100,10 @@ export default {
   },
   methods: {
     onPageBeforeIn() {
-      this.getBannerImages()
-      this.initActivities()
+      if (this.user.isLogin) {
+        this.getBannerImages()
+        this.initActivities()
+      }
     },
     async initActivities() {
       const data1 = await getActivities(1)
