@@ -27,10 +27,10 @@ const mutations = {
 
     if (liked === false) {
       t.liked = true
-      t.likeCount += 1
+      t.likeCount = Number(t.likeCount) + 1
     } else {
       t.liked = false
-      t.likeCount -= 1
+      t.likeCount = Number(t.likeCount) - 1
     }
   },
   resetTweets(state, { tweets }) {
@@ -55,7 +55,6 @@ const actions = {
       } else {
         console.error(data)
       }
-
     } catch (error) {
       console.log(error)
     }
@@ -71,18 +70,15 @@ const actions = {
       })
 
       if (data.iRet === 0) {
-
         if (data.data.length === 0) {
           state.tweetsIsLoadAll = true
         } else {
           commit('addPageNum')
           commit('appendTweets', { tweets: data.data })
         }
-
       } else {
         console.error(data)
       }
-
     } catch (error) {
       console.log(error)
     }
