@@ -1,37 +1,34 @@
 <template>
-  <f7-page class="me-tweet-detail" no-toolbar>
+  <f7-page class="me-tweet-detail" no-toolbar :page-content="false" @page:beforein="onPageBeforeIn">
     <f7-navbar :back-link="backText" sliding></f7-navbar>
 
-    <card :enableToolBar="false" :data="tweet"></card>
+    <f7-page-content @ptr:refresh="onPageRefresh" ptr>
+      <card :enableToolBar="false" :data="tweet"></card>
 
-    <div class="me-comments">
-      <div class="me-title">
-        <span>评论</span>
-      </div>
+      <div class="me-comments">
+        <div class="me-title">
+          <span>评论</span>
+        </div>
 
-      <div class="me-comments-list" v-if="comments.length">
-        <div class="me-comment" v-for="comment in comments" :key="comment.commentId">
-          <img
-            :src="comment.avatar"
-            alt
-            class="me-avatar lazy lazy-fade-in"
-          >
-          <div class="me-detail">
-            <div class="me-nickname">{{ comment.nickname }}</div>
-            <div class="me-time">{{ comment.createTime }}</div>
-            <div class="me-text">{{ comment.text }}</div>
+        <div class="me-comments-list" v-if="comments.length">
+          <div class="me-comment" v-for="comment in comments" :key="comment.commentId">
+            <img :src="comment.avatar" alt class="me-avatar lazy lazy-fade-in">
+            <div class="me-detail">
+              <div class="me-nickname">{{ comment.nickname }}</div>
+              <div class="me-time">{{ comment.createTime }}</div>
+              <div class="me-text">{{ comment.text }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="me-no-comment" v-else>
+          <i class="iconfont icon-wujieguoyangshi"></i>
+          <div class="me-text me-no-content">
+            <span>暂无内容</span>
           </div>
         </div>
       </div>
-
-      <div class="me-no-comment" v-else>
-        <i class="iconfont icon-wujieguoyangshi"></i>
-        <div class="me-text me-no-content">
-          <span>暂无内容</span>
-        </div>
-      </div>
-    </div>
-
+    </f7-page-content>
     <f7-toolbar class="me-flex-row" position="bottom">
       <f7-link class="me-tool me-tool-border" @click="openCommentPopup">
         <span class="iconfont icon-comment"></span>
@@ -52,6 +49,7 @@
 }
 .me-comments .me-title {
   border-top: 1px solid #dadada;
+  border-bottom: 1px solid #dadada;
   height: 35px;
   line-height: 35px;
   padding: 0 10px;
@@ -116,18 +114,38 @@ export default {
   data() {
     return {
       backText: '返回',
-      likeStyle: 'iconfont icon-like',
       comments: [],
       isPageFirstIn: false
     }
   },
+  computed: {
+    likeStyle() {
+      if (this.tweet.liked) {
+        return 'iconfont icon-like1'
+      } else {
+        return 'iconfont icon-like'
+      }
+    }
+  },
   methods: {
+    async onPageRefresh(event, done) {
+      await this.getAllComment()
+      done()
+    },
     onPageBeforeIn() {
       if (this.isPageFirstIn) {
         return
       }
+
+      this['updateCommentTweetId']({ tweetId: this.tweet.tweetId })
+
+      this.getAllComment()
     },
-    ...mapMutations(['updatePopup', 'home/updateTweetById']),
+    ...mapMutations([
+      'updatePopup',
+      'home/updateTweetById',
+      'updateCommentTweetId'
+    ]),
     async getAllComment() {
       const tweetId = this.tweet.tweetId
       if (!tweetId) {

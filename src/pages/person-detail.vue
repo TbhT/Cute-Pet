@@ -12,7 +12,7 @@
       <f7-list-item media-item header="工作地址" :text="userInfo.workAddress"></f7-list-item>
     </f7-list>
 
-    <f7-block v-else inset>暂无个人相关信息</f7-block>
+    <f7-block v-else inset>暂无相关信息</f7-block>
   </f7-page>
 </template>
 
@@ -29,9 +29,9 @@ export default {
   methods: {
     async onPageAfterIn() {
       try {
-        const data = await getUserInfo()
+        const {iRet, data} = await getUserInfo()
 
-        if (data.iRet === 0) {
+        if (iRet === 0) {
           this.userInfo = data.userInfo
         } else {
           console.error(data)

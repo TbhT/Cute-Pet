@@ -10,6 +10,7 @@
         placeholder="宠物昵称"
         error-message="宠物昵称不能为空"
         :error-message-force="showNicknameErrorFlag"
+        @input="nickname = $event.target.value"
       ></f7-list-input>
 
       <f7-list-input
@@ -18,23 +19,41 @@
         type="select"
         error-message="性别不能为空"
         :error-message-force="showGenderErrorFlag"
+        @input="gender = $event.target.value"
       >
         <option value="1">公</option>
         <option value="2">母</option>
       </f7-list-input>
 
       <f7-list-input label="年龄" :input="false">
-        <f7-range :value="age" label slot="input" :min="1" :max="100" :step="1"></f7-range>
+        <f7-range label slot="input" :min="1" :max="100" :step="1" @rangeChange="onAgeChange"></f7-range>
       </f7-list-input>
 
-      <f7-list-input :value="vaccineStatus" label="疫苗状况" type="select">
+      <f7-list-input
+        :value="vaccineStatus"
+        label="疫苗状况"
+        type="select"
+        @input="vaccineStatus = $event.target.value"
+      >
         <option value="1">已接种</option>
         <option value="2">未接种</option>
       </f7-list-input>
 
-      <f7-list-input label="宠物类别" :value="petType" type="text" placeholder="宠物类别"></f7-list-input>
+      <f7-list-input
+        label="宠物类别"
+        :value="petType"
+        type="text"
+        placeholder="宠物类别"
+        @input="petType = $event.target.value"
+      ></f7-list-input>
 
-      <f7-list-input label="品种" :value="type" type="text" placeholder="品种"></f7-list-input>
+      <f7-list-input
+        label="品种"
+        :value="type"
+        type="text"
+        placeholder="品种"
+        @input="type = $event.target.value"
+      ></f7-list-input>
     </f7-list>
 
     <div class="block block-strong">
@@ -84,6 +103,9 @@ export default {
     }
   },
   methods: {
+    onAgeChange(value) {
+      this.age = value
+    },
     onChange(image) {
       this.picture = image
     },
@@ -129,9 +151,9 @@ export default {
         this.toast('添加宠物成功')
         this.resetAllProps()
 
-        // setTimeout(() => {
-        //   this.back()
-        // }, 1000)
+        setTimeout(() => {
+          this.back()
+        }, 1000)
       } catch (error) {
         console.error(error)
         this.$f7.preloader.hide()

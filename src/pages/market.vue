@@ -11,7 +11,6 @@
       :infinite-preloader="showMarketPreloader"
       @ptr:refresh="onMarketPageRefresh"
       @infinite="onMarketLoadMore"
-      @tab:show="onTabShow"
     >
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
       <market-list :marketList="marketList" v-if="marketList.length"></market-list>
@@ -59,19 +58,7 @@ export default {
     }
   },
   methods: {
-    onTabShow() {
-      // if (this.isTabFirstIn) {
-      //   return
-      // }
-
-      // this.isTabFirstIn = true
-      // this.onPageBeforeIn()
-    },
     onPageBeforeIn() {
-      // if (!this.user.isLogin) {
-      //   return
-      // }
-
       if (this.isFirstPageIn) {
         return
       }
@@ -81,15 +68,17 @@ export default {
     },
     async onMarketPageRefresh(event, done) {
       try {
-        const data = await getMarketAll()
+        const data = await getMarketAll({ offset: 1 })
 
-        if (data.length < 6) {
-          this.showMarketPreloader = false
+        if (data.iRet === 0) {
+          if (data.length < 6) {
+            this.showMarketPreloader = false
+          }
+
+          this.marketList = data.data
         } else {
-          console.error(data)
+          console.error(error)
         }
-
-        this.marketList = data
       } catch (error) {
         console.error(error)
       } finally {
@@ -134,9 +123,11 @@ export default {
           this.marketList = data.data
         } else {
           console.error(data)
+          this.showMarketPreloader = false
         }
       } catch (error) {
         console.error(error)
+        this.showMarketPreloader = false
       }
     }
   }

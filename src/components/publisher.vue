@@ -48,6 +48,10 @@ export default {
       this.file = null
       this.imagePreviewUrl = ''
       this.text = ''
+      this.updatePopup({
+        key: 'publisherOpened',
+        value: false
+      })
     },
     textInputChange(text) {
       this.updateEditorText({ text })
@@ -65,7 +69,6 @@ export default {
       toast.open()
     },
     async sendTweet() {
-
       if (this.editorText.length === 0 && !this.file) {
         return this.toast('发送内容不能为空')
       } else if (this.editorText.length > 200) {

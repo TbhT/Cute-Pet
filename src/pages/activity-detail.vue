@@ -1,9 +1,10 @@
 <template>
-  <f7-page name="activityDetail" no-toolbar>
+  <f7-page name="activityDetail" no-toolbar @page:beforein="onPageBeforeIn">
     <f7-navbar :back-link="backText" sliding title="活动信息"></f7-navbar>
 
     <f7-block-title>赛事信息</f7-block-title>
     <f7-list class="me-activity-detail-list" v-if="activityInfo">
+      <f7-list-item header="活动名称" :title="activityInfo.name"></f7-list-item>
       <f7-list-item header="活动开始时间" :title="activityInfo.beginTime"></f7-list-item>
       <f7-list-item header="活动结束时间" :title="activityInfo.endTime"></f7-list-item>
       <f7-list-item header="报名总人数" :title="activityInfo.totalCount"></f7-list-item>

@@ -6,8 +6,10 @@
       v-for="market in marketList"
       media-item
       :title="market.name"
+      :subtitle="market.place"
+      :text="market.intro"
     >
-      <img :src="market.image" slot="media" width="80" class="lazy lazy-fade-in">
+      <img :src="market.image" slot="media" width="80" height="80" class="lazy lazy-fade-in">
     </f7-list-item>
   </f7-list>
 </template>

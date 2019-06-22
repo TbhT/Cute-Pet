@@ -38,8 +38,8 @@ export async function getComment({ tweetId, page = 1 }) {
 /**
  * 添加评论
  */
-export async function createComment() {
-  const data = await postJSON(CREATE_COMMENT, { text: text })
+export async function createComment({ text, tweetId }) {
+  const data = await postJSON(CREATE_COMMENT, { text, tweetId })
   return data
 }
 
@@ -109,15 +109,10 @@ export async function getUserAllTweets({ page = 1 }) {
 /**
  * 获取商家详情
  */
-export async function getMarketDetail() {
-  const data = await postJSON(GET_MARKET_DETAIL)
+export async function getMarketDetail({ marketId }) {
+  const data = await postJSON(GET_MARKET_DETAIL, { marketId })
 
-  if (data.iRet === 0) {
-    return data.data
-  } else {
-    console.error(data)
-    return null
-  }
+  return data
 }
 
 /**
@@ -243,13 +238,7 @@ export async function getActivityDetail({ activityId }) {
  */
 export async function joinActivity({ activityId }) {
   const data = await postJSON(JOIN_ACTIVITY, { activityId })
-
-  if (data.iRet === 0) {
-    return true
-  } else {
-    console.error(data)
-    return false
-  }
+  return data
 }
 
 /**
@@ -282,12 +271,7 @@ export async function addPet({
     picture
   })
 
-  if (data.iRet === 0) {
-    return true
-  } else {
-    console.error(data)
-    return false
-  }
+  return data
 }
 
 /**
@@ -322,12 +306,7 @@ export async function addActivity({
     picture
   })
 
-  if (data.iRet === 0) {
-    return true
-  } else {
-    console.error(error)
-    return false
-  }
+  return data
 }
 
 /**
@@ -335,12 +314,8 @@ export async function addActivity({
  */
 export async function getActivities(type, offset = 1) {
   const data = await postJSON(GET_ACTIVITY, { type, offset })
-  if (data.iRet === 0) {
-    return data.data
-  } else {
-    console.error(data)
-    return []
-  }
+
+  return data
 }
 
 export const imgFilterReg = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i

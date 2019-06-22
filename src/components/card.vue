@@ -12,7 +12,7 @@
         </div>
       </f7-card-header>
 
-      <f7-card-content>
+      <f7-card-content class="me-card-content">
         <div class="text me-text">{{ data.text }}</div>
         <div class="me-image" v-if="data.image">
           <img :src="data.image" class="lazy">
@@ -43,6 +43,7 @@
 }
 .me-post-card .card-header {
   justify-content: inherit;
+  padding: 5px 10px 5px 10px;
 }
 
 .me-post-card .card-content {
@@ -52,8 +53,14 @@
 .me-text.text {
   word-wrap: break-word;
   text-indent: 2em;
-  font-size: 20px;
+  font-size: 16px;
   padding: 4px;
+}
+.me-flex-row.card-footer {
+  padding: 2px 10px 2px 10px;
+}
+.me-card-content {
+  padding: 5px 10px;
 }
 .me-user {
   font-size: 14px;
@@ -91,9 +98,13 @@ export default {
       default: true
     }
   },
-  data() {
-    return {
-      likeStyle: 'iconfont icon-like'
+  computed: {
+    likeStyle() {
+      if (this.data.liked) {
+        return 'iconfont icon-like1'
+      } else {
+        return 'iconfont icon-like'
+      }
     }
   },
   methods: {
@@ -113,11 +124,9 @@ export default {
 
         if (data.iRet === 0) {
           if (this.likeStyle === 'iconfont icon-like') {
-            this.likeStyle = 'iconfont icon-like1'
             this['home/updateTweetById']({ tweetId, liked: false })
           } else {
             this['home/updateTweetById']({ tweetId, liked: true })
-            this.likeStyle = 'iconfont icon-like'
           }
         } else {
           console.error(data)

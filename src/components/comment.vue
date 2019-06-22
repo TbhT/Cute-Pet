@@ -29,7 +29,8 @@ export default {
   },
   computed: {
     ...mapState({
-      editorText: state => state.popup.editorText
+      editorText: state => state.popup.editorText,
+      commentTweetId: state => state.popup.commentTweetId
     })
   },
   components: {
@@ -44,8 +45,16 @@ export default {
       })
       toast.open()
     },
-    ...mapMutations(['updatePopup', 'updateEditorText']),
+    ...mapMutations([
+      'updatePopup',
+      'updateEditorText',
+      'updateCommentTweetId'
+    ]),
     closePopup() {
+      this.resetStatus()
+    },
+    resetStatus() {
+      this.updateCommentTweetId({ tweetId: -1 })
       this.updateEditorText({ text: '' })
     },
     textInputChange(text) {
@@ -61,7 +70,10 @@ export default {
       this.$f7.preloader.show()
 
       try {
-        const data = await createComment({ text: this.editorText })
+        const data = await createComment({
+          text: this.editorText,
+          tweetId: this.commentTweetId
+        })
 
         if (data.iRet === 0) {
           this.$f7.preloader.hide()
@@ -70,6 +82,7 @@ export default {
             key: 'commentOpened',
             value: false
           })
+          this.resetStatus()
         } else {
           this.toast('评论失败')
           console.error(data)

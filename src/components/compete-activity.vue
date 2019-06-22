@@ -9,7 +9,7 @@
       :text="formatPlace(activity)"
       :link="getDetailLink(activity)"
     >
-      <img :src="activity.image" slot="media" width="80" class="lazy lazy-fade-in">
+      <img :src="activity.image" slot="media" width="80" height="80" class="lazy lazy-fade-in">
     </f7-list-item>
   </f7-list>
 </template>

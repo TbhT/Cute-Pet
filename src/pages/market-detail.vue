@@ -8,7 +8,7 @@
       <f7-list-item header="商家名称" :title="marketInfo.name"></f7-list-item>
       <f7-list-item header="联系人" :title="marketInfo.contact"></f7-list-item>
       <f7-list-item header="联系方式" :title="marketInfo.phoneNumber"></f7-list-item>
-      <f7-list-item media-item header="地点" :text="marketInfo.place"></f7-list-item>
+      <f7-list-item header="地点" :text="marketInfo.place"></f7-list-item>
       <f7-list-item header="工作时间" :text="marketInfo.workTime"></f7-list-item>
       <f7-list-item header="简介" :text="marketInfo.intro"></f7-list-item>
     </f7-list>

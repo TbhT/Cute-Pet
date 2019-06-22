@@ -1,5 +1,5 @@
 <template>
-  <f7-page id="personView" @page:beforein="onPageBeforeIn">
+  <f7-page id="personView" @page:beforein="onPageBeforeIn" :page-content="false">
     <f7-navbar title="我的"></f7-navbar>
 
     <f7-page-content @tab:show="onTabShow">
@@ -110,7 +110,6 @@ export default {
       // if (this.isTabFirstShow) {
       //   return
       // }
-
       // this.isTabFirstShow = true
       // this.onPageBeforeIn()
     },

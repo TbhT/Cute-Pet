@@ -17,7 +17,8 @@ const state = {
   popup: {
     publisherOpened: false,
     commentOpened: false,
-    editorText: ''
+    editorText: '',
+    commentTweetId: -1
   }
 }
 

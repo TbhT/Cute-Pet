@@ -25,7 +25,6 @@
       :infinite-preloader="showCompetePre"
       @ptr:refresh="onCompetePageRefresh"
       @infinite="onCompetePageLoadMore"
-      @tab:show="onTabShow"
     >
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
       <compete-activity v-if="competeActivities.length" :competeActivities="competeActivities"></compete-activity>
@@ -44,7 +43,7 @@
       @infinite="onPartyPageLoadMore"
     >
       <banner-swiper v-if="bannerImages.length" :bannerImages="bannerImages"></banner-swiper>
-      <compete-activity v-if="competeActivities.length" :competeActivities="competeActivities"></compete-activity>
+      <compete-activity v-if="partyActivities.length" :competeActivities="partyActivities"></compete-activity>
       <f7-block v-else inset>暂无宠物趴体~</f7-block>
     </f7-page-content>
 
@@ -58,7 +57,7 @@
       @infinite="onTravelPageLoadMore"
     >
       <banner-swiper v-if="bannerImages.length" :bannerImages="bannerImages"></banner-swiper>
-      <compete-activity v-if="competeActivities.length" :competeActivities="competeActivities"></compete-activity>
+      <compete-activity v-if="travelActivities.length" :competeActivities="travelActivities"></compete-activity>
       <f7-block v-else inset>暂无带宠旅行~</f7-block>
     </f7-page-content>
 
@@ -102,15 +101,7 @@ export default {
     }
   },
   methods: {
-    onTabShow() {
-      // if (this.isTabFirstShow) {
-      //   return
-      // }
-      // this.isTabFirstShow = true
-      // this.onPageBeforeIn()
-    },
     onPageBeforeIn() {
-      // if (this.user.isLogin) {
       if (this.isPageFirstIn) {
         return
       }
@@ -118,26 +109,45 @@ export default {
       this.getBannerImages()
       this.initActivities()
       this.isPageFirstIn = true
-      // }
     },
     async initActivities() {
-      const data1 = await getActivities(1)
-      if (data1.length < 6) {
-        this.showCompetePre = false
-      }
-      this.competeActivities = data1
+      try {
+        const data1 = await getActivities(1)
+        console.log('1111', data1)
+        if (data1.iRet === 0) {
+          if (data1.data.length < 6) {
+            this.showCompetePre = false
+          }
+          this.competeActivities = data1.data
+        } else {
+          console.error(data1)
+          this.showCompetePre = false
+        }
 
-      const data2 = await getActivities(2)
-      if (data2.length < 6) {
-        this.showPartyPre = false
-      }
-      this.partyActivities = data2
+        const data2 = await getActivities(2)
+        if (data2.iRet === 0) {
+          if (data2.data.length < 6) {
+            this.showPartyPre = false
+          }
+          this.partyActivities = data2.data
+        } else {
+          console.error(data2)
+          this.showPartyPre = false
+        }
 
-      const data3 = await getActivities(3)
-      if (data3.length < 6) {
-        this.showTravelPre = false
+        const data3 = await getActivities(3)
+        if (data3.iRet === 0) {
+          if (data3.data.length < 6) {
+            this.showTravelPre = false
+          }
+          this.travelActivities = data3.data
+        } else {
+          console.error(data3)
+          this.showTravelPre = false
+        }
+      } catch (error) {
+        console.log(error)
       }
-      this.travelActivities = data3
     },
     async onCompetePageRefresh(event, done) {
       try {

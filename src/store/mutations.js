@@ -11,5 +11,10 @@ export default {
       state.user.userId = userId
       state.user.isGetInfo = true
     }
+  },
+  updateCommentTweetId(state, { tweetId }) {
+    if (tweetId) {
+      state.popup.commentTweetId = tweetId
+    }
   }
 }
