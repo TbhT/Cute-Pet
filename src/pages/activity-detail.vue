@@ -3,17 +3,123 @@
     <f7-navbar :back-link="backText" sliding title="活动信息"></f7-navbar>
 
     <f7-block-title>赛事信息</f7-block-title>
-    <f7-list class="me-activity-detail-list" v-if="activityInfo">
-      <f7-list-item header="活动名称" :title="activityInfo.name"></f7-list-item>
-      <f7-list-item header="活动开始时间" :title="activityInfo.beginTime"></f7-list-item>
-      <f7-list-item header="活动结束时间" :title="activityInfo.endTime"></f7-list-item>
-      <f7-list-item header="报名总人数" :title="activityInfo.totalCount"></f7-list-item>
-      <f7-list-item header="报名总费用" :title="activityInfo.totalCost"></f7-list-item>
-      <f7-list-item header="报名开始时间" :title="activityInfo.joinBeginTime"></f7-list-item>
-      <f7-list-item header="报名结束时间" :title="activityInfo.joinEndTime"></f7-list-item>
-      <f7-list-item media-item header="主办方" :text="activityInfo.organizer"></f7-list-item>
-      <f7-list-item media-item header="承办方" :text="activityInfo.coorganizer"></f7-list-item>
-      <f7-list-item media-item header="活动地点" :text="activityInfo.place"></f7-list-item>
+    <f7-list class="me-activity-detail-list media-list" v-if="activityInfo">
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">活动名称</div>
+              {{activityInfo.name || '暂无'}}
+            </div>
+            <div class="item-after"></div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">活动开始时间</div>
+              {{activityInfo.beginTime || '暂无'}}
+            </div>
+            <div class="item-after"></div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">活动结束时间</div>
+              {{activityInfo.endTime || '暂无'}}
+            </div>
+            <div class="item-after"></div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">报名总人数</div>
+              {{activityInfo.totalCount || '暂无'}}
+            </div>
+            <div class="item-after"></div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">报名总费用</div>
+              {{activityInfo.totalCost || '暂无'}}
+            </div>
+            <div class="item-after"></div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">报名开始时间</div>
+              {{activityInfo.joinBeginTime || '暂无'}}
+            </div>
+            <div class="item-after"></div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">报名结束时间</div>
+              {{activityInfo.joinEndTime || '暂无'}}
+            </div>
+            <div class="item-after"></div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">主办方</div>
+            </div>
+            <div class="item-text">{{activityInfo.organizer || '暂无'}}</div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">承办方</div>
+            </div>
+            <div class="item-text">{{activityInfo.coorganizer || '暂无'}}</div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">活动地点</div>
+            </div>
+            <div class="item-text">{{activityInfo.place || '暂无'}}</div>
+          </div>
+        </a>
+      </li>
     </f7-list>
 
     <f7-block v-else inset>暂无赛事信息</f7-block>
@@ -23,6 +129,22 @@
 <style scoped>
 .me-activity-detail-list {
   word-break: break-all;
+}
+.block-title {
+  font-size: 20px;
+  padding: 0px;
+  height: 30px;
+}
+.me-list-item .item-title,
+.me-list-item .item-text {
+  color: black;
+  font-weight: inherit;
+  font-size: 17px;
+}
+.me-list-item .item-title > .item-header {
+  color: grey;
+  font-size: 16px;
+  padding-bottom: 5px;
 }
 </style>
 
@@ -60,6 +182,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

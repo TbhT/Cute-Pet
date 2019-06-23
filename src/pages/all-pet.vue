@@ -8,9 +8,11 @@
           :link="getDetailLink(pet)"
           :key="pet.petId"
           v-for="pet in allPets"
-          :title="pet.name"
+          :title="'昵称：' + pet.nickname"
+          :subtitle="'年龄：' + pet.age"
+          :text="getGenderText(pet)"
         >
-          <img :src="pet.image" slot="media" width="80" class="lazy lazy-fade-in">
+          <img :src="pet.image" slot="media" width="80" height="80" class="lazy lazy-fade-in">
         </f7-list-item>
       </f7-list>
 
@@ -36,6 +38,13 @@ export default {
     }
   },
   methods: {
+    getGenderText(pet) {
+      if (pet.gender == 1) {
+        return '性别：公'
+      } else {
+        return '性别：母'
+      }
+    },
     async onPageRefresh(event, done) {
       await this.getAllPets()
       done()
