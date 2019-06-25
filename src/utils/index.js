@@ -189,28 +189,14 @@ export async function getUserLogin({ username, password }) {
  * 注册
  */
 export async function getUserSignUp({
-  name,
-  email,
   nickname,
   username,
   password,
-  gender,
-  age,
-  homeAddress,
-  workAddress,
-  picture
 }) {
   const data = await postJSON(USER_SIGN_UP, {
-    name,
-    email,
     nickname,
     username,
-    password,
-    gender,
-    age,
-    homeAddress,
-    workAddress,
-    picture
+    password
   })
 
   return data

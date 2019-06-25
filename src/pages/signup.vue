@@ -3,21 +3,6 @@
     <f7-navbar back-link="返回" sliding title="注册"></f7-navbar>
 
     <f7-list no-hairlines-md>
-      <f7-list-input
-        :value="name"
-        @input="name = $event.target.value"
-        label="姓名"
-        type="text"
-        placeholder="姓名"
-      ></f7-list-input>
-
-      <f7-list-input
-        :value="email"
-        @input="email = $event.target.value"
-        label="邮箱"
-        type="email"
-        placeholder="example@example.com"
-      ></f7-list-input>
 
       <f7-list-input
         :value="nickname"
@@ -46,58 +31,7 @@
         placeholder="密码"
       ></f7-list-input>
 
-      <f7-list-input :value="gender" @input="gender = $event.target.value" label="性别" type="select">
-        <option value="1">男</option>
-        <option value="2">女</option>
-        <option value="3">待定</option>
-      </f7-list-input>
-
-      <f7-list-input label="年龄" :input="false">
-        <f7-range
-          label
-          slot="input"
-          :value="18"
-          :min="0"
-          :max="100"
-          :step="1"
-          @rangeChange="onAgeChange"
-        ></f7-range>
-      </f7-list-input>
-
-      <f7-list-input
-        @input="homeAddress = $event.target.value"
-        :value="homeAddress"
-        label="居住地址"
-        type="textarea"
-        placeholder="居住地址"
-        resizable
-      ></f7-list-input>
-
-      <f7-list-input
-        @input="workAddress = $event.target.value"
-        :value="workAddress"
-        label="工作单位"
-        type="textarea"
-        placeholder="工作单位"
-        resizable
-      ></f7-list-input>
     </f7-list>
-
-    <div class="block block-strong">
-      <div class="block-header">上传头像</div>
-      <picture-input
-        ref="pictureInput"
-        @change="onChange"
-        width="200"
-        height="200"
-        margin="16"
-        accept="image/*"
-        size="10"
-        hideChangeButton
-        :removable="true"
-        :customStrings="{upload: '<p>上传头像</p>', tap: '<p>上传头像</p>', remove: '清除'}"
-      ></picture-input>
-    </div>
 
     <f7-block>
       <f7-row>
@@ -114,25 +48,16 @@ import { getUserSignUp } from '../utils'
 const phoneRegExp = new RegExp(
   '^(?=\\d{11}$)^1(?:3\\d|4[57]|5[^4\\D]|66|7[^249\\D]|8\\d|9[89])\\d{8}$'
 )
-import PictureInput from 'vue-picture-input'
 
 export default {
   components: {
-    DateTime,
-    PictureInput
+    DateTime
   },
   data() {
     return {
-      name: '',
-      email: '',
       nickname: '',
       username: '',
       password: '',
-      gender: '',
-      age: '',
-      homeAddress: '',
-      workAddress: '',
-      picture: '',
       showUsernameError: false,
       showPasswordError: false,
       passwordErrorMsg: ''
@@ -140,26 +65,12 @@ export default {
   },
   methods: {
     resetAllProps() {
-      this.name = ''
-      this.email = ''
       this.nickname = ''
       this.username = ''
       this.password = ''
-      this.gender = ''
-      this.age = ''
-      this.homeAddress = ''
-      this.workAddress = ''
       this.showUsernameError = false
       this.showPasswordError = false
       this.passwordErrorMsg = ''
-      this.picture = ''
-    },
-    onAgeChange(value) {
-      this.age = value
-    },
-    onChange(image) {
-      console.log(this.$refs.pictureInput.image)
-      this.picture = image
     },
     toast(msg, open = true) {
       const toast = this.$f7.toast.create({
@@ -208,23 +119,11 @@ export default {
         return
       }
 
-      if (!this.picture) {
-        this.toast('请上传头像', false)
-        return
-      }
-
       try {
         const data = await getUserSignUp({
-          name: this.name,
-          email: this.email,
           nickname: this.nickname,
           username: this.username,
           password: this.password,
-          gender: this.gender,
-          age: this.age,
-          homeAddress: this.homeAddress,
-          workAddress: this.workAddress,
-          picture: this.picture
         })
 
         if (data.iRet === 0) {
