@@ -42,7 +42,7 @@ export default {
       this.getIndexTweets()
       this.isPageFirstIn = true
     },
-    async onRefresh(done) {
+    async onRefresh(event, done) {
       await this.getIndexTweets()
       done()
     },

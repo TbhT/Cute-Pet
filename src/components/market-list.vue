@@ -15,7 +15,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
+  ...mapState({
+    userLogin: state => state.user.isLogin
+  }),
   props: {
     marketList: {
       type: Array
@@ -23,6 +28,10 @@ export default {
   },
   methods: {
     getDetailLink(market) {
+      if (this.userLogin === false) {
+        return this.$f7router.navigate('/user/login')
+      }
+
       return `/market/detail/${market.marketId}`
     }
   }

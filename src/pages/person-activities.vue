@@ -43,7 +43,7 @@ export default {
       this.getIndexActivities()
       this.isPageFirstIn = true
     },
-    async onRefresh(done) {
+    async onRefresh(event, done) {
       await this.getIndexActivities()
       done()
     },

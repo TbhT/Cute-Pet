@@ -83,7 +83,7 @@
 
 <script>
 import { likeTweet } from '../utils/index.js'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 
 export default {
   props: {
@@ -105,14 +105,25 @@ export default {
       } else {
         return 'iconfont icon-like'
       }
-    }
+    },
+    ...mapState({
+      userLogin: state => state.user.isLogin
+    })
   },
   methods: {
     ...mapMutations(['home/updateTweetById']),
     cardClick(data) {
+      if (this.userLogin === false) {
+        return this.$f7router.navigate('/user/login')
+      }
+
       this.$emit('card:content-click', data)
     },
     async likeClick(tweetId) {
+      if (this.userLogin === false) {
+        return this.$f7router.navigate('/user/login')
+      }
+
       let type = 1
 
       if (this.likeStyle !== 'iconfont icon-like') {

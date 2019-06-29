@@ -85,7 +85,6 @@ export default {
       // if (this.isTabFirstShow) {
       //   return
       // }
-
       // this.isTabFirstShow = true
       // this.onPageBeforeIn()
     },
@@ -95,21 +94,20 @@ export default {
       }
 
       this.$f7.preloader.show()
-      await this.getUserStatus()
+      // await this.getUserStatus()
 
-      if (this.user.isLogin === true) {
-        await this.getBannerImages()
-        await this.getIndexTweets()
+      await this.getBannerImages()
+      await this.getIndexTweets()
 
-        if (this.tweets.length < 6) {
-          this.showPreloader = false
-        }
-
-        this.$f7.preloader.hide()
-      } else {
-        this.$f7.preloader.hide()
-        this.$f7router.back('/user/login')
+      if (this.tweets.length < 6) {
+        this.showPreloader = false
       }
+
+      this.$f7.preloader.hide()
+      // } else {
+      //   this.$f7.preloader.hide()
+      //   this.$f7router.back('/user/login')
+      // }
 
       this.isPageFirstIn = true
     },

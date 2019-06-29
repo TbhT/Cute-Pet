@@ -18,7 +18,7 @@ import ActivityDetailPage from './pages/activity-detail.vue'
 import MarketDetailPage from './pages/market-detail.vue'
 import PersonDetailPage from './pages/person-detail.vue'
 import PetDetailPage from './pages/pet-detail.vue'
-import { getComment } from './utils'
+import { getUserStatus } from './utils'
 
 const routes = [
   {
@@ -71,18 +71,32 @@ const routes = [
   },
   {
     path: '/activities/detail/:activityId',
-    async: function(to, from, resolve) {
+    async: async function(to, from, resolve) {
       const activityId = to.params.activityId
-      resolve(
-        {
-          component: ActivityDetailPage
-        },
-        {
-          props: {
-            activityId
+      try {
+        const userInfo = await getUserStatus()
+
+        if (userInfo.iRet === 0) {
+          if (userInfo.data.userId) {
+            resolve(
+              {
+                component: ActivityDetailPage
+              },
+              {
+                props: {
+                  activityId
+                }
+              }
+            )
+          } else {
+            resolve({ component: LoginPage })
           }
+        } else {
+          console.log(error)
         }
-      )
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   {
@@ -117,15 +131,66 @@ const routes = [
   },
   {
     path: '/person/pets',
-    component: PersonPetsPage
+    async: async function(to, from, resolve) {
+      try {
+        const userInfo = await getUserStatus()
+        if (userInfo.iRet === 0) {
+          if (userInfo.data.userId) {
+            resolve({
+              component: PersonPetsPage
+            })
+          } else {
+            resolve({ component: LoginPage })
+          }
+        } else {
+          console.error(error)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
   },
   {
     path: '/person/activities',
-    component: PersonActivitiesPage
+    async: async function(to, from, resolve) {
+      try {
+        const userInfo = await getUserStatus()
+        if (userInfo.iRet === 0) {
+          if (userInfo.data.userId) {
+            resolve({
+              component: PersonActivitiesPage
+            })
+          } else {
+            resolve({ component: LoginPage })
+          }
+        } else {
+          console.error(error)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
   },
   {
     path: '/person/tweets',
-    component: PersonTweetsPage
+    async: async function(to, from, resolve) {
+      try {
+        const userInfo = await getUserStatus()
+        if (userInfo.iRet === 0) {
+          if (userInfo.data.userId) {
+            resolve({
+              component: PersonTweetsPage
+            })
+          } else {
+            resolve({ component: LoginPage })
+          }
+        } else {
+          console.error(error)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
   },
   {
     path: '/market',
@@ -134,22 +199,53 @@ const routes = [
   },
   {
     path: '/market/add',
-    component: AddMarketPage
+    async: async function(to, from, resolve) {
+      try {
+        const userInfo = await getUserStatus()
+        if (userInfo.iRet === 0) {
+          if (userInfo.data.userId) {
+            resolve({
+              component: AddMarketPage
+            })
+          } else {
+            resolve({ component: LoginPage })
+          }
+        } else {
+          console.error(error)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
   },
   {
     path: '/market/detail/:marketId',
-    async: function(to, from, resolve) {
+    async: async function(to, from, resolve) {
       const marketId = to.params.marketId
-      resolve(
-        {
-          component: MarketDetailPage
-        },
-        {
-          props: {
-            marketId
+      try {
+        const userInfo = await getUserStatus()
+
+        if (userInfo.iRet === 0) {
+          if (userInfo.data.userId) {
+            resolve(
+              {
+                component: MarketDetailPage
+              },
+              {
+                props: {
+                  marketId
+                }
+              }
+            )
+          } else {
+            resolve({ component: LoginPage })
           }
+        } else {
+          console.error(error)
         }
-      )
+      } catch (error) {
+        console.error(error)
+      }
     }
   },
   {
