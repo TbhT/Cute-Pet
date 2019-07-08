@@ -66,10 +66,6 @@ const routes = [
     keepAlive: true
   },
   {
-    path: '/activities/add',
-    component: AddActivitiesPage
-  },
-  {
     path: '/activities/detail/:activityId',
     async: async function(to, from, resolve) {
       const activityId = to.params.activityId

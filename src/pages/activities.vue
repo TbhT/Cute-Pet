@@ -61,9 +61,6 @@
       <f7-block v-else inset>暂无带宠旅行~</f7-block>
     </f7-page-content>
 
-    <f7-fab position="right-bottom" slot="fixed" color="orange" href="/activities/add">
-      <f7-icon ios="f7:add" aurora="f7:add" md="material:add"></f7-icon>
-    </f7-fab>
   </f7-page>
 </template>
 
