@@ -51,6 +51,16 @@ export const GET_USER_DETAIL_INFO = '/api/user/person/j-detail-info'
 
 export const GET_USER_ACTIVITIES = '/api/user/person/j-activities'
 
+// 用户 手机号 + 验证码登录
+export const USER_LOGIN_WITH_USER = '/api/user/login-with-user'
+
+// 获取验证码
+export const USER_GET_VALIDATE_CODE = '/api/user/validate-code'
+
+// 退出登录
+export const USER_LOGOUT_WITH_USER = '/api/user/logout-with-user'
+
+// 
 
 
 
