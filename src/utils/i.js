@@ -27,4 +27,35 @@ export async function logoutWithUser() {
   return data
 }
 
+// 更新用户数据
+export async function updateUserData({
+  mobile,
+  avatar,
+  name,
+  nickname,
+  birth,
+  gender,
+  age,
+  city,
+  province,
+  address,
+  idCard,
+  high
+}) {
+  const data = await postJSON(Api.USER_UPDATE_DATA, {
+    mobile,
+    avatar,
+    name,
+    nickname,
+    birth,
+    gender,
+    age,
+    city,
+    province,
+    address,
+    idCard,
+    high
+  })
 
+  return data
+}

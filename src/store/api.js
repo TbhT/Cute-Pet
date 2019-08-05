@@ -60,7 +60,8 @@ export const USER_GET_VALIDATE_CODE = '/api/user/validate-code'
 // 退出登录
 export const USER_LOGOUT_WITH_USER = '/api/user/logout-with-user'
 
-// 
+// 更新用户数据
+export const USER_UPDATE_DATA = '/api/user/update-data'
 
 
 
