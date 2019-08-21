@@ -5,7 +5,8 @@
     <f7-page-content @tab:show="onTabShow">
       <f7-list class="me-person-profile">
         <f7-list-item :link="link">
-          <img :src="userInfo.image" slot="media">
+          <img :src="userInfo.image" slot="media" v-if="userInfo.image">
+          <div class="me-default-icon icon iconfont icon-person" v-else slot="media"></div>
           <div class slot="inner-start">
             <div class="me-person-name">{{userInfo.nickname}}</div>
             <div class="me-person-master-pet">{{(pet && pet.name) || ''}}</div>
@@ -13,73 +14,12 @@
         </f7-list-item>
       </f7-list>
 
-      <f7-list class="me-person-pet-list">
-        <f7-list-item divider title="我的宠物"></f7-list-item>
-        <li class="item-content">
-          <a href="/person/pets">
-            <div class="item-inner item-cell">
-              <div class="item-row">
-                <div class="item-cell">
-                  <i class="iconfont icon-pets"></i>
-                  <div>宠物</div>
-                </div>
-              </div>
-            </div>
-          </a>
-        </li>
-      </f7-list>
-
-      <f7-list class="me-person-tweet">
-        <f7-list-item divider title="我的互动"></f7-list-item>
-
-        <a href="/person/tweets">
-          <li class="item-content">
-            <div class="item-inner item-cell">
-              <div class="item-row">
-                <div class="item-cell">
-                  <i class="iconfont icon-activity1"></i>
-                  <div>动态</div>
-                </div>
-              </div>
-            </div>
-          </li>
-        </a>
-      </f7-list>
-
-      <f7-list class="me-person-activity">
-        <f7-list-item divider title="我的活动"></f7-list-item>
-        <a href="/person/activities">
-          <li class="item-content">
-            <div class="item-inner item-cell">
-              <div class="item-row">
-                <div class="item-cell">
-                  <i class="iconfont icon-xunzhang"></i>
-                  活动勋章
-                </div>
-                <div class="item-cell">
-                  <i class="iconfont icon-xunzhang"></i>
-                  赛事勋章
-                </div>
-              </div>
-            </div>
-          </li>
-        </a>
-      </f7-list>
-
-      <f7-list class="me-person-other">
-        <f7-list-item divider title="其他"></f7-list-item>
-        <a href="/market/add">
-          <li class="item-content">
-            <div class="item-inner item-cell">
-              <div class="item-row">
-                <div class="item-cell">
-                  <i class="iconfont icon-shangjia"></i>
-                  <div>商家</div>
-                </div>
-              </div>
-            </div>
-          </li>
-        </a>
+      <f7-list>
+        <f7-list-item title="我的宠物" link="/person/pets"></f7-list-item>
+        <f7-list-item title="我的动态" link="/person/tweets"></f7-list-item>
+        <f7-list-item title="我的活动" link="/person/activities"></f7-list-item>
+        <f7-list-item title="商家" link="/market/add"></f7-list-item>
+        <f7-list-item title="登录" link="/user/login"></f7-list-item>
       </f7-list>
     </f7-page-content>
   </f7-page>
@@ -106,17 +46,10 @@ export default {
     }
   },
   methods: {
-    onTabShow() {
-      // if (this.isTabFirstShow) {
-      //   return
-      // }
-      // this.isTabFirstShow = true
-      // this.onPageBeforeIn()
-    },
     async onPageBeforeIn() {
       try {
         // if (!this.user.isLogin) {
-        //   return
+        //   return this.$f7router.navigate('/user/login')
         // }
 
         if (this.isPageFirstIn) {
@@ -155,5 +88,8 @@ export default {
 }
 .list {
   margin: 10px 0;
+}
+.me-default-icon {
+  font-size: 60px;
 }
 </style>

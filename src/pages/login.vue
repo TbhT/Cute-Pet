@@ -6,33 +6,53 @@
       <f7-list-input
         label="手机号"
         type="text"
-        placeholder="12366660000"
+        placeholder="请输入手机号"
         :error-message-force="showUsernameError"
         :error-message="usernameErrorMsg"
         :value="username"
         @input="username = $event.target.value"
+        required
       ></f7-list-input>
 
       <f7-list-input
-        label="密码"
-        type="password"
-        placeholder="密码"
+        label="验证码"
+        type="text"
+        placeholder="输入验证码"
         :error-message="passwordErrorMsg"
-        :error-message-force="showPasswordError"
-        :value="password"
+        required
+        validate
+        pattern="[0-9]*"
+        clear-button
         @input="password = $event.target.value"
-      ></f7-list-input>
+      >
+        <f7-button
+          :disabled="disabledButton"
+          type="button"
+          class="me-button"
+          color="blue"
+          slot="content-end"
+          :style="disabledButton ? {color: 'grey'} : ''"
+          @click.prevent.self="validateCodeClick"
+        >发送验证码</f7-button>
+      </f7-list-input>
     </f7-list>
 
     <f7-list>
       <f7-list-button @click="signIn">登录</f7-list-button>
-      <f7-list-button @click="signUp">注册</f7-list-button>
+      <!-- <f7-list-button @click="signUp">注册</f7-list-button> -->
     </f7-list>
   </f7-page>
 </template>
 
+<style scoped>
+.me-button {
+  width: 60%;
+  height: 100%;
+}
+</style>
+
 <script>
-import { getUserLogin } from '../utils'
+import { loginWithUser, getValidateCode } from '../utils'
 import { mapState, mapMutations } from 'vuex'
 const phoneRegExp = new RegExp(
   '^(?=\\d{11}$)^1(?:3\\d|4[57]|5[^4\\D]|66|7[^249\\D]|8\\d|9[89])\\d{8}$'
@@ -45,12 +65,40 @@ export default {
       password: '',
       showUsernameError: false,
       showPasswordError: false,
-      passwordErrorMsg: '',
-      usernameErrorMsg: ''
+      passwordErrorMsg: '验证码输入不正确',
+      usernameErrorMsg: '',
+      disabledButton: false
     }
   },
   methods: {
     ...mapMutations(['updateUserStatus']),
+    async validateCodeClick() {
+      if (this.disabledButton) {
+        return
+      }
+
+      const phoneFlag = phoneRegExp.test(this.username)
+      const emptyFlag = this.username.length === 0
+
+      if (!phoneFlag || emptyFlag) {
+        this.showUsernameError = true
+        this.usernameErrorMsg = emptyFlag ? '请输入手机号' : '手机号格式不正确'
+
+        setTimeout(() => {
+          this.showUsernameError = false
+          this.usernameErrorMsg = ''
+        }, 1000)
+
+        return
+      }
+
+      this.disabledButton = true
+      const result = await getValidateCode({ mobile: this.username })
+      setTimeout(() => {
+        this.disabledButton = false
+      }, 60000)
+      console.log(result)
+    },
     async signIn() {
       const self = this
       const app = self.$f7
@@ -72,23 +120,8 @@ export default {
 
       if (this.password.length === 0) {
         this.showPasswordError = true
-        this.passwordErrorMsg = '密码不能为空'
-        setTimeout(() => {
-          this.showPasswordError = false
-        }, 1000)
+        this.passwordErrorMsg = '验证码不能为空'
 
-        return
-      } else if (this.password.length < 6) {
-        this.showPasswordError = true
-        this.passwordErrorMsg = '密码不能小于6位'
-        setTimeout(() => {
-          this.showPasswordError = false
-        }, 1000)
-
-        return
-      } else if (this.password.length > 64) {
-        this.showPasswordError = true
-        this.passwordErrorMsg = '密码不能大于64位'
         setTimeout(() => {
           this.showPasswordError = false
         }, 1000)
@@ -99,9 +132,9 @@ export default {
       try {
         this.$f7.preloader.show()
 
-        const data = await getUserLogin({
-          username: this.username,
-          password: this.password
+        const data = await loginWithUser({
+          mobile: this.username,
+          validateCode: this.password
         })
 
         this.$f7.preloader.hide()
@@ -120,8 +153,8 @@ export default {
           location.reload()
         } else {
           console.error(data)
-          if (data.data[0] === 'Incorrect username or password.') {
-            this.toast('密码或者手机号不正确')
+          if (data.data[0]) {
+            this.toast(data.data[0])
           } else {
             this.toast('登录失败')
           }

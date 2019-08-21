@@ -19,17 +19,8 @@
       </f7-block>
     </f7-page-content>
 
-    <f7-fab position="right-bottom" slot="fixed" color="orange" href="/market/add">
-      <f7-icon ios="f7:add" aurora="f7:add" md="material:add"></f7-icon>
-    </f7-fab>
   </f7-page>
 </template>
-
-<style scoped>
-/* .me-market-page-content {
-  padding: 0;
-} */
-</style>
 
 
 <script>
@@ -133,6 +124,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

@@ -19,7 +19,7 @@
         :value="contact"
         placeholder="联系人"
         error-message="联系人不能为空"
-        :error-messsage-force="showContactErrorMsg"
+        :error-message-force="showContactErrorMsg"
         @input="contact = $event.target.value"
       ></f7-list-input>
 
