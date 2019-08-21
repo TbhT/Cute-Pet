@@ -74,3 +74,36 @@ export async function getUserStatus() {
   const data = await postJSON(Api.GET_USER_STATUS)
   return data
 }
+
+// 获取用户信息
+export async function getUserInfo() {
+  const data = await postJSON(Api.USER_GET_INFO)
+  return data
+}
+
+
+// 获取banner信息
+export async function getBanners() {
+  const data = await postJSON(Api.BANNERS_GET)
+  return data
+}
+
+
+// 获取所有商家信息
+export async function getMarketAll() {
+  const data = await postJSON(Api.MARKET_ALL)
+  return data
+}
+
+
+// 获取所有活动
+export async function getActivities() {
+  const data = await postJSON(Api)
+}
+
+
+// 点赞推特
+export async function likeTweet() {
+  
+}
+

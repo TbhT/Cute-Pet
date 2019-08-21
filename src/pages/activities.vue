@@ -36,7 +36,7 @@
     <f7-page-content
       id="me-activity-2"
       tab
-      inifite
+      infinite
       ptr
       :infinite-preloader="showPartyPre"
       @ptr:refresh="onPartyPageRefresh"

@@ -2,7 +2,7 @@
   <f7-page id="personView" @page:beforein="onPageBeforeIn" :page-content="false">
     <f7-navbar title="我的"></f7-navbar>
 
-    <f7-page-content @tab:show="onTabShow">
+    <f7-page-content>
       <f7-list class="me-person-profile">
         <f7-list-item :link="link">
           <img :src="userInfo.image" slot="media" v-if="userInfo.image">
