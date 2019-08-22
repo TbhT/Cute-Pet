@@ -111,6 +111,10 @@ export default {
       done()
     },
     openPublisherPopup() {
+      if (this.user.isLogin === false) {
+        return this.$f7router.navigate('/user/login')
+      }
+
       this.updatePopup({
         key: 'publisherOpened',
         value: true

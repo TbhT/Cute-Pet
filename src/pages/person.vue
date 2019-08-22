@@ -5,11 +5,15 @@
     <f7-page-content>
       <f7-list class="me-person-profile">
         <f7-list-item :link="link">
-          <img :src="userInfo.image" slot="media" v-if="userInfo.image">
+          <img :src="userInfo.image" slot="media" v-if="userInfo.image" />
           <div class="me-default-icon icon iconfont icon-person" v-else slot="media"></div>
-          <div class slot="inner-start">
-            <div class="me-person-name">{{userInfo.nickname}}</div>
+          <div class slot="inner-start" v-if="user.isLogin">
+            <div class="me-person-name">{{userInfo.nickname || userInfo.mobile}}</div>
             <div class="me-person-master-pet">{{(pet && pet.name) || ''}}</div>
+          </div>
+
+          <div class slot="inner-start" v-else>
+            <div class="me-person-name">未登录/未注册</div>
           </div>
         </f7-list-item>
       </f7-list>
@@ -42,6 +46,10 @@ export default {
   computed: {
     ...mapState(['user']),
     link() {
+      if (!this.user.isLogin) {
+        return `/user/login`
+      }
+
       return `/person/detail`
     }
   },

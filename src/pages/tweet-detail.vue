@@ -12,7 +12,7 @@
 
         <div class="me-comments-list" v-if="comments.length">
           <div class="me-comment" v-for="comment in comments" :key="comment.commentId">
-            <img :src="comment.avatar" alt class="me-avatar lazy lazy-fade-in">
+            <img :src="comment.avatar" alt class="me-avatar lazy lazy-fade-in" />
             <div class="me-detail">
               <div class="me-nickname">{{ comment.nickname }}</div>
               <div class="me-time">{{ comment.createTime }}</div>
@@ -98,7 +98,7 @@
 
 <script>
 import Card from '../components/card.vue'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 import { likeTweet, getComment } from '../utils'
 
 export default {
@@ -119,6 +119,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['user']),
     likeStyle() {
       if (this.tweet.liked) {
         return 'iconfont icon-like1'
@@ -166,6 +167,10 @@ export default {
     },
     async triggerLike(tweetId, liked) {
       try {
+        if (this.user.isLogin === false) {
+          return this.$f7router.navigate('/user/login')
+        }
+
         let type = 1
 
         if (this.likeStyle !== 'iconfont icon-like') {
@@ -190,6 +195,10 @@ export default {
       }
     },
     openCommentPopup() {
+      if (this.user.isLogin === false) {
+        return this.$f7router.navigate('/user/login')
+      }
+
       this.updatePopup({
         key: 'commentOpened',
         value: true
