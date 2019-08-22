@@ -181,11 +181,11 @@ export default {
 
         if (data.iRet === 0) {
           if (this.likeStyle === 'iconfont icon-like') {
-            this.likeStyle = 'iconfont icon-like1'
+            // this.likeStyle = 'iconfont icon-like1'
             this['home/updateTweetById']({ tweetId, liked: false })
           } else {
             this['home/updateTweetById']({ tweetId, liked: true })
-            this.likeStyle = 'iconfont icon-like'
+            // this.likeStyle = 'iconfont icon-like'
           }
         } else {
           console.error(data)

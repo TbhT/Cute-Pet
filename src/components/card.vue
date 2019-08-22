@@ -3,11 +3,12 @@
     <f7-card class="me-post-card">
       <f7-card-header>
         <div class="me-avatar">
-          <img :src="data.avatar" class="lazy lazy-fade-in">
+          <img :src="data.avatar" class="lazy lazy-fade-in" v-if="data.avatar">
+          <div class="me-default-icon icon iconfont icon-person" v-else></div>
         </div>
 
         <div class="me-user">
-          <div class="me-name">{{ data.nickname }}</div>
+          <div class="me-name">{{ data.nickname || data.mobile }}</div>
           <div class="me-create-time">{{ data.createTime }}</div>
         </div>
       </f7-card-header>

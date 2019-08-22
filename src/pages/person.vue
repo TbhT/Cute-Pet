@@ -9,7 +9,7 @@
           <div class="me-default-icon icon iconfont icon-person" v-else slot="media"></div>
           <div class slot="inner-start" v-if="user.isLogin">
             <div class="me-person-name">{{userInfo.nickname || userInfo.mobile}}</div>
-            <div class="me-person-master-pet">{{(pet && pet.name) || ''}}</div>
+            <!-- <div class="me-person-master-pet">{{(pet && pet.name) || ''}}</div> -->
           </div>
 
           <div class slot="inner-start" v-else>
@@ -67,14 +67,14 @@ export default {
         const data = await getUserInfo()
         this.isPageFirstIn = true
 
-        if (data.iRet === 0) {
+        if (data.iRet === 0 && data.data) {
           if (data.data.userInfo) {
-            this.userInfo = data.data.userInfo
+            this.userInfo = data.data
           }
 
-          if (data.data.pet) {
-            this.pet = data.data.pet
-          }
+          // if (data.data.pet) {
+          //   this.pet = data.data.pet
+          // }
 
           this.isGetUserInfo = true
         } else {
