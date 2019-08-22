@@ -16,6 +16,15 @@ export const USER_UPDATE_DATA = '/api/user/update-data'
 // 获取用户状态
 export const GET_USER_STATUS = '/api/user/j-user-status'
 
+// 获取用户所有的宠物
+export const USER_ALL_PET = '/api/user/j-all-pet'
+
+// 获取用户所有的活动
+export const USER_ALL_ACTIVITY = '/api/user/j-all-activity'
+
+// 获取用户所有的动态
+export const USER_ALL_TWEETS = '/api/user/j-all-tweets'
+
 // 获取所有动态信息
 export const GET_ALL_TWEETS = '/api/tweet/j-all-tweets'
 
@@ -25,5 +34,41 @@ export const BANNERS_GET = '/api/banner/j-get'
 // 获取市场
 export const MARKET_ALL = '/api/market/j-all'
 
-// 获取活动
-export const ACTIVITY_ALL = '/api/activity/j-all'
+// 获取商场详情
+export const MARKET_DETAIL = '/api/market/j-detail'
+
+// 获取类型活动
+export const ACTIVITY_TYPE = '/api/activity/j-activity'
+
+// 加入活动
+export const ACTIVITY_JOIN = '/api/activity/j-join'
+
+// 获取活动详情
+export const ACTIVITY_DETAIL = '/api/activity/j-detail'
+
+// 点赞
+export const TWEET_LIKE = '/api/tweet/j-like'
+
+// 添加宠物
+export const PET_ADD = '/api/pet/j-create'
+
+//. 获取宠物详情
+export const PET_DETAIL = '/api/pet/j-detail'
+
+// 添加评论 
+export const COMMENT_CREATE = '/api/comment/j-create'
+
+// 获取推特的所有评论
+export const COMMENT_FOR_TWEET = '/api/comment/j-tweet'
+
+// 添加动态
+export const TWEET_CREATE = '/api/tweet/j-create'
+
+// 添加商家
+export const MARKET_CREATE = '/api/market/j-create'
+
+// 获取所有话题
+export const TOPIC_ALL = '/api/topic/j-all'
+
+// 获取话题下的所有推特
+export const TOPIC_ALL_TWEET = '/api/topic/j-tweet-all'

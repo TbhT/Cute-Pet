@@ -12,7 +12,7 @@ export default {
       // }
 
       if (data.iRet === 0) {
-        commit('updateUserStatus', data.data)
+        commit('updateUserStatus', data.data || {})
         // commit('updateUserStatus', { userId: 12312312312 })
       }
 

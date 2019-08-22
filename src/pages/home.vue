@@ -28,7 +28,6 @@
       :infinite-preloader="showPreloader"
       @ptr:refresh="onRefresh"
       @infinite="loadMore"
-      @tab:show="onTabShow"
     >
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
       <card-list :loadCardData="tweets" v-if="tweets.length"></card-list>
@@ -81,20 +80,13 @@ export default {
     }
   },
   methods: {
-    onTabShow() {
-      // if (this.isTabFirstShow) {
-      //   return
-      // }
-      // this.isTabFirstShow = true
-      // this.onPageBeforeIn()
-    },
     async onPageBeforeIn() {
       if (this.isPageFirstIn) {
         return
       }
 
       this.$f7.preloader.show()
-      // await this.getUserStatus()
+      await this.getUserStatus()
 
       await this.getBannerImages()
       await this.getIndexTweets()

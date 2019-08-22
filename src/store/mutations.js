@@ -5,7 +5,7 @@ export default {
   updateEditorText(state, { text }) {
     state.popup.editorText = text
   },
-  updateUserStatus(state, { userId }) {
+  updateUserStatus(state, { userId = null }) {
     if (userId) {
       state.user.isLogin = true
       state.user.userId = userId

@@ -60,12 +60,9 @@ export async function updateUserData({
   return data
 }
 
-
 // 获取所有动态
-export async function getAllTweets({
-  offset = 1
-}) {
-  const data = await postJSON(Api.GET_ALL_TWEETS, {offset})
+export async function getAllTweets({ offset = 1 }) {
+  const data = await postJSON(Api.GET_ALL_TWEETS, { offset })
   return data
 }
 
@@ -81,13 +78,11 @@ export async function getUserInfo() {
   return data
 }
 
-
 // 获取banner信息
 export async function getBanners() {
   const data = await postJSON(Api.BANNERS_GET)
   return data
 }
-
 
 // 获取所有商家信息
 export async function getMarketAll() {
@@ -95,82 +90,119 @@ export async function getMarketAll() {
   return data
 }
 
-
 // 获取所有活动
-export async function getActivities() {
-  const data = await postJSON(Api)
+export async function getActivities(type, offset = 1) {
+  const data = await postJSON(Api.ACTIVITY_TYPE, { type, offset })
+  return data
 }
 
+// 参加活动
+export async function joinActivity({activityId}) {
+  const data = await postJSON(Api.ACTIVITY_JOIN, {activityId})
+  return data
+}
 
 // 点赞推特
-export async function likeTweet() {
-  
+export async function likeTweet({ type, tweetId }) {
+  const data = await postJSON(Api.TWEET_LIKE, { type, tweetId })
+  return data
 }
 
 // 添加宠物
-export async function addPet() {
+export async function addPet({
+  nickname,
+  gender,
+  age,
+  vaccineStatus,
+  petType,
+  type,
+  picture
+}) {
+  const data = await postJSON(Api.PET_ADD, {
+    nickname,
+    gender,
+    age,
+    vaccineStatus,
+    petType,
+    type,
+    picture
+  })
 
+  return data
 }
 
 // 添加评论
-export async function createComment() {
-
+export async function createComment({ text, tweetId }) {
+  const data = await postJSON(Api.COMMENT_CREATE, { text, tweetId })
+  return data
 }
 
 // 添加动态
-export async function createTweet() {
-
+export async function createTweet({ text, picture }) {
+  return await postJSON(Api.TWEET_CREATE, { text, picture })
 }
 
 // 添加商家
-export async function createMarket() {
-
+export async function createMarket({
+  name,
+  contact,
+  phoneNumber,
+  place,
+  serveType,
+  workTime,
+  intro,
+  picture
+}) {
+  return await postJSON(Api.MARKET_CREATE, { name })
 }
 
 // 获取活动详情
-export async function getActivityDetail() {
-
+export async function getActivityDetail({ activityId }) {
+  return await postJSON(Api.ACTIVITY_DETAIL, { activityId })
 }
 
 // 获取所有的宠物
 export async function getAllPet() {
-
+  return await postJSON(Api.USER_ALL_PET)
 }
 
 // 获取评论
-export async function getComment() {
-
+export async function getComment({tweetId, page = 1}) {
+  return await postJSON(Api.COMMENT_FOR_TWEET, {tweetId, page})
 }
 
 // 获取商家详情
-export async function getMarketDetail() {
-
+export async function getMarketDetail({marketId}) {
+  return await postJSON(Api.MARKET_DETAIL, {marketId})
 }
 
 // 获取宠物详情
-export async function getPetDetail() {
-
+export async function getPetDetail({petId}) {
+  return await postJSON(Api.PET_DETAIL, {petId})
 }
 
 // 获取 话题 列表
 export async function getTopicAll() {
-
+  return await postJSON(Api.TOPIC_ALL)
 }
 
 // 获取话题相关的列表
-export async function getTopicTweets() {
-
+export async function getTopicTweets({topicId, page = 1}) {
+  return await postJSON(Api.TOPIC_ALL_TWEET, {topicId, page})
 }
 
 // 获取用户参加的活动
 export async function getUserActivities() {
+  return await postJSON(Api.USER_ALL_ACTIVITY)
+}
 
+// 获取用户所有的动态
+export async function getUserAllTweets() {
+  return await postJSON(Api.USER_ALL_TWEETS)
 }
 
 // 用户注册
-export async function getUserSignUp() {
-
-}
+export async function getUserSignUp() {}
 
 export const imgFilterReg = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i
 

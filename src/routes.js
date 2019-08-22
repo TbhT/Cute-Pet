@@ -72,7 +72,7 @@ const routes = [
         const userInfo = await getUserStatus()
 
         if (userInfo.iRet === 0) {
-          if (userInfo.data.userId) {
+          if (userInfo.data && userInfo.data.userId) {
             resolve(
               {
                 component: ActivityDetailPage
@@ -122,7 +122,27 @@ const routes = [
   },
   {
     path: '/person/detail',
-    component: PersonDetailPage
+    // component: PersonDetailPage
+    async: async function(to, from, resolve) {
+      try {
+        const userInfo = await getUserStatus()
+        if (userInfo.iRet === 0) {
+          if (userInfo.data && userInfo.data.userId) {
+            resolve({
+              component: PersonDetailPage
+            })
+          } else {
+            resolve({
+              component: LoginPage
+            })
+          }
+        } else {
+          console.error(userInfo)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
   },
   {
     path: '/person/pets',
@@ -130,7 +150,7 @@ const routes = [
       try {
         const userInfo = await getUserStatus()
         if (userInfo.iRet === 0) {
-          if (userInfo.data.userId) {
+          if (userInfo.data && userInfo.data.userId) {
             resolve({
               component: PersonPetsPage
             })
@@ -151,7 +171,7 @@ const routes = [
       try {
         const userInfo = await getUserStatus()
         if (userInfo.iRet === 0) {
-          if (userInfo.data.userId) {
+          if (userInfo.data && userInfo.data.userId) {
             resolve({
               component: PersonActivitiesPage
             })
@@ -172,7 +192,7 @@ const routes = [
       try {
         const userInfo = await getUserStatus()
         if (userInfo.iRet === 0) {
-          if (userInfo.data.userId) {
+          if (userInfo.data && userInfo.data.userId) {
             resolve({
               component: PersonTweetsPage
             })
@@ -198,7 +218,7 @@ const routes = [
       try {
         const userInfo = await getUserStatus()
         if (userInfo.iRet === 0) {
-          if (userInfo.data.userId) {
+          if (userInfo.data && userInfo.data.userId) {
             resolve({
               component: AddMarketPage
             })
@@ -221,7 +241,7 @@ const routes = [
         const userInfo = await getUserStatus()
 
         if (userInfo.iRet === 0) {
-          if (userInfo.data.userId) {
+          if (userInfo.data && userInfo.data.userId) {
             resolve(
               {
                 component: MarketDetailPage
