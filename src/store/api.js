@@ -71,4 +71,4 @@ export const MARKET_CREATE = '/api/market/j-create'
 export const TOPIC_ALL = '/api/topic/j-all'
 
 // 获取话题下的所有推特
-export const TOPIC_ALL_TWEET = '/api/topic/j-tweet-all'
+export const TOPIC_ALL_TWEET = '/api/topic/j-list'

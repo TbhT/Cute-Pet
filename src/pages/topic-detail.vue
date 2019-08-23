@@ -6,6 +6,7 @@
     :infinite-preloader="showPreloader"
     @ptr:refresh="onRefresh"
     @infinite="loadMoreTweets"
+    @page:beforein="onPageBeforeIn"
   >
     <f7-navbar :title="trimTopicText(topicText)" :back-link="backText"></f7-navbar>
 
@@ -44,6 +45,23 @@ export default {
     async onRefresh(done) {
       await this.getIndexTweets()
       done()
+    },
+    onPageBeforeIn() {
+      this.getIndexTweets()
+    },
+    async loadMoreTweets() {
+      this.page += 1
+
+      const data = await getTopicTweets({
+        topicId: this.topicId,
+        page: this.page
+      })
+
+      if (data.iRet === 0) {
+        this.tweets = this.tweets.concat(data.data)
+      } else {
+        console.error(data)
+      }
     },
     async getIndexTweets() {
       try {

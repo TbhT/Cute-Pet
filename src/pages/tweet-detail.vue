@@ -12,9 +12,16 @@
 
         <div class="me-comments-list" v-if="comments.length">
           <div class="me-comment" v-for="comment in comments" :key="comment.commentId">
-            <img :src="comment.avatar" alt class="me-avatar lazy lazy-fade-in" />
+            <img
+              :src="comment.avatar"
+              alt
+              class="me-avatar lazy lazy-fade-in"
+              v-if="comment.avatar"
+            />
+            <div class="me-default-icon icon iconfont icon-person" v-else></div>
+
             <div class="me-detail">
-              <div class="me-nickname">{{ comment.nickname }}</div>
+              <div class="me-nickname">{{ comment.nickname || comment.mobile }}</div>
               <div class="me-time">{{ comment.createTime }}</div>
               <div class="me-text">{{ comment.text }}</div>
             </div>
@@ -207,6 +214,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

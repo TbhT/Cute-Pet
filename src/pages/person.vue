@@ -8,7 +8,7 @@
           <img :src="userInfo.image" slot="media" v-if="userInfo.image" />
           <div class="me-default-icon icon iconfont icon-person" v-else slot="media"></div>
           <div class slot="inner-start" v-if="user.isLogin">
-            <div class="me-person-name">{{userInfo.nickname || userInfo.mobile}}</div>
+            <div class="me-person-name">用户：{{userInfo.nickname || userInfo.mobile}}</div>
             <!-- <div class="me-person-master-pet">{{(pet && pet.name) || ''}}</div> -->
           </div>
 
@@ -68,9 +68,8 @@ export default {
         this.isPageFirstIn = true
 
         if (data.iRet === 0 && data.data) {
-          if (data.data.userInfo) {
-            this.userInfo = data.data
-          }
+          console.log('----------', data.data)
+          this.userInfo = data.data
 
           // if (data.data.pet) {
           //   this.pet = data.data.pet

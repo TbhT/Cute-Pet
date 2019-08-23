@@ -28,7 +28,7 @@ const routes = [
   {
     path: '/topic/:topicId/',
     async: async function(to, from, resolve) {
-      const topicId = routeTo.params.topicId
+      const topicId = to.params.topicId
 
       resolve(
         {

@@ -90,6 +90,7 @@ export default {
 
       await this.getBannerImages()
       await this.getIndexTweets()
+      await this.getAllTopics()
 
       if (this.tweets.length < 6) {
         this.showPreloader = false
@@ -159,6 +160,7 @@ export default {
         }
 
         const data = await getTopicAll()
+        console.log('-----topic-------', data)
 
         if (data.iRet === 0) {
           this.topics = data.data

@@ -9,9 +9,9 @@
     <f7-navbar title="活动">
       <f7-subnavbar class="me-activity-subnavbar">
         <f7-segmented raised>
-          <f7-button tab-link="#me-activity-1" tab-link-active>宠物赛事</f7-button>
-          <f7-button tab-link="#me-activity-2">宠物趴体</f7-button>
-          <f7-button tab-link="#me-activity-3">带宠旅行</f7-button>
+          <f7-button tab-link="#me-activity-1" tab-link-active>赛事类</f7-button>
+          <f7-button tab-link="#me-activity-2">非赛事类</f7-button>
+          <!-- <f7-button tab-link="#me-activity-3">带宠旅行</f7-button> -->
         </f7-segmented>
       </f7-subnavbar>
     </f7-navbar>
@@ -29,7 +29,7 @@
       <banner-swiper :bannerImages="bannerImages"></banner-swiper>
       <compete-activity v-if="competeActivities.length" :competeActivities="competeActivities"></compete-activity>
       <f7-block v-else inset>
-        <p>暂无宠物赛事~</p>
+        <p>暂无赛事类活动~</p>
       </f7-block>
     </f7-page-content>
 
@@ -44,10 +44,10 @@
     >
       <banner-swiper v-if="bannerImages.length" :bannerImages="bannerImages"></banner-swiper>
       <compete-activity v-if="partyActivities.length" :competeActivities="partyActivities"></compete-activity>
-      <f7-block v-else inset>暂无宠物趴体~</f7-block>
+      <f7-block v-else inset>暂无非赛事类活动~</f7-block>
     </f7-page-content>
 
-    <f7-page-content
+    <!-- <f7-page-content
       id="me-activity-3"
       tab
       ptr
@@ -59,7 +59,7 @@
       <banner-swiper v-if="bannerImages.length" :bannerImages="bannerImages"></banner-swiper>
       <compete-activity v-if="travelActivities.length" :competeActivities="travelActivities"></compete-activity>
       <f7-block v-else inset>暂无带宠旅行~</f7-block>
-    </f7-page-content>
+    </f7-page-content> -->
 
   </f7-page>
 </template>
@@ -132,16 +132,16 @@ export default {
           this.showPartyPre = false
         }
 
-        const data3 = await getActivities(3)
-        if (data3.iRet === 0) {
-          if (data3.data.length < 6) {
-            this.showTravelPre = false
-          }
-          this.travelActivities = data3.data
-        } else {
-          console.error(data3)
-          this.showTravelPre = false
-        }
+        // const data3 = await getActivities(3)
+        // if (data3.iRet === 0) {
+        //   if (data3.data.length < 6) {
+        //     this.showTravelPre = false
+        //   }
+        //   this.travelActivities = data3.data
+        // } else {
+        //   console.error(data3)
+        //   this.showTravelPre = false
+        // }
       } catch (error) {
         console.log(error)
       }
