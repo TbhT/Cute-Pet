@@ -1,5 +1,5 @@
 <template>
-  <f7-page class="me-sign-up" no-toolbar>
+  <f7-page class="me-sign-up" no-toolbar @page:beforein="onPageBeforeIn">
     <f7-navbar back-link="返回" sliding title="添加宠物"></f7-navbar>
 
     <f7-list no-hairlines-md>
@@ -60,6 +60,7 @@
       <div class="block-header">上传头像</div>
       <picture-input
         ref="pictureInput"
+        :prefill="imageUrl"
         @change="onChange"
         width="200"
         height="200"
@@ -82,12 +83,16 @@
 </template>
 
 <script>
-import { addPet } from '../utils/index.js'
+import { addPet, getPetDetail } from '../utils/index.js'
 import PictureInput from 'vue-picture-input'
 
 export default {
   components: {
     PictureInput
+  },
+  props: {
+    type: 1,
+    petId: null
   },
   data() {
     return {
@@ -99,10 +104,24 @@ export default {
       vaccineStatus: 0,
       petType: 0,
       type: '',
-      picture: ''
+      picture: '',
+      imageUrl: ''
     }
   },
   methods: {
+    async onPageBeforeIn() {
+      if (this.type === 2 && this.petId) {
+        const {data, iRet} = await getPetDetail({ petId: this.petId })
+        if (iRet === 0) {
+          this.nickname = data.nickname
+          this.gender = data.gender
+          this.age = data.age
+          this.vaccineStatus = data.vaccineStatus
+          this.petType = data.petType
+          this.imageUrl = data.image
+        }
+      }
+    },
     onAgeChange(value) {
       this.age = value
     },

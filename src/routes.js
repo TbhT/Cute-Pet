@@ -99,6 +99,13 @@ const routes = [
     component: AddPetPage
   },
   {
+    path: '/pet/update/:petId',
+    async: function (to, from, resolve) {
+      const petId = to.params.petId
+      
+    }
+  },
+  {
     path: '/pet/detail/:petId',
     async: function(to, from, resolve) {
       const petId = to.params.petId
