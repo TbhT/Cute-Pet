@@ -278,3 +278,16 @@ export const MINUTES = (() => {
 
   return m
 })()
+
+
+export function formatDate(template, date) {
+  const specs = 'YYYY:MM:DD:HH:mm:ss'.split(':')
+  date = ((date && date.valueOf()) || Date.now()) - new Date().getTimezoneOffset() * 6e4
+  date = new Date(date)
+  return date
+    .toISOString()
+    .split(/[-:.TZ]/)
+    .reduce(function(template, item, i) {
+      return template.split(specs[i]).join(item)
+    }, template)
+}

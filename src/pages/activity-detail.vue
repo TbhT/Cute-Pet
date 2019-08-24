@@ -1,156 +1,76 @@
 <template>
-  <f7-page name="activityDetail" no-toolbar @page:beforein="onPageBeforeIn">
-    <f7-navbar :back-link="backText" sliding title="活动信息"></f7-navbar>
+  <f7-page name="activityPayDetail" no-toolbar @page:beforein="onPageBeforeIn">
+    <f7-navbar back-link="返回" title="活动详情"></f7-navbar>
 
-    <f7-block-title>赛事信息</f7-block-title>
-    <f7-list class="me-activity-detail-list media-list" v-if="activityInfo">
-      <li class="me-list-item">
-        <a class="item-content">
-          <div class="item-inner">
-            <div class="item-title">
-              <div class="item-header">活动名称</div>
-              {{activityInfo.name || '暂无'}}
-            </div>
-            <div class="item-after"></div>
-          </div>
-        </a>
-      </li>
+    <f7-toolbar tabbar bottom v-if="activityInfo">
+      <f7-link :style="{color: '#007aff'}">报名参加</f7-link>
+    </f7-toolbar>
 
-      <li class="me-list-item">
-        <a class="item-content">
-          <div class="item-inner">
-            <div class="item-title">
-              <div class="item-header">活动开始时间</div>
-              {{activityInfo.beginTime || '暂无'}}
-            </div>
-            <div class="item-after"></div>
-          </div>
-        </a>
-      </li>
+    <div class="block" v-if="activityInfo">
+      <h3>{{activityInfo.name}}</h3>
 
-      <li class="me-list-item">
-        <a class="item-content">
-          <div class="item-inner">
-            <div class="item-title">
-              <div class="item-header">活动结束时间</div>
-              {{activityInfo.endTime || '暂无'}}
-            </div>
-            <div class="item-after"></div>
-          </div>
-        </a>
-      </li>
+      <div class="block tablet-inset" v-if="activityInfo.image">
+        <img :src="activityInfo.image" alt="" class="me-image">
+      </div>
 
-      <li class="me-list-item">
-        <a class="item-content">
-          <div class="item-inner">
-            <div class="item-title">
-              <div class="item-header">报名总人数</div>
-              {{activityInfo.totalCount || '暂无'}}
-            </div>
-            <div class="item-after"></div>
-          </div>
-        </a>
-      </li>
+      <div class="me-item">
+        <i class="f7-icons icon size-22">time</i>
+        <span>活动时间： {{activityTime}}</span>
+      </div>
 
-      <li class="me-list-item">
-        <a class="item-content">
-          <div class="item-inner">
-            <div class="item-title">
-              <div class="item-header">报名总费用</div>
-              {{activityInfo.totalCost || '暂无'}}
-            </div>
-            <div class="item-after"></div>
-          </div>
-        </a>
-      </li>
+      <div class="me-item">
+        <i class="f7-icons icon">time</i>
+        <span>报名时间：{{reportTime}}</span>
+      </div>
 
-      <li class="me-list-item">
-        <a class="item-content">
-          <div class="item-inner">
-            <div class="item-title">
-              <div class="item-header">报名开始时间</div>
-              {{activityInfo.joinBeginTime || '暂无'}}
-            </div>
-            <div class="item-after"></div>
-          </div>
-        </a>
-      </li>
+      <div class="me-item">
+        <i class="f7-icons icon">money_yen_round</i>
+        <span>报名费：{{petUnitPrice}} {{personUnitPrice}}</span>
+      </div>
 
-      <li class="me-list-item">
-        <a class="item-content">
-          <div class="item-inner">
-            <div class="item-title">
-              <div class="item-header">报名结束时间</div>
-              {{activityInfo.joinEndTime || '暂无'}}
-            </div>
-            <div class="item-after"></div>
-          </div>
-        </a>
-      </li>
+      <div class="me-item">
+        <i class="f7-icons icon">persons</i>
+        <span>报名人数：{{joinPersonCount}}</span>
+      </div>
 
-      <li class="me-list-item">
-        <a class="item-content">
-          <div class="item-inner">
-            <div class="item-title">
-              <div class="item-header">主办方</div>
-            </div>
-            <div class="item-text">{{activityInfo.organizer || '暂无'}}</div>
-          </div>
-        </a>
-      </li>
+      <div class="me-item">
+        <i class="f7-icons icon">info_round</i>
+        <span>主办方：{{activityInfo.organizer}}</span>
+      </div>
 
-      <li class="me-list-item">
-        <a class="item-content">
-          <div class="item-inner">
-            <div class="item-title">
-              <div class="item-header">承办方</div>
-            </div>
-            <div class="item-text">{{activityInfo.coorganizer || '暂无'}}</div>
-          </div>
-        </a>
-      </li>
+      <div class="me-item">
+        <i class="f7-icons icon">info_round</i>
+        <span>协办方：{{activityInfo.coorganizer}}</span>
+      </div>
 
-      <li class="me-list-item">
-        <a class="item-content">
-          <div class="item-inner">
-            <div class="item-title">
-              <div class="item-header">活动地点</div>
-            </div>
-            <div class="item-text">{{activityInfo.place || '暂无'}}</div>
-          </div>
-        </a>
-      </li>
-    </f7-list>
+      <div class="me-item">
+        <i class="f7-icons icon">info_round</i>
+        <span>活动地点：{{place}}</span>
+      </div>
+    </div>
 
-    <f7-block v-else inset>暂无赛事信息</f7-block>
+    <div class="block" v-else>暂无详细信息~</div>
   </f7-page>
 </template>
 
+
 <style scoped>
-.me-activity-detail-list {
-  word-break: break-all;
+.icon.f7-icons {
+  font-size: 14px;
 }
-.block-title {
-  font-size: 20px;
-  padding: 0px;
-  height: 30px;
+.me-image {
+  width: 100%;
+  height: 100%;
 }
-.me-list-item .item-title,
-.me-list-item .item-text {
-  color: black;
-  font-weight: inherit;
-  font-size: 17px;
-}
-.me-list-item .item-title > .item-header {
-  color: grey;
-  font-size: 16px;
-  padding-bottom: 5px;
+.me-item {
+  margin-bottom: 10px;
 }
 </style>
 
 
 <script>
-import { getActivityDetail } from '../utils'
+import { getActivityDetail, formatDate } from '../utils'
+import { format } from 'path'
 
 export default {
   props: {
@@ -158,8 +78,75 @@ export default {
   },
   data() {
     return {
-      backText: '返回',
       activityInfo: null
+    }
+  },
+  computed: {
+    activityTime() {
+      if (!this.activityInfo) {
+        return ''
+      }
+
+      let bt = this.activityInfo.beginTime
+      let et = this.activityInfo.endTime
+
+      bt = formatDate('MM/DD HH:mm', new Date(bt))
+      et = formatDate('MM/DD HH:mm', new Date(et))
+
+      return `${bt} - ${et}`
+    },
+    reportTime() {
+      if (!this.activityInfo) {
+        return ''
+      }
+
+      let bt = this.activityInfo.joinBeginTime
+      let et = this.activityInfo.joinEndTime
+
+      bt = formatDate('MM/DD HH:mm', new Date(bt))
+      et = formatDate('MM/DD HH:mm', new Date(et))
+
+      return `${bt} - ${et}`
+    },
+    joinPersonCount() {
+      if (!this.activityInfo) {
+        return
+      }
+
+      let all = this.activityInfo.personCount
+      let hasJoin = this.activityInfo.hasJoin
+
+      return `${hasJoin}/${all}`
+    },
+    place() {
+      if (!this.activityInfo) {
+        return
+      }
+
+      const p = this.activityInfo.province || ''
+      const c = this.activityInfo.city || ''
+      const a = this.activityInfo.area || ''
+      const place = this.activityInfo.place || ''
+
+      return `${p} ${c} ${a} ${place}`
+    },
+    petUnitPrice() {
+      if (!this.activityInfo) {
+        return
+      }
+
+      const p = this.activityInfo.petUnitPrice
+
+      return `${p}元/宠`
+    },
+    personUnitPrice() {
+      if (!this.activityInfo) {
+        return
+      }
+
+      const p = this.activityInfo.personUnitPrice
+
+      return `${p}元/人`
     }
   },
   methods: {
@@ -168,9 +155,15 @@ export default {
     },
     async getActivityInfo() {
       try {
+        console.log(this.activityId)
+        if (!this.activityId) {
+          return
+        }
+
         const data = await getActivityDetail({ activityId: this.activityId })
 
         if (data.iRet === 0) {
+          console.log(data.data)
           this.activityInfo = data.data
         } else {
           console.error(data)
