@@ -1,5 +1,5 @@
 <template>
-  <f7-page name="personDetail" no-toolbar @page:afterin="onPageAfterIn">
+  <f7-page name="personDetail" no-toolbar @page:beforein="onPageBeforeIn">
     <f7-navbar :back-link="backText" sliding title="个人信息"></f7-navbar>
 
     <f7-block-title>用户信息</f7-block-title>
@@ -95,12 +95,12 @@ export default {
     }
   },
   methods: {
-    async onPageAfterIn() {
+    async onPageBeforeIn() {
       try {
         const { iRet, data } = await getUserInfo()
 
         if (iRet === 0) {
-          this.userInfo = data.userInfo
+          this.userInfo = data
         } else {
           console.error(data)
         }

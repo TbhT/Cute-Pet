@@ -12,7 +12,8 @@
           :subtitle="'年龄：' + pet.age"
           :text="getGenderText(pet)"
         >
-          <img :src="pet.image" slot="media" width="80" height="80" class="lazy lazy-fade-in">
+          <img :src="pet.image" slot="media" width="80" height="80" class="lazy lazy-fade-in" v-if="pet.image">
+          <i class="icon f7-icons me-icons" slot="media">paw</i>
         </f7-list-item>
       </f7-list>
 
@@ -26,6 +27,14 @@
     </f7-fab>
   </f7-page>
 </template>
+
+<style scoped>
+.icon.f7-icons.me-icons {
+  font-size: 60px;
+  width: 60px;
+  height: 60px;
+}
+</style>
 
 <script>
 import { getAllPet } from '../utils'

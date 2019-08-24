@@ -22,8 +22,8 @@
         <f7-list-item title="我的宠物" link="/person/pets"></f7-list-item>
         <f7-list-item title="我的动态" link="/person/tweets"></f7-list-item>
         <f7-list-item title="我的活动" link="/person/activities"></f7-list-item>
-        <f7-list-item title="商家" link="/market/add"></f7-list-item>
-        <f7-list-item title="登录" link="/user/login"></f7-list-item>
+        <!-- <f7-list-item title="商家" link="/market/add"></f7-list-item> -->
+        <!-- <f7-list-item title="登录" link="/user/login"></f7-list-item> -->
       </f7-list>
     </f7-page-content>
   </f7-page>

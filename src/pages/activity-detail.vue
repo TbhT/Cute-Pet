@@ -56,7 +56,7 @@
 
 <style scoped>
 .icon.f7-icons {
-  font-size: 14px;
+  font-size: 20px;
 }
 .me-image {
   width: 100%;
