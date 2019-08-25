@@ -1,12 +1,18 @@
 import * as Api from '../store/api.js'
 import F7 from 'framework7'
+import $$ from 'dom7'
 const { postJSON } = F7.request.promise
+
+function getToken() {
+  return $$('meta[name="csrf-token"').attr('content')
+}
 
 // 登录接口
 export async function loginWithUser({ mobile, validateCode }) {
   const data = await postJSON(Api.USER_LOGIN_WITH_USER, {
     login: mobile,
-    password: validateCode
+    password: validateCode,
+    _csrf: getToken()
   })
 
   return data
@@ -15,7 +21,8 @@ export async function loginWithUser({ mobile, validateCode }) {
 // 获取 验证码
 export async function getValidateCode({ mobile }) {
   const data = await postJSON(Api.USER_GET_VALIDATE_CODE, {
-    mobile
+    mobile,
+    _csrf: getToken()
   })
 
   return data
@@ -23,7 +30,9 @@ export async function getValidateCode({ mobile }) {
 
 // 退出登录
 export async function logoutWithUser() {
-  const data = await postJSON(Api.USER_LOGOUT_WITH_USER)
+  const data = await postJSON(Api.USER_LOGOUT_WITH_USER, {
+    _csrf: getToken()
+  })
   return data
 }
 
@@ -54,7 +63,8 @@ export async function updateUserData({
     province,
     address,
     idCard,
-    high
+    high,
+    _csrf: getToken()
   })
 
   return data
@@ -62,49 +72,68 @@ export async function updateUserData({
 
 // 获取所有动态
 export async function getAllTweets({ offset = 1 }) {
-  const data = await postJSON(Api.GET_ALL_TWEETS, { offset })
+  const data = await postJSON(Api.GET_ALL_TWEETS, { offset, _csrf: getToken() })
   return data
 }
 
 // 获取用户登录状态
 export async function getUserStatus() {
-  const data = await postJSON(Api.GET_USER_STATUS)
+  const data = await postJSON(Api.GET_USER_STATUS, {
+    _csrf: getToken()
+  })
   return data
 }
 
 // 获取用户信息
 export async function getUserInfo() {
-  const data = await postJSON(Api.USER_GET_INFO)
+  const data = await postJSON(Api.USER_GET_INFO, {
+    _csrf: getToken()
+  })
   return data
 }
 
 // 获取banner信息
 export async function getBanners() {
-  const data = await postJSON(Api.BANNERS_GET)
+  const data = await postJSON(Api.BANNERS_GET, {
+    _csrf: getToken()
+  })
   return data
 }
 
 // 获取所有商家信息
 export async function getMarketAll() {
-  const data = await postJSON(Api.MARKET_ALL)
+  const data = await postJSON(Api.MARKET_ALL, {
+    _csrf: getToken()
+  })
   return data
 }
 
 // 获取所有活动
 export async function getActivities(type, offset = 1) {
-  const data = await postJSON(Api.ACTIVITY_TYPE, { type, offset })
+  const data = await postJSON(Api.ACTIVITY_TYPE, {
+    type,
+    offset,
+    _csrf: getToken()
+  })
   return data
 }
 
 // 参加活动
 export async function joinActivity({ activityId }) {
-  const data = await postJSON(Api.ACTIVITY_JOIN, { activityId })
+  const data = await postJSON(Api.ACTIVITY_JOIN, {
+    activityId,
+    _csrf: getToken()
+  })
   return data
 }
 
 // 点赞推特
 export async function likeTweet({ type, tweetId }) {
-  const data = await postJSON(Api.TWEET_LIKE, { type, tweetId })
+  const data = await postJSON(Api.TWEET_LIKE, {
+    type,
+    tweetId,
+    _csrf: getToken()
+  })
   return data
 }
 
@@ -133,7 +162,8 @@ export async function addPet({
     neuter,
     size,
     color,
-    picture
+    picture,
+    _csrf: getToken()
   })
 
   return data
@@ -168,20 +198,25 @@ export async function updatePet({
     neuter,
     size,
     color,
-    picture
+    picture,
+    _csrf: getToken()
   })
   return data
 }
 
 // 添加评论
 export async function createComment({ text, tweetId }) {
-  const data = await postJSON(Api.COMMENT_CREATE, { text, tweetId })
+  const data = await postJSON(Api.COMMENT_CREATE, {
+    text,
+    tweetId,
+    _csrf: getToken()
+  })
   return data
 }
 
 // 添加动态
 export async function createTweet({ text, picture }) {
-  return await postJSON(Api.TWEET_CREATE, { text, picture })
+  return await postJSON(Api.TWEET_CREATE, { text, picture, _csrf: getToken() })
 }
 
 // 添加商家
@@ -195,52 +230,68 @@ export async function createMarket({
   intro,
   picture
 }) {
-  return await postJSON(Api.MARKET_CREATE, { name })
+  return await postJSON(Api.MARKET_CREATE, { name, _csrf: getToken() })
 }
 
 // 获取活动详情
 export async function getActivityDetail({ activityId }) {
-  return await postJSON(Api.ACTIVITY_DETAIL, { activityId })
+  return await postJSON(Api.ACTIVITY_DETAIL, { activityId, _csrf: getToken() })
 }
 
 // 获取所有的宠物
 export async function getAllPet() {
-  return await postJSON(Api.USER_ALL_PET)
+  return await postJSON(Api.USER_ALL_PET, {
+    _csrf: getToken()
+  })
 }
 
 // 获取评论
 export async function getComment({ tweetId, page = 1 }) {
-  return await postJSON(Api.COMMENT_FOR_TWEET, { tweetId, page })
+  return await postJSON(Api.COMMENT_FOR_TWEET, {
+    tweetId,
+    page,
+    _csrf: getToken()
+  })
 }
 
 // 获取商家详情
 export async function getMarketDetail({ marketId }) {
-  return await postJSON(Api.MARKET_DETAIL, { marketId })
+  return await postJSON(Api.MARKET_DETAIL, { marketId, _csrf: getToken() })
 }
 
 // 获取宠物详情
 export async function getPetDetail({ petId }) {
-  return await postJSON(Api.PET_DETAIL, { petId })
+  return await postJSON(Api.PET_DETAIL, { petId, _csrf: getToken() })
 }
 
 // 获取 话题 列表
 export async function getTopicAll() {
-  return await postJSON(Api.TOPIC_ALL)
+  return await postJSON(Api.TOPIC_ALL, {
+    _csrf: getToken()
+  })
 }
 
 // 获取话题相关的列表
 export async function getTopicTweets({ topicId, page = 1 }) {
-  return await postJSON(Api.TOPIC_ALL_TWEET, { topicId, page })
+  return await postJSON(Api.TOPIC_ALL_TWEET, {
+    topicId,
+    page,
+    _csrf: getToken()
+  })
 }
 
 // 获取用户参加的活动
 export async function getUserActivities() {
-  return await postJSON(Api.USER_ALL_ACTIVITY)
+  return await postJSON(Api.USER_ALL_ACTIVITY, {
+    _csrf: getToken()
+  })
 }
 
 // 获取用户所有的动态
 export async function getUserAllTweets() {
-  return await postJSON(Api.USER_ALL_TWEETS)
+  return await postJSON(Api.USER_ALL_TWEETS, {
+    _csrf: getToken()
+  })
 }
 
 // 更新用户信息
@@ -270,7 +321,8 @@ export async function getUserSignUp({
     address,
     idCard,
     high,
-    picture
+    picture,
+    _csrf: getToken()
   })
 
   return data

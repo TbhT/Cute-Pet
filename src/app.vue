@@ -72,8 +72,11 @@ export default {
     }
   },
   mounted() {
-    this.$f7ready(async f7 => {
+    this.$f7ready(f7 => {
       // Call F7 APIs here
+      const token = this.$$('meta[name="csrf-token"').attr('content');
+      console.log('---------------token', token)
+      this.$$(window).__me_csrf = token
     })
   }
 }
