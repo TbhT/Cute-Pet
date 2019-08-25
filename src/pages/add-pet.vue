@@ -26,7 +26,15 @@
       </f7-list-input>
 
       <f7-list-input label="年龄" :input="false">
-        <f7-range label slot="input" :min="1" :max="100" :step="1" @rangeChange="onAgeChange"></f7-range>
+        <f7-range
+          label
+          slot="input"
+          :value="age"
+          :min="1"
+          :max="100"
+          :step="1"
+          @rangeChange="onAgeChange"
+        ></f7-range>
       </f7-list-input>
 
       <f7-list-input
@@ -49,10 +57,46 @@
 
       <f7-list-input
         label="品种"
-        :value="type"
+        :value="subType"
         type="text"
         placeholder="品种"
-        @input="type = $event.target.value"
+        @input="subType = $event.target.value"
+      ></f7-list-input>
+
+      <f7-list-input
+        label="体重/千克"
+        :value="weight"
+        type="text"
+        validate
+        pattern="[0-9]*"
+        placeholder="体重/千克"
+        @input="weight = $event.target.value"
+      ></f7-list-input>
+
+      <f7-list-input
+        label="是否阉割"
+        :value="neuter"
+        type="select"
+        @input="neuter = $event.target.value"
+      >
+        <option value="0">否</option>
+        <option value="1">是</option>
+      </f7-list-input>
+
+      <f7-list-input
+        label="尺寸"
+        :value="size"
+        type="text"
+        @input="size = $event.target.value"
+        placeholder="尺寸"
+      ></f7-list-input>
+
+      <f7-list-input
+        label="颜色"
+        :value="color"
+        type="text"
+        @input="color = $event.target.value"
+        placeholder="颜色"
       ></f7-list-input>
     </f7-list>
 
@@ -83,7 +127,7 @@
 </template>
 
 <script>
-import { addPet, getPetDetail } from '../utils/index.js'
+import { addPet, getPetDetail, updatePet } from '../utils/index.js'
 import PictureInput from 'vue-picture-input'
 
 export default {
@@ -91,34 +135,50 @@ export default {
     PictureInput
   },
   props: {
-    type: 1,
+    type: {
+      type: Number,
+      default: 1
+    },
     petId: null
   },
   data() {
     return {
       nickname: '',
       showNicknameErrorFlag: false,
-      gender: 0,
+      gender: 1,
       showGenderErrorFlag: false,
       age: 0,
-      vaccineStatus: 0,
-      petType: 0,
-      type: '',
+      vaccineStatus: 2,
+      petType: '',
+      subType: '',
+      weight: 1,
+      neuter: 0,
+      size: '',
+      color: '',
       picture: '',
-      imageUrl: ''
+      imageUrl: '',
+      checkPicture: true
     }
   },
   methods: {
     async onPageBeforeIn() {
       if (this.type === 2 && this.petId) {
-        const {data, iRet} = await getPetDetail({ petId: this.petId })
+        const { data, iRet } = await getPetDetail({ petId: this.petId })
         if (iRet === 0) {
           this.nickname = data.nickname
           this.gender = data.gender
           this.age = data.age
           this.vaccineStatus = data.vaccineStatus
           this.petType = data.petType
-          this.imageUrl = data.image
+          this.subType = data.subType
+          this.size = data.size
+          this.color = data.color
+          this.weight = data.weight
+          this.neuter = data.neuter
+          this.imageUrl = data.avatar
+          if (data.avatar) {
+            this.checkPicture = false
+          }
         }
       }
     },
@@ -151,17 +211,22 @@ export default {
           return (this.showGenderErrorFlag = true)
         }
 
-        if (!this.picture) {
+        if (!this.picture && this.checkPicture) {
           return this.toast('宠物头像不能为空')
         }
 
         this.$f7.preloader.show()
 
-        const result = await addPet(this)
+        let result
+        if (this.checkPicture) {
+          result = await addPet(this)
+        } else {
+          result = await updatePet(this)
+        }
 
         this.$f7.preloader.hide()
 
-        if (!result) {
+        if (result.iRet !== 0) {
           console.log('添加宠物失败', result)
           this.toast('添加宠物失败')
           return

@@ -5,7 +5,7 @@
     <f7-page-content>
       <f7-list class="me-person-profile">
         <f7-list-item :link="link">
-          <img :src="userInfo.image" slot="media" v-if="userInfo.image" />
+          <img :src="userInfo.avatar" slot="media" v-if="userInfo.avatar" />
           <div class="me-default-icon icon iconfont icon-person" v-else slot="media"></div>
           <div class slot="inner-start" v-if="user.isLogin">
             <div class="me-person-name">用户：{{userInfo.nickname || userInfo.mobile}}</div>

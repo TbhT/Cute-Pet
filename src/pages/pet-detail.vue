@@ -2,7 +2,6 @@
   <f7-page name="petDetail" no-toolbar @page:beforein="onPageBeforeIn">
     <f7-navbar :back-link="backText" sliding title="宠物信息"></f7-navbar>
 
-    <f7-block-title>宠物信息</f7-block-title>
     <f7-list class="me-pet-detail-list media-list" v-if="petInfo">
       <li class="me-list-item">
         <a class="item-content">
@@ -64,11 +63,61 @@
             <div class="item-title">
               <div class="item-header">品种</div>
             </div>
-            <div class="item-text">{{petInfo.type || '暂无'}}</div>
+            <div class="item-text">{{petInfo.subType || '暂无'}}</div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">体重</div>
+            </div>
+            <div class="item-text">{{petInfo.weight || '暂无'}}</div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">是否阉割</div>
+            </div>
+            <div class="item-text">{{neuter}}</div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">尺寸</div>
+            </div>
+            <div class="item-text">{{this.petInfo.size || '暂无'}}</div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">颜色</div>
+            </div>
+            <div class="item-text">{{this.petInfo.color || '暂无'}}</div>
           </div>
         </a>
       </li>
     </f7-list>
+
+    <f7-block v-if="petInfo">
+      <f7-row>
+        <f7-button :href="link" class="col" fill raised color="green">更新</f7-button>
+      </f7-row>
+    </f7-block>
 
     <f7-block v-else inset>暂无宠物信息</f7-block>
   </f7-page>
@@ -104,6 +153,13 @@ export default {
     }
   },
   computed: {
+    link() {
+      if (this.petId) {
+        return `/pet/update/${this.petId}`
+      } else {
+        return '#'
+      }
+    },
     vaccineStatus() {
       if (this.petInfo.vaccineStatus == 1) {
         return '已接种'
@@ -116,6 +172,13 @@ export default {
         return '公'
       } else {
         return '母'
+      }
+    },
+    neuter() {
+      if (this.petInfo.neuter == 1) {
+        return '是'
+      } else {
+        return '否'
       }
     }
   },

@@ -29,6 +29,17 @@
         <a class="item-content">
           <div class="item-inner">
             <div class="item-title">
+              <div class="item-header">手机号</div>
+            </div>
+            <div class="item-text">{{userInfo.mobile || '暂无'}}</div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
               <div class="item-header">年龄</div>
             </div>
             <div class="item-text">{{userInfo.age || '暂无'}}</div>
@@ -46,13 +57,14 @@
           </div>
         </a>
       </li>
+
       <li class="me-list-item">
         <a class="item-content">
           <div class="item-inner">
             <div class="item-title">
-              <div class="item-header">家庭住址</div>
+              <div class="item-header">城市</div>
             </div>
-            <div class="item-text">{{userInfo.homeAddress || '暂无'}}</div>
+            <div class="item-text">{{userInfo.city || '暂无'}}</div>
           </div>
         </a>
       </li>
@@ -61,13 +73,52 @@
         <a class="item-content">
           <div class="item-inner">
             <div class="item-title">
-              <div class="item-header">工作地址</div>
+              <div class="item-header">省份</div>
             </div>
-            <div class="item-text">{{userInfo.workAddress || '暂无'}}</div>
+            <div class="item-text">{{userInfo.province || '暂无'}}</div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">住址</div>
+            </div>
+            <div class="item-text">{{userInfo.address || '暂无'}}</div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">身份证号</div>
+            </div>
+            <div class="item-text">{{userInfo.idCard || '暂无'}}</div>
+          </div>
+        </a>
+      </li>
+
+      <li class="me-list-item">
+        <a class="item-content">
+          <div class="item-inner">
+            <div class="item-title">
+              <div class="item-header">身高/cm</div>
+            </div>
+            <div class="item-text">{{userInfo.high || '暂无'}}</div>
           </div>
         </a>
       </li>
     </f7-list>
+
+    <f7-block v-if="userInfo">
+      <f7-row>
+        <f7-button href="/person/update" class="col" fill raised color="green">更新</f7-button>
+      </f7-row>
+    </f7-block>
 
     <f7-block v-else inset>暂无相关信息</f7-block>
   </f7-page>

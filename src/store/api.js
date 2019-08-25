@@ -52,6 +52,9 @@ export const TWEET_LIKE = '/api/tweet/j-like'
 // 添加宠物
 export const PET_ADD = '/api/pet/j-create'
 
+// 更新宠物
+export const PET_UPDATE = '/api/pet/j-update'
+
 //. 获取宠物详情
 export const PET_DETAIL = '/api/pet/j-detail'
 

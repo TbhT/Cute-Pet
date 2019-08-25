@@ -97,8 +97,8 @@ export async function getActivities(type, offset = 1) {
 }
 
 // 参加活动
-export async function joinActivity({activityId}) {
-  const data = await postJSON(Api.ACTIVITY_JOIN, {activityId})
+export async function joinActivity({ activityId }) {
+  const data = await postJSON(Api.ACTIVITY_JOIN, { activityId })
   return data
 }
 
@@ -115,7 +115,11 @@ export async function addPet({
   age,
   vaccineStatus,
   petType,
-  type,
+  subType,
+  weight,
+  neuter,
+  size,
+  color,
   picture
 }) {
   const data = await postJSON(Api.PET_ADD, {
@@ -124,10 +128,48 @@ export async function addPet({
     age,
     vaccineStatus,
     petType,
-    type,
+    subType,
+    weight,
+    neuter,
+    size,
+    color,
     picture
   })
 
+  return data
+}
+
+/**
+ * 更新宠物信息
+ */
+export async function updatePet({
+  nickname,
+  gender,
+  age,
+  vaccineStatus,
+  petType,
+  subType,
+  weight,
+  neuter,
+  size,
+  color,
+  picture,
+  petId
+}) {
+  const data = await postJSON(Api.PET_UPDATE, {
+    petId,
+    nickname,
+    gender,
+    age,
+    vaccineStatus,
+    petType,
+    subType,
+    weight,
+    neuter,
+    size,
+    color,
+    picture
+  })
   return data
 }
 
@@ -167,18 +209,18 @@ export async function getAllPet() {
 }
 
 // 获取评论
-export async function getComment({tweetId, page = 1}) {
-  return await postJSON(Api.COMMENT_FOR_TWEET, {tweetId, page})
+export async function getComment({ tweetId, page = 1 }) {
+  return await postJSON(Api.COMMENT_FOR_TWEET, { tweetId, page })
 }
 
 // 获取商家详情
-export async function getMarketDetail({marketId}) {
-  return await postJSON(Api.MARKET_DETAIL, {marketId})
+export async function getMarketDetail({ marketId }) {
+  return await postJSON(Api.MARKET_DETAIL, { marketId })
 }
 
 // 获取宠物详情
-export async function getPetDetail({petId}) {
-  return await postJSON(Api.PET_DETAIL, {petId})
+export async function getPetDetail({ petId }) {
+  return await postJSON(Api.PET_DETAIL, { petId })
 }
 
 // 获取 话题 列表
@@ -187,8 +229,8 @@ export async function getTopicAll() {
 }
 
 // 获取话题相关的列表
-export async function getTopicTweets({topicId, page = 1}) {
-  return await postJSON(Api.TOPIC_ALL_TWEET, {topicId, page})
+export async function getTopicTweets({ topicId, page = 1 }) {
+  return await postJSON(Api.TOPIC_ALL_TWEET, { topicId, page })
 }
 
 // 获取用户参加的活动
@@ -201,8 +243,38 @@ export async function getUserAllTweets() {
   return await postJSON(Api.USER_ALL_TWEETS)
 }
 
-// 用户注册
-export async function getUserSignUp() {}
+// 更新用户信息
+export async function getUserSignUp({
+  mobile,
+  name,
+  nickname,
+  birth,
+  gender,
+  age,
+  city,
+  province,
+  address,
+  idCard,
+  high,
+  picture
+}) {
+  const data = await postJSON(Api.USER_UPDATE_DATA, {
+    mobile,
+    name,
+    nickname,
+    birth,
+    gender,
+    age,
+    city,
+    province,
+    address,
+    idCard,
+    high,
+    picture
+  })
+
+  return data
+}
 
 export const imgFilterReg = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i
 
@@ -279,10 +351,11 @@ export const MINUTES = (() => {
   return m
 })()
 
-
 export function formatDate(template, date) {
   const specs = 'YYYY:MM:DD:HH:mm:ss'.split(':')
-  date = ((date && date.valueOf()) || Date.now()) - new Date().getTimezoneOffset() * 6e4
+  date =
+    ((date && date.valueOf()) || Date.now()) -
+    new Date().getTimezoneOffset() * 6e4
   date = new Date(date)
   return date
     .toISOString()
@@ -290,4 +363,44 @@ export function formatDate(template, date) {
     .reduce(function(template, item, i) {
       return template.split(specs[i]).join(item)
     }, template)
+}
+
+const allPetType = {
+  dog: [
+    '贵宾',
+    '贵宾（泰迪）',
+    '比熊',
+    '博美',
+    '吉娃娃',
+    '雪拉瑞',
+    '约克夏',
+    '柯基',
+    '八哥',
+    '蝴蝶',
+    '马尔济斯',
+    '中华田园犬',
+    '哈士奇',
+    '金毛',
+    '阿拉斯加',
+    '拉布拉多',
+    '苏牧',
+    '德牧',
+    '古牧',
+    '其他'
+  ],
+  cat: [
+    '布偶',
+    '暹罗',
+    '苏折',
+    '英短',
+    '美短',
+    '波斯',
+    '蓝猫',
+    '孟买',
+    '缅因',
+    '斯芬克斯猫',
+    '加菲',
+    '中华田园猫',
+    '其他'
+  ]
 }

@@ -103,6 +103,18 @@ const routes = [
     async: function (to, from, resolve) {
       const petId = to.params.petId
       
+      resolve(
+        {
+          component: AddPetPage
+        },
+        {
+          props: {
+            petId,
+            type: 2
+          }
+        }
+      )
+
     }
   },
   {
@@ -212,6 +224,21 @@ const routes = [
       } catch (error) {
         console.error(error)
       }
+    }
+  },
+  {
+    path: '/person/update',
+    async: function (to, from, resolve) {
+      resolve(
+        {
+          component: SignupPage
+        },
+        {
+          props: {
+            type: 2
+          }
+        }
+      )
     }
   },
   {
