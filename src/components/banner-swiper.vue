@@ -1,7 +1,7 @@
 <template>
   <f7-swiper :params="params" init pagination class="me-swiper">
     <f7-swiper-slide v-for="(bannerImage, index) in bannerImages" :key="index">
-      <img :src="bannerImage.imgUrl" class="lazy">
+      <img :src="bannerImage.image" class="lazy">
     </f7-swiper-slide>
   </f7-swiper>
 </template>
@@ -9,7 +9,7 @@
 <style scoped>
 .me-swiper img {
   width: 100%;
-  height: 20%;
+  height: 150px;
 }
 div.me-swiper.swiper-container {
   margin-top: 0px;

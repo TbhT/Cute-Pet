@@ -76,6 +76,7 @@ export default {
       // Call F7 APIs here
       const token = this.$$('meta[name="csrf-token"').attr('content');
       console.log('---------------token', token)
+      window.__me_csrf = token
       this.$$(window).__me_csrf = token
     })
   }

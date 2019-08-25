@@ -5,7 +5,7 @@
     tabs
     with-subnavbar
     no-swipeback
-    @page:beforein="onPageBeforeIn"
+    @page:afterin="onPageAfterIn"
   >
     <f7-navbar title="首页">
       <f7-nav-right>
@@ -80,7 +80,7 @@ export default {
     }
   },
   methods: {
-    async onPageBeforeIn() {
+    async onPageAfterIn() {
       if (this.isPageFirstIn) {
         return
       }
