@@ -37,7 +37,20 @@
 </template>
 
 <script>
-import { getActivityDetail, joinActivity } from '../utils'
+import { getActivityDetail, joinActivity, getUserInfo } from '../utils'
+
+const userMap = {
+  mobile: '手机号',
+  name: '姓名',
+  birth: '生日',
+  gender: '性别',
+  age: '年龄',
+  city: '城市',
+  province: '省份',
+  address: '地址',
+  idCard: '身份证号',
+  high: '身高'
+}
 
 export default {
   props: {
@@ -48,7 +61,8 @@ export default {
       activityInfo: null,
       personCount: 1,
       petCount: 1,
-      status: 1
+      status: 1,
+      userInfo: null
     }
   },
   computed: {
@@ -81,14 +95,29 @@ export default {
       return Math.floor(personPrice) + Math.floor(petPrice)
     }
   },
-  mounted() {
-    console.log(this.submitData, this.back)
-  },
   methods: {
     async submitData() {
       try {
-        if (!this.activityInfo) {
+        if (!this.activityInfo || !this.userInfo) {
           return
+        }
+
+        if (this.activityInfo.tag && this.activityInfo.tag.length) {
+          let key
+          const flag = this.activityInfo.tag.some(k => {
+            if (!this.userInfo[k]) {
+              key = k
+              return true
+            }
+
+            return false
+          })
+
+          if (flag) {
+            return this.$f7.dialog.confirm('请先完善个人信息', null, () => {
+              this.$f7router.navigate('/person/update')
+            })
+          }
         }
 
         if (this.status === 2) {
@@ -101,6 +130,9 @@ export default {
 
         if (iRet === 0) {
           this.status = 2
+          setTimeout(() => {
+            this.back()
+          }, 1000)
         } else {
           this.toast('参加活动失败，请稍后重试')
         }
@@ -120,6 +152,19 @@ export default {
     },
     onPageBeforeIn() {
       this.getActivityInfo()
+      this.getUserInfo()
+    },
+    async getUserInfo() {
+      try {
+        const { iRet, data } = await getUserInfo()
+        if (iRet === 0) {
+          this.userInfo = data
+        } else {
+          console.error(data)
+        }
+      } catch (error) {
+        console.error(error)
+      }
     },
     async getActivityInfo() {
       try {
