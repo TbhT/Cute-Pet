@@ -10,7 +10,17 @@
     <f7-navbar title="我的赛事" back-link="返回"></f7-navbar>
 
     <f7-list media-list class="me-media-list me-acitivities" v-if="activities.length">
-      <f7-list-item link="#" :key="activity.activityId" v-for="activity in activities" media-item></f7-list-item>
+      <f7-list-item
+        :key="activity.activityId"
+        v-for="activity in activities"
+        media-item
+        :subtitle="formatSubtitle(activity)"
+        :title="activity.name"
+        :text="formatPlace(activity)"
+        :link="getDetailLink(activity)"
+      >
+        <img :src="activity.image" slot="media" width="80" height="80" class="lazy lazy-fade-in" />
+      </f7-list-item>
     </f7-list>
 
     <f7-block v-else inset>
@@ -23,7 +33,6 @@
 import { getUserActivities } from '../utils'
 
 export default {
-  methods: {},
   data() {
     return {
       activities: [],
@@ -35,6 +44,15 @@ export default {
     }
   },
   methods: {
+    getDetailLink(activity) {
+      return `/activities/detail/${activity.activityId}`
+    },
+    formatSubtitle(data) {
+      return `总名额: ${data.personCount} 人`
+    },
+    formatPlace(data) {
+      return `活动地点: ${data.place}`
+    },
     onPageBeforeIn() {
       if (this.isPageFirstIn) {
         return

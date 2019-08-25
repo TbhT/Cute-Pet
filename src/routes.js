@@ -17,6 +17,7 @@ import ActivityDetailPage from './pages/activity-detail.vue'
 import MarketDetailPage from './pages/market-detail.vue'
 import PersonDetailPage from './pages/person-detail.vue'
 import PetDetailPage from './pages/pet-detail.vue'
+import JoinPage from './pages/join.vue'
 import { getUserStatus } from './utils'
 
 const routes = [
@@ -63,6 +64,23 @@ const routes = [
     path: '/activities/',
     component: ActivitiesPage,
     keepAlive: true
+  },
+  {
+    path: '/activity/join/:activityId',
+    // component: JoinPage
+    async: function (to, from, resolve) {
+      const activityId = to.params.activityId
+      resolve(
+        {
+          component: JoinPage
+        },
+        {
+          props: {
+            activityId
+          }
+        }
+      )
+    }
   },
   {
     path: '/activities/detail/:activityId',
