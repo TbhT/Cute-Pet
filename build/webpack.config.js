@@ -41,7 +41,7 @@ module.exports = {
     compress: true,
     contentBase: '/www/',
     disableHostCheck: true,
-    host: '127.0.0.1',
+    host: '0.0.0.0',
     proxy: {
       '/': {
         // TODO: 最好不要配置成虚拟主机

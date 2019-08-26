@@ -93,7 +93,16 @@ export default {
       }
 
       this.disabledButton = true
+      console.log('---begin---validate code')
       const result = await getValidateCode({ mobile: this.username })
+      console.log('----end --- validate code')
+
+      if (result.iRet === 0) {
+        this.toast('验证码发送成功')
+      } else {
+        this.toast('验证码发送失败')
+      }
+
       setTimeout(() => {
         this.disabledButton = false
       }, 60000)

@@ -4,7 +4,7 @@ import $$ from 'dom7'
 const { postJSON } = F7.request.promise
 
 function getToken() {
-  return $$('meta[name="csrf-token"').attr('content') || window.__me_csrf
+  // return $$('meta[name="csrf-token"').attr('content') || window.__me_csrf
 }
 
 // 登录接口
