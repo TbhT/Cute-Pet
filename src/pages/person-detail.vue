@@ -140,8 +140,10 @@ export default {
     gender() {
       if (this.userInfo.gender == 1) {
         return '男'
-      } else {
+      } else if (this.userInfo.gender === 0) {
         return '女'
+      } else {
+        return ''
       }
     }
   },
