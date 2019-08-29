@@ -155,9 +155,9 @@ export default {
     },
     async getAllTopics() {
       try {
-        if (this.user.isLogin !== true) {
-          return
-        }
+        // if (this.user.isLogin !== true) {
+        //   return
+        // }
 
         const data = await getTopicAll()
         console.log('-----topic-------', data)

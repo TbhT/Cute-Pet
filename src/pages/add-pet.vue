@@ -22,7 +22,7 @@
         @input="gender = $event.target.value"
       >
         <option value="1">公</option>
-        <option value="2">母</option>
+        <option value="0">母</option>
       </f7-list-input>
 
       <f7-list-input label="年龄" :input="false">
@@ -30,8 +30,8 @@
           label
           slot="input"
           :value="age"
-          :min="1"
-          :max="100"
+          :min="0"
+          :max="30"
           :step="1"
           @rangeChange="onAgeChange"
         ></f7-range>
@@ -44,7 +44,7 @@
         @input="vaccineStatus = $event.target.value"
       >
         <option value="1">已接种</option>
-        <option value="2">未接种</option>
+        <option value="0">未接种</option>
       </f7-list-input>
 
       <f7-list-input
@@ -68,13 +68,13 @@
         :value="weight"
         type="text"
         validate
-        pattern="[0-9]*"
+        pattern="[0-9]*(.[0-9]*)?$"
         placeholder="体重/千克"
         @input="weight = $event.target.value"
       ></f7-list-input>
 
       <f7-list-input
-        label="是否阉割"
+        label="是否绝育"
         :value="neuter"
         type="select"
         @input="neuter = $event.target.value"
@@ -82,14 +82,6 @@
         <option value="0">否</option>
         <option value="1">是</option>
       </f7-list-input>
-
-      <f7-list-input
-        label="尺寸"
-        :value="size"
-        type="text"
-        @input="size = $event.target.value"
-        placeholder="尺寸"
-      ></f7-list-input>
 
       <f7-list-input
         label="颜色"

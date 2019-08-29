@@ -122,12 +122,14 @@ export default {
     return {
       backText: '返回',
       comments: [],
-      isPageFirstIn: false
+      isPageFirstIn: false,
+      likeFlag: false
     }
   },
   computed: {
     ...mapState(['user']),
     likeStyle() {
+      console.log('-------更新了 點贊----')
       if (this.tweet.liked) {
         return 'iconfont icon-like1'
       } else {
@@ -178,27 +180,39 @@ export default {
           return this.$f7router.navigate('/user/login')
         }
 
+        if (this.likeFlag) {
+          return
+        }
+
+        this.likeFlag = true
+
         let type = 1
 
         if (this.likeStyle !== 'iconfont icon-like') {
           type = 2
         }
 
-        const data = await likeTweet({ tweetId, type })
-
-        if (data.iRet === 0) {
-          if (this.likeStyle === 'iconfont icon-like') {
-            // this.likeStyle = 'iconfont icon-like1'
-            this['home/updateTweetById']({ tweetId, liked: false })
-          } else {
-            this['home/updateTweetById']({ tweetId, liked: true })
-            // this.likeStyle = 'iconfont icon-like'
-          }
+        if (this.likeStyle === 'iconfont icon-like') {
+          console.log(111111)
+          this.tweet.liked = true
+          this.tweet.likeCount -= 1
+          this['home/updateTweetById']({ tweetId, liked: false })
         } else {
-          console.error(data)
+          console.log(222222)
+          this.tweet.liked = false
+          this.tweet.likeCount += 1
+          this['home/updateTweetById']({ tweetId, liked: true })
+        }
+
+        try {
+          const data = await likeTweet({ tweetId, type })
+        } catch (error) {
+          console.error(error)
         }
       } catch (error) {
         console.error(error)
+      } finally {
+        this.likeFlag = false
       }
     },
     openCommentPopup() {

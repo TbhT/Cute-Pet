@@ -204,12 +204,12 @@ export default {
       try {
         const data = await getUserSignUp(this)
 
-        // if (data.iRet === 0) {
-        //   this.toast('更新成功')
-        // } else {
-        //   console.error(data)
-        //   this.toast('更新失败', false)
-        // }
+        if (data.iRet === 0) {
+          this.toast('更新成功')
+        } else {
+          console.error(data)
+          this.toast('更新失败', false)
+        }
       } catch (error) {
         console.error(error)
         this.$f7.dialog.alert('注册失败, 请重试')

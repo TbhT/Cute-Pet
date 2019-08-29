@@ -3,7 +3,7 @@
     <f7-card class="me-post-card">
       <f7-card-header>
         <div class="me-avatar">
-          <img :src="data.avatar" class="lazy lazy-fade-in" v-if="data.avatar">
+          <img :src="data.avatar" class="lazy lazy-fade-in" v-if="data.avatar" />
           <div class="me-default-icon icon iconfont icon-person" v-else></div>
         </div>
 
@@ -16,7 +16,7 @@
       <f7-card-content class="me-card-content">
         <div class="text me-text">{{ data.text }}</div>
         <div class="me-image" v-if="data.image">
-          <img :src="data.image" class="lazy">
+          <img :src="data.image" class="lazy" />
         </div>
       </f7-card-content>
 
@@ -99,6 +99,11 @@ export default {
       default: true
     }
   },
+  data() {
+    return {
+      likeFlag: false
+    };
+  },
   computed: {
     likeStyle() {
       if (this.data.liked) {
@@ -125,26 +130,40 @@ export default {
         return this.$f7router.navigate('/user/login')
       }
 
+      if (this.likeFlag) {
+        return
+      }
+
+      this.likeFlag = true
+
       let type = 1
 
       if (this.likeStyle !== 'iconfont icon-like') {
         type = 2
       }
 
+      if (this.likeStyle === 'iconfont icon-like') {
+        this['home/updateTweetById']({ tweetId, liked: false })
+      } else {
+        this['home/updateTweetById']({ tweetId, liked: true })
+      }
+
       try {
         const data = await likeTweet({ tweetId, type })
 
-        if (data.iRet === 0) {
-          if (this.likeStyle === 'iconfont icon-like') {
-            this['home/updateTweetById']({ tweetId, liked: false })
-          } else {
-            this['home/updateTweetById']({ tweetId, liked: true })
-          }
-        } else {
-          console.error(data)
-        }
+        // if (data.iRet === 0) {
+        //   if (this.likeStyle === 'iconfont icon-like') {
+        //     this['home/updateTweetById']({ tweetId, liked: false })
+        //   } else {
+        //     this['home/updateTweetById']({ tweetId, liked: true })
+        //   }
+        // } else {
+        //   console.error(data)
+        // }
       } catch (error) {
         console.error(error)
+      } finally {
+        this.likeFlag = false
       }
     }
   }
