@@ -184,7 +184,8 @@ export default {
           this.activityInfo = data.data
           const now = getLocaleDatetime()
           const joinEndTime = new Date(this.activityInfo.joinEndTime)
-
+          console.log('---now---', now)
+          console.log('---end---', joinEndTime)
           if (this.activityInfo.userJoinStatus === 1) {
             this.flag = 3
           } else if ((now.valueOf() - joinEndTime.valueOf()) > 0) {

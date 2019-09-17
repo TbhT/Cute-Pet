@@ -43,6 +43,18 @@ export const ACTIVITY_TYPE = '/api/activity/j-activity'
 // 加入活动
 export const ACTIVITY_JOIN = '/api/activity/j-join'
 
+// 创建订单
+export const ORDER_CREATE = '/api/order/j-create'
+
+// 统一支付订单
+export const UNIFIED_ORDER = '/api/order/j-pay'
+
+// 根据activityId获取订单详情
+export const ORDER_DETAIL_FOR_ACTIVITY_ID = '/api/order/j-detail'
+
+// 获取订单列表
+export const ORDER_LIST = '/api/order/j-list'
+
 // 获取活动详情
 export const ACTIVITY_DETAIL = '/api/activity/j-detail'
 

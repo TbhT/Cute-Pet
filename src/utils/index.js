@@ -127,6 +127,37 @@ export async function joinActivity({ activityId }) {
   return data
 }
 
+// 创建订单
+export async function createOrder({ petCount, personCount, activityId }) {
+  const data = await postJSON(Api.ORDER_CREATE, {
+    petCount,
+    personCount,
+    activityId,
+    _csrf: getToken()
+  })
+
+  return data
+}
+
+// 统一支付订单参数
+export async function unifiedOrder({ orderId }) {
+  const data = await postJSON(Api.UNIFIED_ORDER, {
+    _csrf: getToken(),
+    orderId
+  })
+
+  return data
+}
+
+// 根据活动id获取订单详情
+export async function getOrderInfoForActivityId({ activityId }) {
+  const data = await postJSON(Api.ORDER_DETAIL_FOR_ACTIVITY_ID, {
+    activityId
+  })
+
+  return data
+}
+
 // 点赞推特
 export async function likeTweet({ type, tweetId }) {
   const data = await postJSON(Api.TWEET_LIKE, {
@@ -328,18 +359,24 @@ export async function getUserSignUp({
   return data
 }
 
+// 获取订单列表
+export async function getOrderList() {
+  const data = await postJSON(Api.ORDER_LIST)
+  return data
+}
+
 export const imgFilterReg = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i
 
-export function getLocaleDatetime() {
-  const today = new Date()
+export function getLocaleDatetime(dd) {
+  const today = dd || new Date()
   const y = today.getUTCFullYear(),
-    m = today.getUTCMonth() + 1,
-    d = today.getUTCDay(),
+    m = today.getUTCMonth(),
+    d = today.getUTCDate(),
     h = today.getUTCHours() + 8,
     mi = today.getUTCMinutes(),
     s = today.getUTCSeconds()
 
-  return new Date(Date.UTC(y, m, d, h, mi, s))
+  return new Date(y, m, d, h, mi, s)
 }
 
 export function getDaysInMonth(year, month) {

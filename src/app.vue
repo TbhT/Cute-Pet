@@ -30,7 +30,6 @@
     <f7-popup :opened="publisherOpened" @popup:closed="closePopup('publisherOpened')">
       <publisher></publisher>
     </f7-popup>
-
   </f7-app>
 </template>
 <script>

@@ -12,12 +12,12 @@
     <f7-block class="text-align-left">
       <div>
         <p>选择参与活动的人数</p>
-        <f7-stepper :input="false" round :min="1" @stepper:change="onPersonChange"></f7-stepper>
+        <f7-stepper :input="false" round :min="1" :max="2" @stepper:change="onPersonChange"></f7-stepper>
       </div>
 
       <div>
         <p>选择参与活动的宠物数量</p>
-        <f7-stepper :input="false" round :min="1" @stepper:change="onPetChange"></f7-stepper>
+        <f7-stepper :input="false" round :min="1" :max="2" @stepper:change="onPetChange"></f7-stepper>
       </div>
 
       <div>
@@ -28,7 +28,9 @@
     <f7-block v-if="status === 1">
       <f7-row>
         <f7-button class="col" raised @click="back">取消</f7-button>
-        <f7-button class="col" fill raised color="green" @click="submitData">报名</f7-button>
+        <f7-button class="col" fill raised color="green" @click="orderCreate">支付并报名参加</f7-button>
+
+        <!-- <f7-button class="col" fill raised color="green" @click="submitData">报名</f7-button> -->
       </f7-row>
     </f7-block>
 
@@ -37,7 +39,14 @@
 </template>
 
 <script>
-import { getActivityDetail, joinActivity, getUserInfo } from '../utils'
+import {
+  getActivityDetail,
+  joinActivity,
+  getUserInfo,
+  createOrder,
+  unifiedOrder,
+  getOrderInfoForActivityId
+} from '../utils'
 
 const userMap = {
   mobile: '手机号',
@@ -52,6 +61,17 @@ const userMap = {
   high: '身高'
 }
 
+let JSAPIPARAMS = null
+
+function jsApiCall(fn) {
+  WeixinJSBridge.invoke('getBrandWCPayRequest', JSAPIPARAMS, function(res) {
+    console.log('--------------支付结果')
+    console.log(res)
+    fn && fn(res)
+    WeixinJSBridge.log(res.err_msg)
+  })
+}
+
 export default {
   props: {
     activityId: null
@@ -62,7 +82,8 @@ export default {
       personCount: 1,
       petCount: 1,
       status: 1,
-      userInfo: null
+      userInfo: null,
+      orderInfo: null
     }
   },
   computed: {
@@ -96,6 +117,14 @@ export default {
     }
   },
   methods: {
+    toast(msg) {
+      const toast = this.$f7.toast.create({
+        text: msg,
+        closeTimeout: 2000,
+        position: 'center'
+      })
+      toast.open()
+    },
     async submitData() {
       try {
         if (!this.activityInfo || !this.userInfo) {
@@ -140,6 +169,68 @@ export default {
         console.error(error)
       }
     },
+
+    async orderCreate() {
+      try {
+        if (!this.activityInfo) {
+          return
+        }
+
+        if (!this.orderInfo) {
+          const data = await createOrder({
+            petCount: this.petCount,
+            personCount: this.personCount,
+            activityId: this.activityInfo.activityId
+          })
+
+          if (data.iRet === 0) {
+            this.orderInfo = data.data
+          }
+        }
+
+        if (this.orderInfo.orderId) {
+          location.href = `/order/j-pay/?orderId=${this.orderInfo.orderId}`
+        }
+
+        // const jsApiParams = await unifiedOrder({
+        //   orderId: this.orderInfo.orderId
+        // })
+        // JSAPIPARAMS = jsApiParams.data
+
+        // if (jsApiParams.iRet === 0) {
+        //   this.callpay(res => {})
+        // } else {
+        //   console.log(jsApiParams)
+        //   this.toast('支付失败')
+        // }
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    callpay(fn) {
+      if (typeof WeixinJSBridge == 'undefined') {
+        if (document.addEventListener) {
+          document.addEventListener(
+            'WeixinJSBridgeReady',
+            jsApiCall.bind(null, [fn]),
+            false
+          )
+        } else if (document.attachEvent) {
+          document.attachEvent(
+            'WeixinJSBridgeReady',
+            jsApiCall.bind(null, [fn])
+          )
+          document.attachEvent(
+            'onWeixinJSBridgeReady',
+            jsApiCall.bind(null, [fn])
+          )
+        }
+      } else {
+        jsApiCall(fn)
+      }
+    },
+
     back() {
       this.$f7router.back()
     },
@@ -153,6 +244,20 @@ export default {
     onPageBeforeIn() {
       this.getActivityInfo()
       this.getUserInfo()
+      this.getOrderInfo()
+    },
+    async getOrderInfo() {
+      try {
+        const { iRet, data } = await getOrderInfoForActivityId({
+          activityId: this.activityId
+        })
+
+        if (iRet === 0 && data) {
+          this.orderInfo = data
+        }
+      } catch (error) {
+        console.log(error)
+      }
     },
     async getUserInfo() {
       try {
@@ -186,14 +291,6 @@ export default {
         console.error(error)
       }
     }
-  },
-  toast(msg) {
-    const toast = this.$f7.toast.create({
-      text: msg,
-      closeTimeout: 2000,
-      position: 'center'
-    })
-    toast.open()
   }
 }
 </script>

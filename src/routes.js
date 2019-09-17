@@ -11,6 +11,7 @@ import PersonPage from './pages/person.vue'
 import MarketPage from './pages/market.vue'
 import AddMarketPage from './pages/add-market.vue'
 import PersonPetsPage from './pages/all-pet.vue'
+import PersonOrdersPage from './pages/person-orders.vue'
 import PersonActivitiesPage from './pages/person-activities.vue'
 import PersonTweetsPage from './pages/person-tweets.vue'
 import ActivityDetailPage from './pages/activity-detail.vue'
@@ -243,6 +244,10 @@ const routes = [
         console.error(error)
       }
     }
+  },
+  {
+    path: '/person/orders',
+    component: PersonOrdersPage
   },
   {
     path: '/person/update',
