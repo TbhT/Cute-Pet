@@ -195,12 +195,12 @@ export default {
         if (this.likeStyle === 'iconfont icon-like') {
           console.log(111111)
           this.tweet.liked = true
-          this.tweet.likeCount -= 1
+          this.tweet.likeCount += 1
           this['home/updateTweetById']({ tweetId, liked: false })
         } else {
           console.log(222222)
           this.tweet.liked = false
-          this.tweet.likeCount += 1
+          this.tweet.likeCount -= 1
           this['home/updateTweetById']({ tweetId, liked: true })
         }
 
