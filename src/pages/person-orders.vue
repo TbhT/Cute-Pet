@@ -10,6 +10,7 @@
             <f7-list-item title="订单状态" :after="order.status === 1 ? '未支付' : '已支付'"></f7-list-item>
             <f7-list-item title="创建时间" :after="order.createTime"></f7-list-item>
             <f7-list-item title="订单金额" :after="totalFee(order.totalFee)"></f7-list-item>
+            <f7-list-item link="#" title="去支付" @click="pay(order.orderId)" v-if="order.status === 1"></f7-list-item>
           </f7-list>
         </f7-card-content>
       </f7-card>
@@ -28,6 +29,9 @@ export default {
     }
   },
   methods: {
+    pay(orderId) {
+      location.href = `/order/j-pay/?orderId=${orderId}`
+    },
     async onPageBeforeIn() {
       try {
         const { iRet, data } = await getOrderList()
