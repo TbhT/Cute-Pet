@@ -128,7 +128,7 @@ export default {
     async submitData() {
       try {
         if (!this.activityInfo || !this.userInfo) {
-          return
+          return false
         }
 
         if (this.activityInfo.tag && this.activityInfo.tag.length) {
@@ -143,14 +143,17 @@ export default {
           })
 
           if (flag) {
-            return this.$f7.dialog.confirm('请先完善个人信息', null, () => {
+            this.$f7.dialog.confirm('请先完善个人信息', null, () => {
               this.$f7router.navigate('/person/update')
             })
+
+            return false
           }
         }
 
         if (this.status === 2) {
-          return this.toast('已经参加过该活动了')
+          this.toast('已经参加过该活动了')
+          return false
         }
 
         const { iRet, data } = await joinActivity({
@@ -159,20 +162,27 @@ export default {
 
         if (iRet === 0) {
           this.status = 2
-          setTimeout(() => {
-            this.back()
-          }, 1000)
+          this.toast('参加成功，跳转支付...')
+          return true
         } else {
           this.toast('参加活动失败，请稍后重试')
         }
+
+        return false
       } catch (error) {
         console.error(error)
+        return false
       }
     },
 
     async orderCreate() {
       try {
         if (!this.activityInfo) {
+          return
+        }
+
+        const joinFlag = await this.submitData()
+        if (joinFlag === false) {
           return
         }
 
