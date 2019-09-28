@@ -210,7 +210,7 @@ export default {
         this.$f7.preloader.show()
 
         let result
-        if (this.checkPicture) {
+        if (this.type === 1) {
           result = await addPet(this)
         } else {
           result = await updatePet(this)
@@ -224,8 +224,12 @@ export default {
           return
         }
 
-        this.toast('添加宠物成功')
-        this.resetAllProps()
+        if (this.type === 1) {
+          this.toast('添加宠物成功')
+        } else {
+          this.toast('更新宠物成功')
+        }
+        // this.resetAllProps()
 
         setTimeout(() => {
           this.back()
@@ -245,7 +249,6 @@ export default {
       this.age = 0
       this.vaccineStatus = 0
       this.petType = 0
-      this.type = ''
       this.picture = ''
     }
   }

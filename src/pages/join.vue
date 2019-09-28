@@ -17,7 +17,7 @@
 
       <div>
         <p>选择参与活动的宠物数量</p>
-        <f7-stepper :input="false" round :min="1" :max="2" @stepper:change="onPetChange"></f7-stepper>
+        <f7-stepper :input="false" round :min="0" @stepper:change="onPetChange"></f7-stepper>
       </div>
 
       <div>

@@ -9,8 +9,8 @@
     <f7-navbar title="活动">
       <f7-subnavbar class="me-activity-subnavbar">
         <f7-segmented raised>
-          <f7-button tab-link="#me-activity-1" tab-link-active>赛事类</f7-button>
-          <f7-button tab-link="#me-activity-2">非赛事类</f7-button>
+          <f7-button tab-link="#me-activity-1" tab-link-active>福利社</f7-button>
+          <f7-button tab-link="#me-activity-2">线下趴</f7-button>
           <!-- <f7-button tab-link="#me-activity-3">带宠旅行</f7-button> -->
         </f7-segmented>
       </f7-subnavbar>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <f7-block-title>近期话题</f7-block-title>
+    <f7-block-title  class="me-topic-title" >近期话题</f7-block-title>
     <f7-list v-if="topics.length">
       <f7-list-item
         v-for="topic in topics"
@@ -31,5 +31,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.me-topic-title {
+  margin-top: 10px;
+}
 </style>
