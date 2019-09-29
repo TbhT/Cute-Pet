@@ -34,7 +34,7 @@
         <f7-list-item title="商务合作" link="#">
           <img src="/images/partner.png" alt slot="media" />
         </f7-list-item>
-        <f7-list-item title="意见反馈" link="/person/orders">
+        <f7-list-item title="意见反馈" link="#">
           <img src="/images/help.png" alt slot="media" />
         </f7-list-item>
 
