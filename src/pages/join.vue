@@ -80,7 +80,7 @@ export default {
     return {
       activityInfo: null,
       personCount: 1,
-      petCount: 1,
+      petCount: 0,
       status: 1,
       userInfo: null,
       orderInfo: null
