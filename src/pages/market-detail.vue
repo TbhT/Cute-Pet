@@ -28,6 +28,10 @@
         <i class="f7-icons icon">placemark</i>
         <span>地点：{{marketInfo.place}}</span>
       </div>
+
+      <div class="me-item" v-html="marketInfo.body" v-if="marketInfo.body">
+        
+      </div>
     </div>
 
     <div class="block" v-else>暂无详细信息~</div>
