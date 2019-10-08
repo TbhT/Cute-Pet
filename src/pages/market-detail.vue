@@ -29,9 +29,7 @@
         <span>地点：{{marketInfo.place}}</span>
       </div>
 
-      <div class="me-item" v-html="marketInfo.body" v-if="marketInfo.body">
-        
-      </div>
+      <div class="me-item" v-html="marketInfo.body" v-if="marketInfo.body" id="me-market-article"></div>
     </div>
 
     <div class="block" v-else>暂无详细信息~</div>
@@ -39,6 +37,10 @@
 </template>
 
 <style>
+#me-market-article img {
+  width: 100% !important;
+  height: 40% !important;
+}
 .me-image {
   width: 100%;
   height: 100%;
@@ -49,7 +51,6 @@
 .icon.f7-icons {
   font-size: 20px;
 }
-
 </style>
 
 <script>

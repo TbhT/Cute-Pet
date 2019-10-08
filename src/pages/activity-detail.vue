@@ -59,9 +59,10 @@
 </template>
 
 
-<style scoped>
+<style>
 #me-activity-article img {
-  width: 100%;
+  width: 100% !important;
+  height: 40% !important;
 }
 .icon.f7-icons {
   font-size: 20px;
