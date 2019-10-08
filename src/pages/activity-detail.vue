@@ -49,12 +49,20 @@
       </div>
     </div>
 
+    <div class="block" v-if="activityInfo && activityInfo.body" id="me-activity-article">
+      <h4>活动详情</h4>
+      <div v-html="activityInfo.body"></div>
+    </div>
+
     <div class="block" v-else>暂无详细信息~</div>
   </f7-page>
 </template>
 
 
 <style scoped>
+#me-activity-article img {
+  width: 100%;
+}
 .icon.f7-icons {
   font-size: 20px;
 }
@@ -69,7 +77,7 @@
 
 
 <script>
-import { getActivityDetail, formatDate , getLocaleDatetime} from '../utils'
+import { getActivityDetail, formatDate, getLocaleDatetime } from '../utils'
 import { format } from 'path'
 
 export default {
@@ -188,7 +196,7 @@ export default {
           console.log('---end---', joinEndTime)
           if (this.activityInfo.userJoinStatus === 1) {
             this.flag = 3
-          } else if ((now.valueOf() - joinEndTime.valueOf()) > 0) {
+          } else if (now.valueOf() - joinEndTime.valueOf() > 0) {
             this.flag = 2
           } else {
             this.flag = 1
